@@ -109,10 +109,12 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:v
     <div class="inv"><div class="nm"><b>Poupança</b><span>isenta de IR</span></div><div class="affix"><input class="num" id="r_poup" type="number" min="0" step="0.1" placeholder="ex: 6,17"><span class="u">% a.a.</span></div></div>
 
     <div class="subhead">Digitar manualmente (opcional)</div>
+    <p class="note" style="margin:-4px 0 12px;text-align:justify">Preencha esse bloco só se o investimento que você quer comparar não estiver em nenhuma das opções acima, CDB, Tesouro, Fundos, Ações, LCI/LCA ou Poupança. Serve para coisas como ETF, fundo imobiliário ou debênture, ou qualquer outro investimento fora dessa lista. Se o seu caso já está nas opções de cima, pode deixar os campos abaixo em branco.</p>
     <div class="field"><label>Nome do investimento</label><input id="r_man_nome" type="text" placeholder="ex: ETF, fundo imobiliário, debênture..." style="width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:15px;color:var(--ink);font-family:'IBM Plex Sans',sans-serif;"></div>
     <div class="row2">
       <div class="field"><label>Taxa anual (bruta)</label><div class="affix"><input class="num" id="r_man" type="number" min="0" step="0.1" placeholder="ex: 12"><span class="u">% a.a.</span></div></div>
-      <div class="field"><label>Tributação</label><div class="seg" id="seg-mantax"><button data-v="reg" class="on">Tributado</button><button data-v="isento">Isento</button></div></div>
+      <div class="field"><label>Tributação</label><div class="seg" id="seg-mantax"><button data-v="reg" class="on">Tributado</button><button data-v="isento">Isento</button></div>
+        <div class="hint">Tributado desconta a tabela regressiva do IR sobre o rendimento, igual a CDB, Tesouro e Fundos. Isento não desconta nada, igual a LCI/LCA e poupança. Escolha a que valer para o seu investimento.</div></div>
     </div>
   </div>
 
@@ -135,7 +137,7 @@ footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:v
     </ul>
   </div>
 
-  <div class="seealso"><span class="lbl">Veja também</span><a href="investir.html">Seu dinheiro no futuro</a><a href="independencia.html">Independência financeira</a><a href="inflacao.html">Valor do dinheiro no tempo</a><a href="pgbl-vgbl.html">PGBL x VGBL</a></div>
+  <div class="seealso"><span class="lbl">Veja também</span><a href="investir.html">Seu dinheiro no futuro</a><a href="independencia.html">Independência financeira</a><a href="inflacao.html">Valor do dinheiro no tempo</a></div>
 
   <footer>
     <div>Comparador de investimentos · ferramenta educativa @juanpablodsc</div>
