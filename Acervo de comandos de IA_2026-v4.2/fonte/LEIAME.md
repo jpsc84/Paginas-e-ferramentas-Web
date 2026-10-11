@@ -13,3 +13,4 @@ Base estruturada única para o HTML (../index.html) e o PDF (../guia-comandos-pr
 Para regenerar: mkdir -p out && python3 build_data.py && python3 gen_html.py && python3 gen_pdf.py && python3 test_html.py
 
 Ícone do app: fonte/pwa/ tem icon.svg, maskable.svg, manifest.json e gen_icons.py (gera icons/ a partir dos SVGs). manifest.json e icons/ ficam ao lado do index.html.
+Modo offline: gen_html.py também gera out/sw.js (service worker), que fica ao lado do index.html. O nome do cache acompanha a versão em META; ao publicar nova versão, o app baixa a atualização na próxima abertura com internet.
