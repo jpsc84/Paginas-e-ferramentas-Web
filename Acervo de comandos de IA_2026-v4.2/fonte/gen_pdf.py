@@ -10,31 +10,32 @@ STY = {"oficial": "oficial, reaberta nesta revisão", "herdada": "oficial, citad
 
 CSS = """
 @page{size:A4;margin:20mm 17mm 20mm 17mm;
- @top-left{content:string(modtitle);font:8.5pt 'Inter',sans-serif;color:#6a716b}
- @top-right{content:"v%(v)s · %(d)s";font:8.5pt 'Inter',sans-serif;color:#6a716b}
- @bottom-left{content:"%(t)s";font:8pt 'Inter',sans-serif;color:#6a716b}
- @bottom-right{content:"Página " counter(page) " de " counter(pages);font:8.5pt 'Inter',sans-serif;color:#6a716b}}
+ @top-left{content:string(modtitle);font:8.5pt 'Inter',sans-serif;color:#6b6b6b}
+ @top-right{content:"v%(v)s · %(d)s";font:8.5pt 'Inter',sans-serif;color:#6b6b6b}
+ @bottom-left{content:"%(t)s";font:8pt 'Inter',sans-serif;color:#6b6b6b}
+ @bottom-right{content:"Página " counter(page) " de " counter(pages);font:8.5pt 'Inter',sans-serif;color:#6b6b6b}}
 @page cover{margin:0;@top-left{content:none}@top-right{content:none}@bottom-left{content:none}@bottom-right{content:none}}
 @page toc{@top-left{content:"Índice"}}
-body{font:10pt/1.5 'Inter',sans-serif;color:#1b1f23}
-.cover{page:cover;height:297mm;background:#12463B;color:#fff;padding:40mm 22mm 0;position:relative;break-after:page}
+body{font:10pt/1.55 'Inter',sans-serif;color:#0d0d0d}
+.cover{page:cover;height:297mm;background:#0d0d0d;color:#fff;padding:36mm 22mm 0;position:relative;break-after:page}
+.cover img.logo{width:26mm;height:26mm;margin-bottom:12mm}
 .cover .ey{font-size:10pt;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
 .cover h1{font-size:30pt;line-height:1.15;margin:8mm 0 4mm;bookmark-level:none}
 .cover .sub{font-size:15pt;opacity:.95}
 .cover .box{margin-top:18mm;border-top:1px solid rgba(255,255,255,.4);padding-top:6mm;font-size:10.5pt;line-height:1.7}
 .cover .foot{position:absolute;bottom:22mm;left:22mm;right:22mm;font-size:9pt;opacity:.85}
 .toc{page:toc;break-after:page}
-.toc h2{font-size:18pt;color:#12463B;margin:0 0 6mm;string-set:modtitle "Índice"}
+.toc h2{font-size:18pt;font-weight:600;letter-spacing:-.02em;color:#0d0d0d;margin:0 0 6mm;string-set:modtitle "Índice"}
 .toc ol{list-style:none;padding:0;margin:0}
-.toc li{margin:0;border-bottom:1px dotted #c9c6bb}
-.toc li a{display:block;color:#1b1f23;text-decoration:none;padding:2.2mm 0}
-.toc li a::after{content:target-counter(attr(href),page);float:right;color:#12463B;font-weight:600}
+.toc li{margin:0;border-bottom:0.5pt solid #e3e3e3}
+.toc li a{display:block;color:#0d0d0d;text-decoration:none;padding:2.2mm 0}
+.toc li a::after{content:target-counter(attr(href),page);float:right;color:#0d0d0d;font-family:'DejaVu Sans Mono',monospace;font-size:9pt}
 .toc li.sub a{padding-left:8mm;font-size:9.5pt;color:#444}
 .howto{break-after:page}
-h1.mod{font-size:17pt;color:#12463B;margin:0 0 2mm;string-set:modtitle content();bookmark-level:1;break-before:page}
-.mdesc{color:#555d66;margin:0 0 5mm}
-h2.sub{font-size:13pt;color:#12463B;bookmark-level:2;margin:7mm 0 3mm}
-.item{border:0.6pt solid #d6d3c8;border-radius:2mm;padding:3.5mm 4mm;margin:0 0 4mm;break-inside:auto}
+h1.mod{font-size:18pt;font-weight:600;letter-spacing:-.02em;color:#0d0d0d;padding-bottom:2mm;border-bottom:0.6pt solid #0d0d0d;margin:0 0 2mm;string-set:modtitle content();bookmark-level:1;break-before:page}
+.mdesc{color:#6b6b6b;margin:0 0 5mm}
+h2.sub{font-size:12.5pt;font-weight:600;color:#0d0d0d;bookmark-level:2;margin:7mm 0 3mm}
+.item{border:0.5pt solid #d4d4d4;border-radius:2mm;padding:3.5mm 4mm;margin:0 0 4mm;break-inside:auto}
 .item h3,.lbl,.tags{break-after:avoid}
 .ih{break-inside:avoid;break-after:avoid}
 .item p{orphans:3;widows:3}
@@ -42,19 +43,19 @@ h2.sub{font-size:13pt;color:#12463B;bookmark-level:2;margin:7mm 0 3mm}
 .tags{margin:0 0 2mm}
 .k,.p{display:inline-block;font-size:7.5pt;border-radius:1.2mm;padding:.3mm 1.6mm;margin:0 1mm 1mm 0}
 .k{border:0.6pt solid currentColor;font-weight:700}
-.k.cmd{color:#12463B}.k.ui{color:#2f6b5c}.k.prompt{color:#3d4f6b}.k.api{color:#8a6220}.k.unverified{color:#9E3B26}
-.p{background:#efeee8;color:#4a5158}
-.lbl{font-weight:700;font-size:8.5pt;color:#12463B;text-transform:uppercase;letter-spacing:.04em;margin:2mm 0 .5mm}
-.pbox{break-inside:avoid;background:#f1f5f3;border-left:1.2mm solid #12463B;padding:2.5mm 3mm;border-radius:1mm;white-space:pre-wrap;font-size:9.5pt}
+.k{color:#0d0d0d;border-radius:3mm;font-weight:500}.k.cmd{background:#0d0d0d;color:#fff;border-color:#0d0d0d}.k.prompt{border-style:dashed}.k.api{border-style:dotted;border-width:0.9pt}.k.unverified{color:#b42318;border-color:#b42318}
+.p{background:#f2f2f2;color:#555;border-radius:3mm}
+.lbl{font-weight:500;font-size:7.5pt;color:#6b6b6b;font-family:'DejaVu Sans Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin:2mm 0 .5mm}
+.pbox{break-inside:avoid;background:#f7f7f7;border:0.5pt solid #e3e3e3;border-left:0.8mm solid #0d0d0d;padding:2.5mm 3mm;border-radius:1mm;white-space:pre-wrap;font-size:9.5pt}
 .pbox.code{font-family:'DejaVu Sans Mono',monospace}
 .src{font-size:8.5pt;color:#444}
-.src a{color:#12463B;word-break:break-all}
+.src a{color:#0d0d0d;word-break:break-all}
 p{margin:.5mm 0}
-.q{border:0.6pt solid #d6d3c8;border-radius:2mm;padding:2.5mm 3.5mm;margin:0 0 3mm;break-inside:avoid}
+.q{border:0.5pt solid #d4d4d4;border-radius:2mm;padding:2.5mm 3.5mm;margin:0 0 3mm;break-inside:avoid}
 .q h3{font-size:10pt;margin:0 0 1mm;bookmark-level:none}
 .srcl li{margin:0 0 2mm;font-size:9pt;break-inside:avoid}
-.srcl a{color:#12463B;word-break:break-all}
-.st{font-size:7.5pt;background:#efeee8;border-radius:1mm;padding:0 1.5mm}
+.srcl a{color:#0d0d0d;word-break:break-all}
+.st{font-size:7.5pt;background:#f2f2f2;border-radius:1mm;padding:0 1.5mm}
 .legend div{margin:1.5mm 0}
 ul{padding-left:5mm}
 """ % {"v": M["version"], "d": M["date"], "t": e(M["title"])}
@@ -77,7 +78,7 @@ def item(x):
 <div class="lbl">Limitações e o que conferir</div><p>{e(x['limits'])}</p>
 <div class="lbl">Fontes</div><p class="src">{src}</p></div>'''
 
-parts = [f'''<section class="cover"><div class="ey">Consulta diária · pt-BR</div><h1>{e(M['title'])}</h1>
+parts = [f'''<section class="cover"><img class="logo" src="pwa/icon.svg" alt=""><div class="ey">Consulta diária · pt-BR</div><h1>{e(M['title'])}</h1>
 <div class="sub">{e(M['subtitle'])}</div>
 <div class="box">Versão {M['version']} · pesquisa em {M['date']}<br>{len(data['items'])} itens em 17 módulos · {len(data['quick'])} exemplos de consulta rápida · {len(data['sources'])} fontes<br>
 ChatGPT, Claude, Gemini, Microsoft Copilot, Perplexity, Grok, DeepSeek e Mistral Vibe, com Gemini Notebook, Midjourney, Google Flow, Runway, Kling, Luma, Adobe Firefly, Pika e Higgsfield.</div>
