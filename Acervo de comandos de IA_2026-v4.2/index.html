@@ -29,11 +29,11 @@ button,input,select{font:inherit;color:inherit}
 input[type=checkbox]{accent-color:var(--ink)}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .wrap{max-width:960px;margin:0 auto;padding:0 16px}
-header.top{background:var(--head-bg);color:var(--head-ink);padding:calc(32px + env(safe-area-inset-top,0px)) 0 24px;border-bottom:1px solid var(--line)}
+header.top{text-align:center;background:var(--head-bg);color:var(--head-ink);padding:calc(32px + env(safe-area-inset-top,0px)) 0 24px;border-bottom:1px solid var(--line)}
 header.top .eyebrow{font:500 .72rem/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
 header.top h1{font-weight:600;font-size:clamp(1.5rem,5.4vw,2.3rem);line-height:1.15;letter-spacing:-.025em;margin:0;text-wrap:balance}
 header.top .sub{margin:10px 0 18px;font-size:1rem;color:var(--muted)}
-.meta{display:flex;flex-wrap:wrap;gap:6px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .pill{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font:500 .74rem/1.4 "JetBrains Mono",ui-monospace,monospace;color:var(--ink)}
 .pill a{color:inherit}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0}
