@@ -266,6 +266,14 @@ def page():
 <title>{html.escape(M['title'])}</title>
 <meta name="description" content="{html.escape(M['subtitle'])}: comandos documentados, recursos e prompts para ChatGPT, Claude, Gemini, Copilot, Perplexity, Grok, DeepSeek, Mistral e ferramentas especializadas. Versão {M['version']}, pesquisa em {M['date']}.">
 <meta name="theme-color" content="#12463B">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Prompts IA">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700&family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>
@@ -326,6 +334,7 @@ full = page()
 open("out/index.html", "w", encoding="utf-8").write(full)
 import re
 art = full.split("<head>",1)[1]
+art = re.sub(r'<link rel="(manifest|icon|apple-touch-icon)"[^>]*>\n?|<meta name="(apple-mobile-web-app-capable|mobile-web-app-capable|apple-mobile-web-app-title|apple-mobile-web-app-status-bar-style)"[^>]*>\n?', '', art)
 art = art.replace('<meta charset="utf-8">','').replace('<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">','')
 art = art.replace("</head>","").replace("<body>","").replace("</body>\n</html>","").replace("</body>","").replace("</html>","")
 art = art.replace('<a href="guia-comandos-prompts-ia-2026.pdf" download>Baixar PDF</a>','<a href="guia-comandos-prompts-ia-2026.pdf" target="_blank" rel="noopener">Abrir PDF</a>')

@@ -11,3 +11,5 @@ Base estruturada única para o HTML (../index.html) e o PDF (../guia-comandos-pr
 - test_html.py: testes funcionais com Playwright.
 
 Para regenerar: mkdir -p out && python3 build_data.py && python3 gen_html.py && python3 gen_pdf.py && python3 test_html.py
+
+Ícone do app: fonte/pwa/ tem icon.svg, maskable.svg, manifest.json e gen_icons.py (gera icons/ a partir dos SVGs). manifest.json e icons/ ficam ao lado do index.html.
