@@ -169,6 +169,10 @@ function build(){
       <h3 class="sub-h" id="fontes">Fontes e verificação · ${D.sources.length}</h3>
       <p class="status">Pesquisa em ${esc(D.meta.date)}. Os prompts são exemplos autorais; não houve teste de geração em todas as plataformas.</p>
       <ol class="srclist">${D.sources.map(s=>`<li id="src-${s.id}"><b>[${s.id}]</b> ${esc(s.title)} <span class="stype ${s.type}">${esc(STY[s.type])}</span><br><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url)}</a></li>`).join('')}</ol>`;
+    } else if(its.some(x=>/^(Cena|Estilo|Técnica):/.test(x.title))){
+      const G={'':'Criação, edição e leitura de imagens','Cena':'Construção de cena','Estilo':'Estilos visuais','Técnica':'Técnicas e parâmetros'};
+      const groups=[];its.forEach(x=>{const m=x.title.match(/^(Cena|Estilo|Técnica):/);const g=m?m[1]:'';let last=groups[groups.length-1];if(!last||last.g!==g){last={g,items:[]};groups.push(last);}last.items.push(x);});
+      body=groups.map(gr=>`<div class="grp"><h3 class="sub-h">${esc(G[gr.g])} · ${gr.items.length}</h3>${gr.items.map(card).join('')}</div>`).join('');
     } else body=its.map(card).join('');
     const cnt=m.n===17?`${D.quick.length} exemplos`:`${its.length} itens`;
     h+=`<section class="mod" id="mod-${m.n}" data-mod="${m.n}"><button class="mod-head" aria-expanded="false" aria-controls="b-${m.n}">
@@ -205,6 +209,7 @@ function apply(){
     if(n===17){const qv=$$('.q',sec).filter(e=>!e.hidden).length;cnt.textContent=act?`${qv} exemplo${qv===1?'':'s'} encontrado${qv===1?'':'s'}`:`${D.quick.length} exemplos`;
       $$('.hist,#historico,#fontes,.srclist,#fontes + .status',sec).forEach(e=>e.hidden=act);}
     else cnt.textContent=act?`${vis} encontrado${vis===1?'':'s'}`:`${D.items.filter(x=>x.module===n).length} itens`;
+    $$('.grp',sec).forEach(g=>{g.hidden=act&&!$$('article.card',g).some(c=>!c.hidden)});
     sec.hidden=act&&vis===0;
     if(act&&vis>0&&(st.q||st.onlySel||st.mod!=='all'))setOpen(sec,true);
   });

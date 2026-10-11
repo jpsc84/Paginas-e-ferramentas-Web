@@ -3,7 +3,7 @@
 Base estruturada única para o HTML (../index.html) e o PDF (../guia-comandos-prompts-ia-2026.pdf).
 
 - data_core.py: metadados, plataformas, módulos, fontes e histórico de revisões.
-- data_items1/2/3.py: itens dos módulos 1 a 16.
+- data_items1/2/3/4.py: itens dos módulos 1 a 16 (o 4 traz a ampliação de imagens).
 - data_quick.py: consulta rápida.
 - build_data.py: valida e gera data.json.
 - gen_html.py: gera out/index.html (e out/artifact.html para publicação no Claude).

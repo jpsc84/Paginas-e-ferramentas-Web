@@ -2,7 +2,7 @@
 import json, re, sys
 from data_core import META, KINDS, PLATFORMS, MODULES, SOURCES, CHANGELOG, VERIFIED
 from data_items1 import ITEMS
-import data_items2, data_items3  # noqa: registram itens em ITEMS
+import data_items2, data_items3, data_items4  # noqa: registram itens em ITEMS
 from data_quick import Q
 
 src_ids = {s[0] for s in SOURCES}
@@ -13,7 +13,7 @@ for x in ITEMS:
     m = x["module"]
     counters[m] = counters.get(m, 0) + 1
     x["id"] = f"m{m:02d}-{counters[m]:02d}"
-    x["verified"] = VERIFIED if x["sources"] else ""
+    x["verified"] = (x.get("verified_at") or VERIFIED) if x["sources"] else ""
     for s in x["sources"]:
         if s not in src_ids:
             errors.append(f"fonte inexistente {s} em {x['title']}")

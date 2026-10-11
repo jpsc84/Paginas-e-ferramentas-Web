@@ -113,7 +113,17 @@ for m in data["modules"]:
             sec.append(f'<li id="src-{s["id"]}"><b>[{s["id"]}]</b> {e(s["title"])} <span class="st">{STY[s["type"]]}</span><br><a href="{e(s["url"])}">{e(s["url"])}</a></li>')
         sec.append("</ol>")
     else:
-        sec += [item(x) for x in data["items"] if x["module"] == m["n"]]
+        G = {"": "Criação, edição e leitura de imagens", "Cena": "Construção de cena", "Estilo": "Estilos visuais", "Técnica": "Técnicas e parâmetros"}
+        its = [x for x in data["items"] if x["module"] == m["n"]]
+        grouped = any(x["title"].split(":")[0] in ("Cena", "Estilo", "Técnica") for x in its)
+        last = None
+        for x in its:
+            g = x["title"].split(":")[0] if x["title"].split(":")[0] in ("Cena", "Estilo", "Técnica") else ""
+            if grouped and g != last:
+                n = sum(1 for y in its if (y["title"].split(":")[0] if y["title"].split(":")[0] in ("Cena", "Estilo", "Técnica") else "") == g)
+                sec.append(f'<h2 class="sub">{G[g]} · {n}</h2>')
+                last = g
+            sec.append(item(x))
     parts.append("".join(sec))
 
 doc = f'<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>{e(M["title"])}</title><meta name="author" content="Acervo Na Ponta do Lápis"><meta name="description" content="{e(M["subtitle"])}"><style>{CSS}</style></head><body>{"".join(parts)}</body></html>'

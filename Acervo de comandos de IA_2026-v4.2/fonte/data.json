@@ -2,9 +2,9 @@
  "meta": {
   "title": "Acervo de Comandos e Prompts de IA 2026",
   "subtitle": "Acervo diário de uso geral para as principais IAs",
-  "version": "4.2",
-  "date": "06/10/2026",
-  "date_iso": "2026-10-06",
+  "version": "4.3",
+  "date": "10/10/2026",
+  "date_iso": "2026-10-10",
   "review": "Revisão semanal das fontes oficiais às segundas, 8h (America/Sao_Paulo)."
  },
  "kinds": {
@@ -3558,6 +3558,1423 @@
    "origin": "v3",
    "id": "m12-32",
    "verified": "06/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: ficha completa de cena",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Modelo-mestre para descrever uma imagem com todos os elementos que mais influenciam o resultado.",
+   "how": "Preencha só os campos que importam; campos vazios deixam a IA decidir. Use frases concretas (de onde vem a luz, que objeto fica em primeiro plano) em vez de adjetivos vagos.",
+   "example": "Assunto: [quem ou o quê, com idade, roupa, expressão]. Ação: [o que está fazendo]. Ambiente: [lugar, época, clima, hora do dia]. Primeiro plano: [objeto]. Fundo: [elementos]. Enquadramento: [plano e ângulo]. Lente: [focal e profundidade de campo]. Luz: [fonte, direção, dureza, cor]. Paleta: [3 a 5 cores]. Estilo: [fotografia, ilustração, pintura, 3D]. Textura e acabamento: [grão, pincelada, brilho]. Atmosfera: [sensação]. Formato: [proporção e uso]. Evite: [elementos indesejados].",
+   "limits": "Prompts muito longos podem gerar conflitos entre instruções; se o resultado sair confuso, corte para os 5 campos mais importantes.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-12",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: enquadramento e ângulo",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Define o quanto do assunto aparece e de onde a câmera olha.",
+   "how": "Escolha um plano (geral, conjunto, médio, americano, close, detalhe) e um ângulo (altura dos olhos, plongée de cima para baixo, contra-plongée de baixo para cima, vista aérea zenital, ponto de vista subjetivo, ângulo holandês inclinado).",
+   "example": "Plano médio de uma cozinheira sorrindo ao provar um molho, câmera levemente em contra-plongée, altura do peito, cozinha profissional ao fundo desfocada, luz lateral quente, formato 4:5.",
+   "limits": "Ângulos extremos podem distorcer rosto e mãos. Peça um só ângulo por imagem.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-13",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: lente e profundidade de campo",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Usa vocabulário fotográfico para controlar perspectiva e desfoque.",
+   "how": "Grande angular (16 a 24 mm) amplia o espaço e distorce bordas; 35 mm é natural e documental; 50 mm próximo do olho humano; 85 a 135 mm comprime o fundo e favorece retratos; macro mostra detalhes. Abertura grande (f/1.4 a f/2.8) desfoca o fundo; pequena (f/8 a f/16) deixa tudo nítido.",
+   "example": "Retrato de um senhor pescador na beira do rio, lente de 85 mm, f/1.8, fundo com bokeh suave de reflexos na água, foco nos olhos, luz de fim de tarde, formato 3:4.",
+   "limits": "A IA simula o efeito; números de lente não garantem óptica exata. Tilt-shift e olho de peixe podem exagerar.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-14",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: iluminação",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Controla clima, volume e realismo pela descrição da luz.",
+   "how": "Diga a fonte (sol, janela, luminária, neon), a direção (frontal, lateral, contraluz, de cima), a qualidade (dura com sombras marcadas ou suave difusa) e a temperatura (quente, neutra, fria). Esquemas úteis: hora dourada, hora azul, luz de janela, Rembrandt (triângulo de luz na bochecha), três pontos de estúdio, recorte de contraluz, luz de vela, neon noturno.",
+   "example": "Mulher lendo junto à janela, luz natural suave vindo da esquerda, sombras longas no chão de madeira, poeira visível no feixe de luz, tons quentes de fim de tarde, atmosfera tranquila, formato 16:9.",
+   "limits": "Fontes de luz conflitantes geram sombras incoerentes; mantenha uma luz principal.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-15",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: paleta e gradação de cor",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Fixa as cores dominantes e o tratamento de cor da imagem.",
+   "how": "Liste de 3 a 5 cores com nomes claros (azul-petróleo, terracota, creme) e diga o tratamento: alto contraste, tons pastel, monocromático, dessaturado, cores complementares, grade cinematográfica laranja e azul-esverdeado.",
+   "example": "Cena de café de bairro ao amanhecer, paleta restrita a verde-oliva, creme e cobre, baixa saturação, contraste suave, sem cores vibrantes.",
+   "limits": "Códigos hexadecimais nem sempre são respeitados; prefira nomes de cores e confira na imagem final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-16",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: composição",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Organiza os elementos para guiar o olhar e reservar espaço útil.",
+   "how": "Indique regra dos terços, centralização simétrica, linhas guia, moldura natural, diagonal, primeiro plano com profundidade ou espaço negativo para texto (diga em que lado).",
+   "example": "Ciclista solitário em estrada de terra, posicionado no terço inferior direito, estrada formando linha guia até o horizonte, céu amplo ocupando dois terços superiores como espaço livre para título, formato 16:9.",
+   "limits": "Se o espaço para texto for essencial, confira se ficou realmente vazio; a IA às vezes preenche.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-17",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: atmosfera, clima e época",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Acrescenta condições do ambiente que mudam a sensação da cena.",
+   "how": "Combine estação do ano, tempo (neblina, chuva fina, neve, poeira, calor), hora e época histórica ou futura. Elementos atmosféricos ajudam a dar profundidade.",
+   "example": "Rua de paralelepípedos de uma cidade colonial brasileira em manhã de neblina, década de 1950, lampiões ainda acesos, chão molhado refletindo a luz, poucas pessoas com roupas da época.",
+   "limits": "Detalhes históricos podem sair anacrônicos; confira roupas, carros e placas.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-18",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: materiais e texturas",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Descreve superfícies para dar realismo ou acabamento artístico.",
+   "how": "Nomeie materiais (madeira crua, mármore polido, linho, couro gasto, vidro fosco, metal escovado) e o acabamento (fosco, acetinado, brilhante, oxidado). Em ilustração, cite a técnica (aquarela granulada, guache opaco, lápis de cor).",
+   "example": "Mesa de madeira de demolição com xícara de cerâmica artesanal esmaltada em azul, guardanapo de linho amassado, colher de latão envelhecido, luz suave lateral realçando as texturas, foto em close.",
+   "limits": "Texturas finas podem ser suavizadas na geração; peça close quando o material for o foco.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-19",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: personagem detalhado",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Descreve uma pessoa ou personagem original de forma consistente e respeitosa.",
+   "how": "Informe faixa etária, traços gerais, cabelo, roupa, acessórios, postura e expressão. Evite pedir semelhança com pessoas reais sem autorização.",
+   "example": "Personagem original: mulher de cerca de 35 anos, cabelo cacheado preso em coque, óculos redondos, camisa de linho verde-oliva, relógio de couro, sorriso discreto, segurando uma prancheta, postura confiante.",
+   "limits": "Não use para imitar pessoas reais identificáveis. Detalhes como acessórios podem mudar entre gerações.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-20",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Cena: cena com várias pessoas ou objetos",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Organiza múltiplos elementos sem que se misturem.",
+   "how": "Descreva cada elemento com posição (à esquerda, ao centro, ao fundo) e uma característica própria. Limite a três ou quatro elementos principais.",
+   "example": "Mesa de reunião vista de lado: à esquerda, homem de camisa azul apontando um gráfico no notebook; ao centro, mulher de blazer cinza tomando notas; à direita, jovem de moletom amarelo sorrindo; janela ao fundo com cidade desfocada.",
+   "limits": "Contagem e posição de pessoas falham com frequência; confira e regere a partir da melhor versão.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-21",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: fotografia editorial",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Visual de revista, com narrativa e luz cuidada.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Fotografia editorial de uma empreendedora em sua oficina de cerâmica, retrato ambiental em plano médio, luz natural de janela lateral, paleta terrosa, profundidade de campo rasa, textura de filme sutil, formato 4:5.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-22",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: fotojornalismo documental",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Aparência espontânea e real, sem pose.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Foto documental em preto e branco de uma feira livre no Nordeste ao amanhecer, momento espontâneo de um feirante entregando frutas, lente 35 mm, grão visível, contraste alto, sem pose.",
+   "limits": "Não use para criar imagens que possam ser confundidas com registros de fatos reais. Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-23",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: retrato corporativo",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Foto profissional para perfil ou site.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Retrato corporativo de um homem de 40 anos, camisa social clara, fundo cinza neutro com leve gradiente, luz de estúdio suave em três pontos, expressão confiante e acessível, enquadramento de busto, formato 1:1.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-24",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: fotografia de produto (packshot)",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Produto isolado e nítido para catálogo ou loja.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Foto de produto de um frasco de perfume de vidro âmbar, fundo infinito branco, luz de estúdio difusa com reflexo controlado, sombra suave no chão, foco total, ângulo frontal levemente elevado, formato 1:1, sem texto.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-25",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: produto em ambiente (lifestyle)",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Mostra o produto em uso, em contexto real.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Caneca térmica verde sobre a mesa de um escritório em casa, notebook aberto ao fundo desfocado, manhã com luz de janela, planta ao lado, sensação de rotina organizada, formato 4:5.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-26",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: fotografia gastronômica",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Comida apetitosa com estilo de revista.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Prato de moqueca baiana em panela de barro, vista de cima em 45 graus, vapor visível, folhas de coentro frescas, toalha de linho e talheres antigos ao lado, luz natural lateral, fundo escuro de madeira, formato 4:5.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-27",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: arquitetura e interiores",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Ambientes com linhas retas e luz equilibrada.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Sala de estar minimalista com pé-direito duplo, janelas do chão ao teto, sofá de linho cru, piso de cimento queimado, plantas grandes, luz do meio da manhã, lente grande angular com linhas verticais corrigidas, formato 16:9.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-28",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: paisagem e natureza",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Cenas abertas com profundidade e clima.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Paisagem dos Lençóis Maranhenses ao nascer do sol, lagoas de água azul-turquesa entre dunas brancas, céu com nuvens rosadas, primeiro plano com ondulações de areia, vista ampla, formato 16:9.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-29",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: cinematográfico (still de filme)",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Quadro com cara de cena de cinema.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Still cinematográfico de um homem esperando em uma estação de trem vazia à noite, formato anamórfico 2.39:1, luz fria de lâmpadas fluorescentes e reflexos no piso molhado, grade de cor azul-esverdeada e laranja, grão de filme, clima de suspense.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-30",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: fotografia analógica",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Estética de filme fotográfico, com grão e cores de época.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Foto de família em um quintal no verão, aparência de filme 35 mm colorido dos anos 1990, cores levemente desbotadas, grão visível, luz dura de meio-dia, enquadramento casual, formato 3:2.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-31",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: ilustração vetorial flat",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Formas simples e cores chapadas para web e apresentações.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Ilustração vetorial flat de uma pessoa organizando finanças em um notebook, gráficos de barras e moedas ao redor, paleta azul-petróleo, mostarda e branco, sem sombras, formas geométricas simples, fundo liso, formato 16:9, sem texto.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-32",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: aquarela",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Pintura com transparências e bordas suaves.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Ilustração em aquarela de um casario colorido de cidade histórica, manchas de cor transparentes, bordas que se espalham no papel, granulação do papel visível, áreas em branco preservadas, paleta suave de ocre, azul e rosa.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-33",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: pintura a óleo clássica",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Aparência de tela com pinceladas e luz dramática.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Pintura a óleo em estilo clássico de natureza-morta com frutas tropicais, jarro de cerâmica e pano dobrado, fundo escuro, luz lateral dramática, pinceladas visíveis, verniz levemente amarelado.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-34",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: ilustração de livro infantil",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Traço acolhedor e cores alegres para histórias.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Ilustração de livro infantil de uma menina e um cachorro explorando um jardim mágico com cogumelos gigantes, traço arredondado, texturas de lápis de cor e guache, cores alegres e suaves, expressões gentis, formato 4:3.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-35",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: 3D estilizado (clay/isométrico)",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Objetos com aparência de massinha ou maquete.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Cena isométrica em 3D estilizado de um pequeno escritório com mesa, computador, estante e planta, aparência de massinha fosca, cores pastel, iluminação suave de estúdio, fundo liso, sem texto.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-36",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: low poly e pixel art",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Visual de jogo retrô ou geométrico.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Pixel art em 32 bits de uma vila costeira ao pôr do sol, barcos de pesca, coqueiros e casinhas, paleta limitada a 16 cores, contornos nítidos, formato 16:9.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-37",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: anime e mangá (original)",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Estética de animação japonesa com personagem original.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Ilustração em estilo anime de uma estudante original andando de bicicleta por uma rua arborizada no verão, céu azul com nuvens volumosas, cores vivas, contornos limpos, luz do sol filtrada pelas folhas, formato 16:9.",
+   "limits": "Use personagens originais; personagens existentes são protegidos. Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-38",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: traço, nanquim e esboço",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Desenho de linha para estudo, livro ou tatuagem.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Desenho em nanquim de uma árvore antiga com raízes expostas, traço fino com hachuras para sombras, fundo branco, sem cor, estilo de caderno de esboços.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-39",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: infográfico e diagrama",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Explica um processo ou dado de forma visual.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Infográfico vertical explicando as 4 etapas para montar uma reserva de emergência, ícones simples para cada etapa, setas conectando os blocos, paleta verde e azul, muito espaço em branco. Títulos curtos: \"Gastos\", \"Meta\", \"Aporte\", \"Guarde\".",
+   "limits": "Texto e números em imagem costumam sair com erros; para dados exatos, gere a arte sem texto e diagrame depois. Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-40",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: pôster tipográfico e capa",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Peça com título forte e hierarquia visual.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Pôster vertical para um festival de jazz, título \"NOITE DE JAZZ\" em letras grandes no topo, silhueta de saxofonista em contraluz, paleta azul-noite e dourado, textura de papel envelhecido, espaço inferior livre para informações.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-41",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: logotipo e ícone (rascunho)",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Gera conceitos visuais para orientar um designer.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Três conceitos de ícone para um app de finanças pessoais chamado \"Ponta do Lápis\": formas simples, combinação de lápis e gráfico de barras, duas cores (verde-petróleo e dourado), fundo branco, sem texto.",
+   "limits": "Resultados servem como rascunho; vetorize e verifique originalidade e registro de marca antes de usar. Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-42",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: mockup de embalagem",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Visualiza um produto antes de produzir.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Mockup de embalagem de café especial: pacote kraft com válvula, rótulo minimalista em creme e terracota, apoiado em bancada de madeira com grãos espalhados, luz natural lateral, foto realista, formato 4:5, rótulo sem texto.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-43",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: thumbnail e capa para redes",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Imagem de alto contraste para chamar atenção no feed.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Capa para vídeo sobre organizar o orçamento: pessoa surpresa olhando um extrato, fundo amarelo saturado, alto contraste, iluminação frontal forte, espaço livre à direita para título, formato 16:9.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-44",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: surreal e conceitual",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Metáforas visuais para ideias abstratas.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Imagem conceitual surreal: uma escada de livros abertos subindo até as nuvens, pessoa pequena no primeiro degrau, céu ao entardecer, luz suave, estilo de fotografia manipulada realista, formato 4:5.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-45",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: fantasia e concept art",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Ambientes imaginários para histórias e jogos.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Concept art de uma cidade construída nas copas de árvores gigantes da Amazônia, pontes suspensas de cipó, casas iluminadas por lanternas, névoa entre as árvores, vista ampla ao entardecer, pintura digital detalhada.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-46",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: ficção científica e cyberpunk",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Futuro urbano com tecnologia e neon.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Rua de uma metrópole futurista em noite de chuva, letreiros de neon magenta e ciano refletidos no asfalto, pessoas com capas translúcidas, vapor saindo de bueiros, vista em nível da rua, estilo cinematográfico.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-47",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: retrô anos 70 e 80",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Cores, tipografia e texturas de época.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Ilustração em estilo de anúncio de revista dos anos 1970: família na praia com carro conversível, cores quentes desbotadas, retícula de impressão visível, bordas arredondadas, sensação nostálgica.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-48",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Estilo: minimalista e flat lay",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Composição limpa vista de cima.",
+   "how": "Copie, troque os campos entre colchetes e mantenha a ordem: assunto, cena, composição, luz, cor, estilo, formato. No Midjourney, acrescente parâmetros como --ar no final; nos demais, escreva a proporção por extenso.",
+   "example": "Flat lay minimalista de itens de viagem organizados em grade sobre fundo bege: passaporte, óculos de sol, caderno, câmera analógica e mapa dobrado, sombras suaves, muito espaço livre, vista de cima, formato 1:1.",
+   "limits": "Descreva características do estilo em vez de citar artistas vivos, marcas ou personagens protegidos. Confira mãos, texto, proporções e detalhes pequenos no tamanho final.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-49",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: matriz de estilos",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Gera a mesma cena em vários estilos para comparar antes de escolher.",
+   "how": "Mantenha cena e composição fixas e varie só o estilo; gere uma imagem por estilo se a ferramenta não aceitar várias de uma vez.",
+   "example": "Mesma cena em quatro versões, uma por imagem: casal tomando café em uma varanda com vista para o mar ao amanhecer. Versão 1: fotografia editorial. Versão 2: aquarela. Versão 3: ilustração vetorial flat. Versão 4: 3D estilizado em massinha. Mantenha composição e cores principais.",
+   "limits": "Algumas ferramentas mudam também a composição ao trocar o estilo; compare lado a lado.",
+   "sources": [
+    "C4",
+    "J1",
+    "M2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-50",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: variação controlada",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Ajusta uma imagem mudando uma única variável por vez.",
+   "how": "Anexe ou cite a imagem escolhida e diga exatamente o que muda e o que deve permanecer.",
+   "example": "Mantenha tudo igual nesta imagem e mude apenas a hora do dia para noite, com as luzes da casa acesas e céu estrelado.",
+   "limits": "Mesmo pedindo uma só mudança, outros detalhes podem variar; compare antes e depois.",
+   "sources": [
+    "C4"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-51",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: exclusões e prompt negativo",
+   "kinds": [
+    "prompt",
+    "cmd"
+   ],
+   "platforms": [
+    "portatil",
+    "midjourney"
+   ],
+   "what": "Evita elementos indesejados.",
+   "how": "Na maioria das ferramentas, escreva \"sem...\" no fim do texto. No Midjourney, use o parâmetro --no seguido dos termos.",
+   "example": "Mesa de trabalho organizada com notebook e caderno, luz natural, foto realista --no texto, logotipos, pessoas",
+   "limits": "Excluir com frases negativas nem sempre funciona; o Runway, por exemplo, recomenda descrever apenas o que deve aparecer. Se o elemento persistir, reescreva a cena sem mencioná-lo.",
+   "sources": [
+    "J5",
+    "R1"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-52",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: texto dentro da imagem",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Aumenta a chance de o texto sair correto.",
+   "how": "Coloque o texto exato entre aspas, curto (até 5 palavras), diga posição, tamanho e estilo de letra. Gere a arte sem texto quando a precisão for essencial.",
+   "example": "Cartaz de padaria artesanal com o título \"PÃO DE FERMENTAÇÃO NATURAL\" em letras serifadas grandes no topo, ilustração de pão rústico ao centro, fundo creme, sem outros textos.",
+   "limits": "Acentos e palavras longas em português costumam errar; confira letra por letra.",
+   "sources": [
+    "C4"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-53",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: edição localizada",
+   "kinds": [
+    "ui",
+    "prompt"
+   ],
+   "platforms": [
+    "chatgpt",
+    "gemini",
+    "firefly",
+    "midjourney",
+    "portatil"
+   ],
+   "what": "Altera uma área da imagem preservando o restante.",
+   "how": "No ChatGPT, selecione a área ou comente na imagem. No Midjourney, use Vary Region ou o modelo de edição (--edit). Descreva o que muda e o que fica igual.",
+   "example": "Na área selecionada, troque o vaso de plantas por uma luminária de chão de metal preto. Preserve parede, luz, sombras e todos os outros objetos.",
+   "limits": "Bordas da área editada podem ficar visíveis; amplie e confira.",
+   "sources": [
+    "C4",
+    "J5"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-54",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: expandir a imagem (outpainting)",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Aumenta o quadro mantendo o conteúdo original.",
+   "how": "Anexe a imagem, diga a nova proporção e o que deve aparecer nas áreas novas.",
+   "example": "Expanda esta foto de 1:1 para 16:9, completando as laterais com a continuação da praia e do céu. Não altere a pessoa nem o centro da imagem.",
+   "limits": "As áreas novas são inventadas; confira emendas e repetições.",
+   "sources": [
+    "C4"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-55",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: personagem consistente",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Mantém o mesmo personagem em várias imagens.",
+   "how": "Crie primeiro uma folha de personagem e use-a como referência nas imagens seguintes, repetindo a mesma descrição física palavra por palavra.",
+   "example": "Folha de personagem original: menino de 8 anos, cabelo crespo curto, camiseta laranja com listra azul, bermuda jeans, tênis verde. Mostre de frente, de perfil, de costas e três expressões (alegre, curioso, assustado), fundo branco, mesmo estilo de ilustração.",
+   "limits": "A consistência não é garantida; detalhes de roupa e rosto podem variar. No Midjourney V8, a referência de pessoa ou objeto passou para o modelo de edição.",
+   "sources": [
+    "C4",
+    "J5"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-56",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: estilo a partir de referência",
+   "kinds": [
+    "ui",
+    "prompt"
+   ],
+   "platforms": [
+    "midjourney",
+    "firefly",
+    "chatgpt",
+    "gemini"
+   ],
+   "what": "Usa uma imagem sua para guiar a aparência de novas criações.",
+   "how": "Midjourney: --sref com a imagem ou código de estilo e --sw para a força. Firefly: Styles > Reference para estilo e Composition > Reference para estrutura, com controle de força. ChatGPT e Gemini: anexe a imagem e descreva o que copiar (paleta, traço, luz) e o que mudar.",
+   "example": "Use a imagem anexada apenas como referência de estilo (paleta, textura e traço). Crie uma nova cena: farol no alto de um penhasco em dia de vento, gaivotas, mar agitado.",
+   "limits": "Use referências próprias ou com direito de uso. A referência guia; não copia.",
+   "sources": [
+    "J5",
+    "AD2",
+    "AD3",
+    "C4"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-57",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: esboço para arte final",
+   "kinds": [
+    "prompt"
+   ],
+   "platforms": [
+    "portatil",
+    "chatgpt",
+    "gemini",
+    "copilot",
+    "grok",
+    "midjourney",
+    "firefly"
+   ],
+   "what": "Transforma um rascunho em imagem acabada mantendo a composição.",
+   "how": "Anexe a foto do esboço e diga o estilo final; peça para preservar posições e proporções.",
+   "example": "Transforme este esboço a lápis em uma ilustração digital colorida e finalizada. Mantenha posição dos personagens, perspectiva e enquadramento. Paleta quente de fim de tarde.",
+   "limits": "Esboços pouco legíveis geram interpretações livres; reforce no texto o que cada traço representa.",
+   "sources": [
+    "C4",
+    "AD3"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-58",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: descobrir o prompt de uma imagem",
+   "kinds": [
+    "prompt",
+    "cmd"
+   ],
+   "platforms": [
+    "portatil",
+    "midjourney"
+   ],
+   "what": "Descreve uma imagem de referência em formato de prompt para recriar algo parecido.",
+   "how": "Em assistentes com visão, anexe a imagem e peça a descrição estruturada. No Midjourney (Discord), /describe sugere prompts.",
+   "example": "Descreva esta imagem como um prompt de geração, separando assunto, ambiente, enquadramento, lente, luz, paleta, estilo e proporção. Não identifique pessoas reais.",
+   "limits": "A descrição aproxima o resultado; não reproduz a imagem original.",
+   "sources": [
+    "C5",
+    "J2"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-59",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: Midjourney: parâmetros essenciais",
+   "kinds": [
+    "cmd"
+   ],
+   "platforms": [
+    "midjourney"
+   ],
+   "what": "Ajusta formato e comportamento da geração no fim do prompt.",
+   "how": "--ar define a proporção; --stylize ou --s controla o toque artístico (0 a 1000, padrão 100); --chaos ou --c dá variedade (0 a 100, padrão 0); --weird ou --w torna o resultado incomum (até 3000, padrão 0); --raw dá mais controle; --seed ajuda a repetir testes; --tile cria padrões contínuos; --q ajusta qualidade; --hd gera em 2048 px no V8.1.",
+   "example": "retrato editorial de uma ceramista em sua oficina, luz de janela, paleta terrosa --ar 4:5 --s 250 --c 10 --raw",
+   "limits": "Deixe um espaço antes de cada parâmetro e não use pontuação dentro dele. Faixas e suporte variam por versão; confira a documentação.",
+   "sources": [
+    "J5",
+    "J6",
+    "J7",
+    "J8"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-60",
+   "verified": "10/10/2026"
+  },
+  {
+   "module": 11,
+   "title": "Técnica: Midjourney: estilo pessoal e moodboards",
+   "kinds": [
+    "cmd",
+    "ui"
+   ],
+   "platforms": [
+    "midjourney"
+   ],
+   "what": "Aplica preferências de estilo salvas na conta.",
+   "how": "--profile ou --p aplica o perfil de personalização e moodboards; --sref e --sw usam referência de estilo; --iw ajusta o peso de imagens no prompt.",
+   "example": "jardim de inverno com plantas tropicais e cadeira de vime, luz difusa --ar 3:2 --p",
+   "limits": "O perfil reflete suas escolhas anteriores no site; resultados mudam conforme você treina o perfil.",
+   "sources": [
+    "J5"
+   ],
+   "origin": "v4",
+   "verified_at": "10/10/2026",
+   "id": "m11-61",
+   "verified": "10/10/2026"
   }
  ],
  "quick": [
@@ -5059,6 +6476,258 @@
    ],
    "example": "Adapte este roteiro para [ferramenta/modelo]. Separe ação, câmera, iluminação e som. Informe quais entradas e recursos devo conferir antes de gerar.",
    "origin": "v3"
+  },
+  {
+   "id": "q106",
+   "n": 106,
+   "title": "Ficha completa de cena",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Assunto: [quem ou o quê]. Ação: [o que faz]. Ambiente: [lugar, época, hora]. Enquadramento: [plano e ângulo]. Lente: [focal e desfoque]. Luz: [fonte, direção, cor]. Paleta: [3 a 5 cores]. Estilo: [foto, ilustração, 3D]. Formato: [proporção]. Evite: [elementos indesejados].",
+   "origin": "v4"
+  },
+  {
+   "id": "q107",
+   "n": 107,
+   "title": "Retrato com lente de 85 mm",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Retrato de um senhor pescador na beira do rio, lente de 85 mm, f/1.8, fundo com bokeh suave de reflexos na água, foco nos olhos, luz de fim de tarde, formato 3:4.",
+   "origin": "v4"
+  },
+  {
+   "id": "q108",
+   "n": 108,
+   "title": "Luz de janela",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Mulher lendo junto à janela, luz natural suave vindo da esquerda, sombras longas no chão de madeira, poeira visível no feixe de luz, tons quentes de fim de tarde, formato 16:9.",
+   "origin": "v4"
+  },
+  {
+   "id": "q109",
+   "n": 109,
+   "title": "Espaço livre para título",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Ciclista solitário em estrada de terra no terço inferior direito, estrada como linha guia até o horizonte, céu amplo nos dois terços superiores livre para título, formato 16:9.",
+   "origin": "v4"
+  },
+  {
+   "id": "q110",
+   "n": 110,
+   "title": "Paleta restrita",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Cena de café de bairro ao amanhecer, paleta restrita a verde-oliva, creme e cobre, baixa saturação, contraste suave, sem cores vibrantes.",
+   "origin": "v4"
+  },
+  {
+   "id": "q111",
+   "n": 111,
+   "title": "Fotografia de produto",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Foto de produto de um frasco de vidro âmbar, fundo infinito branco, luz de estúdio difusa, sombra suave no chão, foco total, ângulo frontal levemente elevado, formato 1:1, sem texto.",
+   "origin": "v4"
+  },
+  {
+   "id": "q112",
+   "n": 112,
+   "title": "Fotografia gastronômica",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Prato de moqueca em panela de barro, vista em 45 graus, vapor visível, coentro fresco, toalha de linho, luz natural lateral, fundo escuro de madeira, formato 4:5.",
+   "origin": "v4"
+  },
+  {
+   "id": "q113",
+   "n": 113,
+   "title": "Interior de arquitetura",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Sala minimalista com pé-direito duplo, janelas do chão ao teto, sofá de linho cru, piso de cimento queimado, plantas grandes, luz da manhã, grande angular com verticais corrigidas, formato 16:9.",
+   "origin": "v4"
+  },
+  {
+   "id": "q114",
+   "n": 114,
+   "title": "Still cinematográfico",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Still cinematográfico de um homem esperando em uma estação de trem vazia à noite, formato 2.39:1, luz fria fluorescente, reflexos no piso molhado, grade azul-esverdeada e laranja, grão de filme.",
+   "origin": "v4"
+  },
+  {
+   "id": "q115",
+   "n": 115,
+   "title": "Ilustração vetorial flat",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Ilustração vetorial flat de uma pessoa organizando finanças no notebook, gráficos e moedas ao redor, paleta azul-petróleo, mostarda e branco, sem sombras, fundo liso, formato 16:9, sem texto.",
+   "origin": "v4"
+  },
+  {
+   "id": "q116",
+   "n": 116,
+   "title": "Aquarela",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Ilustração em aquarela de um casario colorido de cidade histórica, transparências, bordas que se espalham, granulação do papel visível, paleta suave de ocre, azul e rosa.",
+   "origin": "v4"
+  },
+  {
+   "id": "q117",
+   "n": 117,
+   "title": "Livro infantil",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Ilustração de livro infantil de uma menina e um cachorro explorando um jardim com cogumelos gigantes, traço arredondado, lápis de cor e guache, cores alegres, formato 4:3.",
+   "origin": "v4"
+  },
+  {
+   "id": "q118",
+   "n": 118,
+   "title": "3D em massinha",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Cena isométrica em 3D estilizado de um pequeno escritório, aparência de massinha fosca, cores pastel, luz suave de estúdio, fundo liso, sem texto.",
+   "origin": "v4"
+  },
+  {
+   "id": "q119",
+   "n": 119,
+   "title": "Pôster tipográfico",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Pôster vertical para festival de jazz, título \"NOITE DE JAZZ\" em letras grandes no topo, silhueta de saxofonista em contraluz, azul-noite e dourado, papel envelhecido.",
+   "origin": "v4"
+  },
+  {
+   "id": "q120",
+   "n": 120,
+   "title": "Matriz de estilos",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Mesma cena em quatro versões, uma por imagem: casal tomando café em uma varanda com vista para o mar ao amanhecer. 1: fotografia editorial. 2: aquarela. 3: vetorial flat. 4: 3D em massinha. Mantenha composição e cores.",
+   "origin": "v4"
+  },
+  {
+   "id": "q121",
+   "n": 121,
+   "title": "Personagem consistente",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Folha de personagem original: menino de 8 anos, cabelo crespo curto, camiseta laranja com listra azul, bermuda jeans, tênis verde. Frente, perfil, costas e três expressões, fundo branco, mesmo estilo.",
+   "origin": "v4"
+  },
+  {
+   "id": "q122",
+   "n": 122,
+   "title": "Descobrir o prompt de uma imagem",
+   "module": 11,
+   "platforms": [
+    "portatil"
+   ],
+   "kinds": [
+    "prompt"
+   ],
+   "example": "Descreva esta imagem como um prompt de geração, separando assunto, ambiente, enquadramento, lente, luz, paleta, estilo e proporção. Não identifique pessoas reais.",
+   "origin": "v4"
+  },
+  {
+   "id": "q123",
+   "n": 123,
+   "title": "Midjourney: parâmetros essenciais",
+   "module": 11,
+   "platforms": [
+    "midjourney"
+   ],
+   "kinds": [
+    "cmd"
+   ],
+   "example": "retrato editorial de uma ceramista em sua oficina, luz de janela, paleta terrosa --ar 4:5 --s 250 --c 10 --raw",
+   "origin": "v4"
   }
  ],
  "sources": [
@@ -5513,6 +7182,42 @@
    "type": "oficial"
   },
   {
+   "id": "J5",
+   "title": "Midjourney: lista de parâmetros",
+   "url": "https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List",
+   "type": "oficial"
+  },
+  {
+   "id": "J6",
+   "title": "Midjourney: Stylize",
+   "url": "https://docs.midjourney.com/hc/en-us/articles/32196176868109-Stylize",
+   "type": "oficial"
+  },
+  {
+   "id": "J7",
+   "title": "Midjourney: Chaos",
+   "url": "https://docs.midjourney.com/hc/en-us/articles/32099348346765-Chaos-Variety",
+   "type": "oficial"
+  },
+  {
+   "id": "J8",
+   "title": "Midjourney: Weird",
+   "url": "https://docs.midjourney.com/hc/en-us/articles/32390120435085-Weird",
+   "type": "oficial"
+  },
+  {
+   "id": "AD2",
+   "title": "Adobe Firefly: referência de estilo",
+   "url": "https://helpx.adobe.com/firefly/web/work-with-images/generate-images/reference-images-for-styling.html",
+   "type": "oficial"
+  },
+  {
+   "id": "AD3",
+   "title": "Adobe Firefly: referência de composição",
+   "url": "https://helpx.adobe.com/firefly/web/work-with-images/generate-images/match-image-composition-to-reference-image.html",
+   "type": "oficial"
+  },
+  {
    "id": "U1",
    "title": "Exemplo de blog com supostos códigos de câmera do Flow (não oficial)",
    "url": "https://www.artea.in/blogs/50-google-flow-camera-commands-2026/",
@@ -5520,6 +7225,17 @@
   }
  ],
  "changelog": [
+  {
+   "version": "4.3",
+   "date": "10/10/2026",
+   "notes": [
+    "Módulo de imagens ampliado de 11 para 61 itens, organizados em três grupos: Cena (10 blocos para descrever enquadramento, lente, luz, paleta, composição, atmosfera, materiais, personagens e cenas com vários elementos), Estilo (28 estilos visuais com prompt pronto) e Técnica (12 itens, como matriz de estilos, variação controlada, exclusões, texto na imagem, edição localizada, expansão, personagem consistente, referência de estilo e parâmetros do Midjourney).",
+    "Parâmetros do Midjourney conferidos na documentação oficial em 10/10/2026: --stylize de 0 a 1000 (padrão 100), --chaos de 0 a 100 (padrão 0), --weird até 3000 (padrão 0), --no, --raw, --seed, --tile, --sref, --sw, --profile, --iw, --hd (2048 px no V8.1) e --edit; a Omni Reference (--oref) foi substituída pelo modelo de edição no V8.",
+    "Adobe Firefly: referência de estilo (Styles > Reference) e de composição (Composition > Reference, com controle de força).",
+    "Consulta rápida ampliada com 18 prompts de imagem.",
+    "Fontes reabertas nesta edição: Midjourney (parâmetros, Stylize, Chaos, Weird) e Adobe Firefly (estilo e composição). Os demais itens mantêm a data de verificação de 06/10/2026."
+   ]
+  },
   {
    "version": "4.2",
    "date": "06/10/2026",

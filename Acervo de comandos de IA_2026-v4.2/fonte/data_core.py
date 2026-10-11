@@ -4,9 +4,9 @@ VERIFIED = "06/10/2026"
 META = {
     "title": "Acervo de Comandos e Prompts de IA 2026",
     "subtitle": "Acervo diário de uso geral para as principais IAs",
-    "version": "4.2",
-    "date": VERIFIED,
-    "date_iso": "2026-10-06",
+    "version": "4.3",
+    "date": "10/10/2026",
+    "date_iso": "2026-10-10",
     "review": "Revisão semanal das fontes oficiais às segundas, 8h (America/Sao_Paulo).",
 }
 
@@ -122,10 +122,23 @@ SOURCES = [
     ("AD1", "Adobe Firefly: movimento de câmera por vídeo de referência", "https://helpx.adobe.com/firefly/web/work-with-audio-and-video/work-with-video/match-camera-motion-to-reference-video.html", "oficial"),
     ("PK1", "Pika: Pikaframes", "https://create.pika.art/apps/pikaframes", "oficial"),
     ("H1", "Higgsfield: Camera Controls", "https://higgsfield.ai/camera-controls", "oficial"),
+    ("J5", "Midjourney: lista de parâmetros", "https://docs.midjourney.com/hc/en-us/articles/32859204029709-Parameter-List", "oficial"),
+    ("J6", "Midjourney: Stylize", "https://docs.midjourney.com/hc/en-us/articles/32196176868109-Stylize", "oficial"),
+    ("J7", "Midjourney: Chaos", "https://docs.midjourney.com/hc/en-us/articles/32099348346765-Chaos-Variety", "oficial"),
+    ("J8", "Midjourney: Weird", "https://docs.midjourney.com/hc/en-us/articles/32390120435085-Weird", "oficial"),
+    ("AD2", "Adobe Firefly: referência de estilo", "https://helpx.adobe.com/firefly/web/work-with-images/generate-images/reference-images-for-styling.html", "oficial"),
+    ("AD3", "Adobe Firefly: referência de composição", "https://helpx.adobe.com/firefly/web/work-with-images/generate-images/match-image-composition-to-reference-image.html", "oficial"),
     ("U1", "Exemplo de blog com supostos códigos de câmera do Flow (não oficial)", "https://www.artea.in/blogs/50-google-flow-camera-commands-2026/", "nao-oficial"),
 ]
 
 CHANGELOG = [
+    ("4.3", "10/10/2026", [
+        "Módulo de imagens ampliado de 11 para 61 itens, organizados em três grupos: Cena (10 blocos para descrever enquadramento, lente, luz, paleta, composição, atmosfera, materiais, personagens e cenas com vários elementos), Estilo (28 estilos visuais com prompt pronto) e Técnica (12 itens, como matriz de estilos, variação controlada, exclusões, texto na imagem, edição localizada, expansão, personagem consistente, referência de estilo e parâmetros do Midjourney).",
+        "Parâmetros do Midjourney conferidos na documentação oficial em 10/10/2026: --stylize de 0 a 1000 (padrão 100), --chaos de 0 a 100 (padrão 0), --weird até 3000 (padrão 0), --no, --raw, --seed, --tile, --sref, --sw, --profile, --iw, --hd (2048 px no V8.1) e --edit; a Omni Reference (--oref) foi substituída pelo modelo de edição no V8.",
+        "Adobe Firefly: referência de estilo (Styles > Reference) e de composição (Composition > Reference, com controle de força).",
+        "Consulta rápida ampliada com 18 prompts de imagem.",
+        "Fontes reabertas nesta edição: Midjourney (parâmetros, Stylize, Chaos, Weird) e Adobe Firefly (estilo e composição). Os demais itens mantêm a data de verificação de 06/10/2026.",
+    ]),
     ("4.2", VERIFIED, [
         "Integrado o conteúdo da edição 3.1, feita em paralelo: seis plataformas de vídeo (Runway, Kling, Luma, Adobe Firefly, Pika e Higgsfield), o item Preparar texto não é gerar vídeo e os seis exemplos de consulta rápida dessas plataformas. Todas as fontes foram reabertas, exceto o PDF da Kuaishou.",
         "Atualizações em relação à 3.1: Runway Gen-4.5 (2 a 10 s, 720p, plano Standard ou superior) e guia de termos de câmera; Kling VIDEO 3.0 (06/02/2026, 3 a 15 s, áudio nativo, várias tomadas); Pikaframes com 2 a 5 imagens; Firefly com vídeo de referência de 5 a 10 s e até 200 MB.",
