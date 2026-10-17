@@ -2,31 +2,408 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roteiros de Viagem 2027</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Cormorant+Garamond:ital,wght@1,600&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diário de Bordo · Roteiros de viagem</title>
+<meta name="description" content="Portal com todos os roteiros de viagem: cartões de embarque, contagem regressiva e carimbos no passaporte.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FBF8F2;--surface:#FFFFFF;--text:#122047;--muted:#5A6378;--line:#CAD5EA;--cobalt:#1D3F8F;--gold:#9A6B1F}
-@media (prefers-color-scheme: dark){:root{--bg:#0E1630;--surface:#141E3D;--text:#E9EEF9;--muted:#A6B1CC;--line:#2A3866;--cobalt:#8FAEF2;--gold:#E2B868}}
+:root{
+  --paper:#F7F2E8; --surface:#FFFFFF; --ink:#12203F; --muted:#5B6479; --line:#DED6C6;
+  --night:#0E1A3A; --night2:#16264F; --sky:#9FC0FF;
+  --cobalt:#1D3F8F; --gold:#A5751F; --wine:#7A1F3D; --green:#2E6B4F;
+  --serif:"Fraunces", Georgia, serif; --sans:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"Space Mono", ui-monospace, Menlo, monospace; --hand:"Caveat", "Comic Sans MS", cursive;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{--paper:#0B142D; --surface:#14204A; --ink:#ECF0FA; --muted:#A7B1CA; --line:#26345F; --cobalt:#9FB8F5; --gold:#E3B96A; --wine:#E58BA8; --green:#7FD1A8; color-scheme:dark}
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:"Instrument Sans",system-ui,sans-serif;display:grid;place-items:center;padding:32px 16px}
-main{width:100%;max-width:520px}
-h1{font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:2.2rem;margin:0 0 6px;color:var(--cobalt)}
-p{color:var(--muted);margin:0 0 24px}
-a{display:block;text-decoration:none;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:12px}
-a:hover{border-color:var(--cobalt)}
-a b{display:block;font-family:"Young Serif",Georgia,serif;font-weight:400;font-size:1.3rem;color:var(--cobalt)}
-a em{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:1.45rem;color:var(--gold)}
-a small{color:var(--muted)}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;color:#EEF2FB;padding:calc(20px + env(safe-area-inset-top,0px)) 20px 0;
+  background:
+    radial-gradient(1200px 500px at 85% -10%, rgba(159,192,255,.22), transparent 60%),
+    radial-gradient(800px 400px at -10% 110%, rgba(165,117,31,.25), transparent 60%),
+    linear-gradient(180deg,var(--night) 0%, var(--night2) 100%)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.16;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 79px, rgba(255,255,255,.55) 79px 80px),
+    repeating-linear-gradient(0deg, transparent 0 79px, rgba(255,255,255,.55) 79px 80px);
+  -webkit-mask-image:radial-gradient(ellipse at 60% 40%, #000 20%, transparent 75%);mask-image:radial-gradient(ellipse at 60% 40%, #000 20%, transparent 75%)}
+.topbar{position:relative;max-width:1120px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:#C9D4EE}
+.brand svg{color:var(--gold)}
+.topbar a{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#C9D4EE;text-decoration:none;border:1px solid rgba(255,255,255,.22);padding:7px 12px;border-radius:999px}
+.topbar a:hover{border-color:var(--gold);color:#fff}
+.hero-inner{position:relative;max-width:1120px;margin:0 auto;padding:48px 0 36px;display:grid;gap:28px;grid-template-columns:1fr}
+@media (min-width:900px){.hero-inner{grid-template-columns:1.15fr .85fr;align-items:end;padding:72px 0 48px}}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.6rem,9vw,5.2rem);line-height:.98;margin:0 0 18px;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+@media (prefers-color-scheme: dark){.hero h1 em{color:#E3B96A}}
+.hero p.lead{margin:0;max-width:34em;color:#C9D4EE;font-size:1.05rem}
+.next{position:relative;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:18px 20px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.next small{display:block;font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#9FB0D8}
+.next .route{font-family:var(--mono);font-weight:700;font-size:1.9rem;letter-spacing:.06em;display:flex;align-items:center;gap:10px;margin:6px 0 2px}
+.next .route svg{color:var(--gold);flex:none}
+.next .where{color:#C9D4EE;font-size:.95rem}
+.count{display:flex;gap:10px;margin-top:14px}
+.count div{flex:1;text-align:center;background:rgba(0,0,0,.22);border-radius:12px;padding:10px 4px}
+.count b{display:block;font-family:var(--mono);font-size:1.7rem;line-height:1.1;color:#fff}
+.count span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9FB0D8}
+.next a.go{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-weight:600;color:var(--night);background:#E3B96A;text-decoration:none;padding:10px 16px;border-radius:999px}
+.next a.go:hover{background:#F0CD8A}
+.flight{position:absolute;right:-40px;top:40px;width:min(620px,90vw);opacity:.55;pointer-events:none}
+@media (max-width:899px){.flight{top:auto;bottom:250px;right:-80px;opacity:.35}}
+
+/* ---------- Postcards marquee ---------- */
+.postcards{position:relative;padding:26px 0 34px;overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.row{display:flex;width:max-content;gap:22px;padding:10px 0;animation:drift 70s linear infinite}
+.row.rev{animation-direction:reverse;animation-duration:85s}
+.postcards:hover .row{animation-play-state:paused}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.pc{position:relative;flex:none;width:250px;background:#FFFDF8;padding:9px 9px 10px;border-radius:4px;color:#1B2440;
+  box-shadow:0 1px 0 rgba(0,0,0,.05),0 10px 24px rgba(14,26,58,.28);transform:rotate(var(--r,0deg));transition:transform .25s}
+.pc:hover{transform:rotate(0deg) translateY(-4px) scale(1.03)}
+@media (min-width:900px){.pc{width:300px}}
+.pc img{aspect-ratio:3/2;object-fit:cover;width:100%;height:auto;border-radius:2px}
+.pc figcaption{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px}
+.pc .city{font-family:var(--hand);font-size:1.45rem;line-height:1}
+.pc .country{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#6B7187}
+.pc .stamp{position:absolute;top:14px;right:14px;width:54px;height:54px;border-radius:50%;border:2px dashed rgba(255,255,255,.85);display:grid;place-items:center;
+  font-family:var(--mono);font-weight:700;font-size:.72rem;color:#fff;letter-spacing:.05em;background:rgba(14,26,58,.35);transform:rotate(-12deg)}
+
+/* ---------- Sections ---------- */
+main{max-width:1120px;margin:0 auto;padding:0 20px 40px}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:56px 0 20px;flex-wrap:wrap}
+.sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.05;margin:0}
+.sec-head h2 em{font-style:italic;color:var(--gold)}
+.sec-head p{margin:0;color:var(--muted);max-width:30em}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{font:inherit;font-size:.88rem;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:999px}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ---------- Boarding passes ---------- */
+.passes{display:grid;gap:22px;grid-template-columns:1fr}
+.pass{position:relative;display:grid;grid-template-columns:1fr;text-decoration:none;color:var(--ink);background:var(--surface);border-radius:20px;overflow:hidden;
+  box-shadow:0 1px 0 var(--line),0 14px 34px rgba(14,26,58,.12);transition:transform .25s, box-shadow .25s}
+.pass:hover{transform:translateY(-4px);box-shadow:0 1px 0 var(--line),0 22px 44px rgba(14,26,58,.2)}
+@media (min-width:760px){.pass{grid-template-columns:1fr 210px}}
+.pass .cover{position:relative;aspect-ratio:16/7;overflow:hidden}
+.pass .cover img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.pass:hover .cover img{transform:scale(1.04)}
+.pass .cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,26,58,0) 35%,rgba(14,26,58,.75))}
+.pass .badge{position:absolute;z-index:1;top:14px;left:14px;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(255,255,255,.92);color:#12203F;padding:5px 10px;border-radius:999px}
+.pass .badge.live{background:#E3B96A}
+.pass .badge.done{background:#C9D4EE}
+.pass .title{position:absolute;z-index:1;left:18px;right:18px;bottom:12px;color:#fff}
+.pass .title h3{font-family:var(--serif);font-weight:500;font-size:clamp(1.5rem,4.5vw,2.1rem);line-height:1.05;margin:0}
+.pass .title span{font-size:.9rem;color:#DCE4F7}
+.pass .body{padding:16px 18px 18px}
+.legs{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.code b{display:block;font-family:var(--mono);font-weight:700;font-size:1.9rem;letter-spacing:.04em;line-height:1}
+.code span{font-size:.78rem;color:var(--muted)}
+.legs .path{flex:1;position:relative;height:2px;background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 11px);min-width:30px}
+.legs .path svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--gold);background:var(--surface);padding:0 4px;box-sizing:content-box}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 14px}
+@media (min-width:560px){.facts{grid-template-columns:repeat(4,1fr)}}
+.facts small{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.facts b{font-weight:600;font-size:.98rem}
+.stub{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:16px 18px 18px;border-top:2px dashed var(--line);background:color-mix(in srgb,var(--gold) 7%,var(--surface))}
+@media (min-width:760px){.stub{border-top:0;border-left:2px dashed var(--line)}}
+.stub::before,.stub::after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;background:var(--paper)}
+.stub::before{left:-12px;top:-12px}.stub::after{right:-12px;top:-12px}
+@media (min-width:760px){.stub::before{left:-12px;top:-12px}.stub::after{left:-12px;right:auto;top:auto;bottom:-12px}}
+.stub .seat{font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.stub .seat b{display:block;font-size:1.05rem;color:var(--ink);letter-spacing:.06em}
+.barcode{height:46px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 12px);opacity:.85}
+.open{display:flex;align-items:center;justify-content:space-between;font-weight:600;color:var(--cobalt)}
+.open svg{transition:transform .25s}
+.pass:hover .open svg{transform:translateX(4px)}
+.pass.soon{place-items:center;text-align:center;min-height:200px;border:2px dashed var(--line);background:transparent;box-shadow:none;grid-template-columns:1fr;padding:24px}
+.pass.soon:hover{transform:none}
+.pass.soon h3{font-family:var(--serif);font-weight:500;font-size:1.5rem;margin:8px 0 4px}
+.pass.soon p{margin:0;color:var(--muted);max-width:28em}
+
+/* ---------- Passport stamps ---------- */
+.passport{background:var(--surface);border-radius:20px;padding:22px;box-shadow:0 1px 0 var(--line),0 10px 26px rgba(14,26,58,.08);
+  background-image:repeating-linear-gradient(0deg,transparent 0 31px,color-mix(in srgb,var(--line) 60%,transparent) 31px 32px)}
+.stamps{display:flex;flex-wrap:wrap;gap:22px 28px;justify-content:center;padding:6px 0}
+.stampx{width:132px;height:132px;border-radius:50%;border:3px solid currentColor;display:grid;place-items:center;text-align:center;position:relative;transform:rotate(var(--r,0deg));opacity:.9}
+.stampx::before{content:"";position:absolute;inset:7px;border-radius:50%;border:1.5px dashed currentColor}
+.stampx b{display:block;font-family:var(--mono);font-size:1.05rem;letter-spacing:.12em;text-transform:uppercase;line-height:1.1}
+.stampx span{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;margin-top:4px}
+.stampx.planned{opacity:.55;border-style:dashed}
+.legend{margin:14px 0 0;text-align:center;color:var(--muted);font-size:.9rem}
+
+footer{max-width:1120px;margin:40px auto 0;padding:24px 20px calc(36px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
+footer details{margin-top:6px}
+footer summary{cursor:pointer;color:var(--ink)}
+footer ul{columns:2 220px;padding-left:18px}
+footer li a{color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
+
+<header class="hero">
+  <div class="topbar">
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>Diário de Bordo</span>
+    <a href="#viagens">Ver viagens</a>
+  </div>
+
+  <svg class="flight" viewBox="0 0 600 260" aria-hidden="true">
+    <path id="arc" d="M20 230 C 160 20, 420 20, 580 140" fill="none" stroke="#E3B96A" stroke-width="2" stroke-dasharray="6 8"/>
+    <circle cx="20" cy="230" r="5" fill="#E3B96A"/><circle cx="580" cy="140" r="5" fill="#E3B96A"/>
+    <g fill="#fff"><path d="M-9 -2 L6 -2 L11 0 L6 2 L-9 2 L-12 6 L-14 6 L-12 0 L-14 -6 L-12 -6 Z M-2 -2 L-6 -11 L-3 -11 L4 -2 Z M-2 2 L-6 11 L-3 11 L4 2 Z"/>
+      <animateMotion dur="9s" repeatCount="indefinite" rotate="auto"><mpath href="#arc"/></animateMotion></g>
+  </svg>
+
+  <div class="hero-inner">
+    <div>
+      <h1>O mundo cabe<br>num <em>roteiro</em>.</h1>
+      <p class="lead">Portal de entrada para todas as viagens. Cada cartão de embarque abre um roteiro dia a dia, com mapa, reservas e paradas para marcar conforme forem visitadas.</p>
+    </div>
+    <div class="next" id="next" aria-live="polite"></div>
+  </div>
+
+  <div class="postcards" aria-hidden="true">
+    <div class="row" id="row1"></div>
+    <div class="row rev" id="row2"></div>
+  </div>
+</header>
+
 <main>
-  <h1>Roteiros de viagem</h1>
-  <p>Escolha o roteiro.</p>
-  <a href="viagem_paris_portugal.html"><b><em>Paris</em> e Portugal</b><small>06 a 16 de outubro de 2027 · roteiro da família</small></a>
-  <a href="viagem_portugal.html"><b>Portugal</b><small>Roteiro original de 7 dias, do Porto a Lisboa</small></a>
+  <section id="viagens">
+    <div class="sec-head reveal">
+      <div>
+        <h2>Cartões de <em>embarque</em></h2>
+        <p>Toque em um cartão para abrir o roteiro.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar viagens">
+        <button type="button" data-f="all" aria-pressed="true">Todas</button>
+        <button type="button" data-f="next" aria-pressed="false">Próximas</button>
+        <button type="button" data-f="done" aria-pressed="false">Concluídas</button>
+      </div>
+    </div>
+    <div class="passes" id="passes"></div>
+    <noscript>
+      <p><a href="viagem_paris_portugal.html">Paris e Portugal · 06 a 16/10/2027</a></p>
+      <p><a href="viagem_portugal.html">Maná Trip 2027 - Portugal · 09 a 16/10/2027</a></p>
+    </noscript>
+  </section>
+
+  <section>
+    <div class="sec-head reveal">
+      <div>
+        <h2>Carimbos no <em>passaporte</em></h2>
+        <p>Cada país entra aqui com a primeira viagem. Os tracejados ainda estão por vir.</p>
+      </div>
+    </div>
+    <div class="passport reveal">
+      <div class="stamps" id="stamps"></div>
+      <p class="legend" id="legend"></p>
+    </div>
+  </section>
 </main>
+
+<footer>
+  <span>Diário de Bordo · roteiros de viagem</span>
+  <details>
+    <summary>Créditos das fotos</summary>
+    <ul id="credits"></ul>
+  </details>
+</footer>
+
+<script>
+/* ===== Para adicionar uma viagem, inclua um item nesta lista ===== */
+const TRIPS = [
+  {
+    title: "Paris e Portugal", subtitle: "Roteiro da família", href: "viagem_paris_portugal.html",
+    cover: "hub/cover_paris_portugal.jpg",
+    from: {code: "FOR", city: "Fortaleza"}, to: {code: "CDG", city: "Paris"}, back: {code: "LIS", city: "Lisboa"},
+    start: "2027-10-06", end: "2027-10-16",
+    countries: ["França", "Portugal"], cities: 6, group: "Família"
+  },
+  {
+    title: "Maná Trip 2027 - Portugal", subtitle: "Roteiro do grupo Maná", href: "viagem_portugal.html",
+    cover: "hub/cover_portugal.jpg",
+    from: {code: "OPO", city: "Porto"}, to: {code: "LIS", city: "Lisboa"},
+    start: "2027-10-09", end: "2027-10-16",
+    countries: ["Portugal"], cities: 7, group: "Grupo Maná"
+  }
+];
+
+const COUNTRY_STYLE = {
+  "França":   {code: "FRA", color: "#1D4FA3"},
+  "Portugal": {code: "PRT", color: "#1F7A4A"},
+  "Itália":   {code: "ITA", color: "#B23A2E"},
+  "Espanha":  {code: "ESP", color: "#B8862B"}
+};
+
+const POSTCARDS = [
+  {img: "pc_paris", city: "Paris", country: "França", code: "CDG", r: -2},
+  {img: "pc_roma", city: "Roma", country: "Itália", code: "FCO", r: 2},
+  {img: "pc_porto", city: "Porto", country: "Portugal", code: "OPO", r: -1.5},
+  {img: "pc_kyoto", city: "Kyoto", country: "Japão", code: "KIX", r: 1.5},
+  {img: "pc_santorini", city: "Santorini", country: "Grécia", code: "JTR", r: -2.5},
+  {img: "pc_lisboa", city: "Lisboa", country: "Portugal", code: "LIS", r: 2},
+  {img: "pc_machu", city: "Machu Picchu", country: "Peru", code: "CUZ", r: -1},
+  {img: "pc_londres", city: "Londres", country: "Reino Unido", code: "LHR", r: 2.5},
+  {img: "pc_rio", city: "Rio de Janeiro", country: "Brasil", code: "GIG", r: -2},
+  {img: "pc_fatima", city: "Fátima", country: "Portugal", code: "PRT", r: 1}
+];
+
+const CREDITS = {
+  "Torre Eiffel, Paris": "https://commons.wikimedia.org/wiki/File:Eiffel_from_Trocadero.jpg",
+  "Notre-Dame, Paris": "https://commons.wikimedia.org/wiki/File:Notre-Dame_de_Paris%2C_4_October_2017.jpg",
+  "Coliseu, Roma": "https://commons.wikimedia.org/wiki/File:Colosseo_2020.jpg",
+  "Rabelos no Douro, Porto": "https://commons.wikimedia.org/wiki/File:Rabelos_en_el_r%C3%ADo_Duero%2C_Vila_Nova_de_Gaia%2C_Portugal%2C_2012-05-09%2C_DD_14.JPG",
+  "Cais da Ribeira, Porto": "https://commons.wikimedia.org/wiki/File:Cais_da_Ribeira_from_Ponte_Lu%C3%ADs_I_-_Porto.JPG",
+  "Fushimi Inari, Kyoto": "https://commons.wikimedia.org/wiki/File:Fushimi_Inari-taisha_senbon-torii%2C_August_2019.jpg",
+  "Oia, Santorini": "https://commons.wikimedia.org/wiki/File:Oia%2C_Santorini_HDR_sunset.jpg",
+  "Torre de Belém, Lisboa": "https://commons.wikimedia.org/wiki/File:Lisboa_-_Torre_de_Bel%C3%A9m.jpg",
+  "Machu Picchu, Peru": "https://commons.wikimedia.org/wiki/File:Machu_Picchu%2C_Peru.jpg",
+  "Palácio de Westminster, Londres": "https://commons.wikimedia.org/wiki/File:Houses_of_Parliament_in_2022.jpg",
+  "Pão de Açúcar, Rio de Janeiro": "https://commons.wikimedia.org/wiki/File:P%C3%A3o_de_A%C3%A7ucar_-_Sugarloaf_Mountain_-_Zuckerhut_-_2022.jpg",
+  "Santuário de Fátima": "https://commons.wikimedia.org/wiki/File:Santu%C3%A1rio_de_F%C3%A1tima_-_Vista_geral.jpg"
+};
+
+/* ===== Utilidades ===== */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const day = s => { const [y,m,d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const fmt = s => s.split("-").reverse().join("/");
+const today = new Date(); today.setHours(0,0,0,0);
+const DAY = 864e5;
+const plane = (w=18) => `<svg width="${w}" height="${w}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg>`;
+const arrow = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`;
+
+TRIPS.forEach(t => {
+  t.s = day(t.start); t.e = day(t.end);
+  t.days = Math.round((t.e - t.s) / DAY) + 1;
+  t.status = today < t.s ? "next" : today > t.e ? "done" : "live";
+});
+TRIPS.sort((a, b) => (a.status === "done") - (b.status === "done") || (a.status === "done" ? b.s - a.s : a.s - b.s));
+
+/* ===== Próxima partida ===== */
+(function(){
+  const el = document.getElementById("next");
+  const live = TRIPS.find(t => t.status === "live");
+  const nxt = live || TRIPS.find(t => t.status === "next");
+  if (!nxt) { el.innerHTML = `<small>Próxima partida</small><div class="route">A definir</div><div class="where">Nenhuma viagem marcada por enquanto.</div>`; return; }
+  const dest = nxt.back ? `${nxt.to.city} e ${nxt.back.city}` : nxt.to.city;
+  el.innerHTML = `<small>${live ? "Em viagem agora" : "Próxima partida"}</small>
+    <div class="route">${esc(nxt.from.code)} ${plane(26)} ${esc(nxt.to.code)}</div>
+    <div class="where">${esc(nxt.title)} · ${fmt(nxt.start)} a ${fmt(nxt.end)}</div>
+    ${live ? "" : `<div class="count"><div><b id="cd-d">0</b><span>dias</span></div><div><b id="cd-h">0</b><span>horas</span></div><div><b id="cd-m">0</b><span>min</span></div></div>`}
+    <a class="go" href="${esc(nxt.href)}">Abrir roteiro ${arrow}</a>`;
+  if (live) return;
+  const tick = () => {
+    const ms = Math.max(0, nxt.s - new Date());
+    document.getElementById("cd-d").textContent = Math.floor(ms / DAY);
+    document.getElementById("cd-h").textContent = Math.floor(ms / 36e5) % 24;
+    document.getElementById("cd-m").textContent = Math.floor(ms / 6e4) % 60;
+  };
+  tick(); setInterval(tick, 30000);
+})();
+
+/* ===== Cartões postais ===== */
+(function(){
+  const card = p => `<figure class="pc" style="--r:${p.r}deg"><img src="hub/${p.img}.jpg" alt="" loading="lazy" width="720" height="480"><span class="stamp">${esc(p.code)}</span><figcaption><span class="city">${esc(p.city)}</span><span class="country">${esc(p.country)}</span></figcaption></figure>`;
+  const half = Math.ceil(POSTCARDS.length / 2);
+  const a = POSTCARDS.slice(0, half), b = POSTCARDS.slice(half);
+  document.getElementById("row1").innerHTML = (a.map(card).join("")).repeat(2);
+  document.getElementById("row2").innerHTML = (b.map(card).join("")).repeat(2);
+})();
+
+/* ===== Cartões de embarque ===== */
+function renderPasses(filter){
+  const list = TRIPS.filter(t => filter === "all" || (filter === "next" ? t.status !== "done" : t.status === "done"));
+  const badge = t => {
+    if (t.status === "live") return `<span class="badge live">Em viagem</span>`;
+    if (t.status === "done") return `<span class="badge done">Concluída</span>`;
+    const d = Math.ceil((t.s - today) / DAY);
+    return `<span class="badge">Faltam ${d} dias</span>`;
+  };
+  const html = list.map(t => `
+    <a class="pass reveal" href="${esc(t.href)}">
+      <div>
+        <div class="cover">
+          ${badge(t)}
+          <img src="${esc(t.cover)}" alt="" loading="lazy" width="960" height="540">
+          <div class="title"><h3>${esc(t.title)}</h3><span>${esc(t.subtitle)}</span></div>
+        </div>
+        <div class="body">
+          <div class="legs">
+            <div class="code"><b>${esc(t.from.code)}</b><span>${esc(t.from.city)}</span></div>
+            <div class="path">${plane(18)}</div>
+            <div class="code" style="text-align:right"><b>${esc(t.to.code)}</b><span>${esc(t.to.city)}</span></div>
+            ${t.back ? `<div class="path">${plane(18)}</div><div class="code" style="text-align:right"><b>${esc(t.back.code)}</b><span>${esc(t.back.city)}</span></div>` : ""}
+          </div>
+          <div class="facts">
+            <div><small>Ida</small><b>${fmt(t.start)}</b></div>
+            <div><small>Volta</small><b>${fmt(t.end)}</b></div>
+            <div><small>Duração</small><b>${t.days} dias</b></div>
+            <div><small>Países</small><b>${esc(t.countries.join(", "))}</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="stub">
+        <div class="seat">Grupo<b>${esc(t.group)}</b></div>
+        <div class="seat">Cidades<b>${t.cities}</b></div>
+        <div class="barcode" aria-hidden="true"></div>
+        <span class="open">Abrir roteiro ${arrow}</span>
+      </div>
+    </a>`).join("");
+  const soon = `<div class="pass soon reveal in"><div>${plane(28)}<h3>Próxima aventura</h3><p>Novo roteiro entra aqui como mais um cartão de embarque.</p></div></div>`;
+  document.getElementById("passes").innerHTML = (html || `<p style="color:var(--muted)">Nenhuma viagem nesta categoria.</p>`) + (filter === "done" ? "" : soon);
+  observe();
+}
+document.querySelector(".filters").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  document.querySelectorAll(".filters button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  renderPasses(b.dataset.f);
+});
+
+/* ===== Carimbos ===== */
+(function(){
+  const seen = new Map();
+  TRIPS.slice().sort((a, b) => a.s - b.s).forEach(t => t.countries.forEach(c => { if (!seen.has(c)) seen.set(c, t); }));
+  const rot = [-8, 6, -3, 10, -12, 4];
+  let i = 0, visited = 0;
+  document.getElementById("stamps").innerHTML = [...seen].map(([c, t]) => {
+    const st = COUNTRY_STYLE[c] || {code: c.slice(0,3).toUpperCase(), color: "#7A1F3D"};
+    const done = t.status === "done"; if (done) visited++;
+    return `<div class="stampx${done ? "" : " planned"}" style="color:${st.color};--r:${rot[i++ % rot.length]}deg" title="${esc(c)}"><div><b>${esc(st.code)}</b><span>${esc(c)}</span><span>${done ? "" : "previsto "}${t.s.getFullYear()}</span></div></div>`;
+  }).join("");
+  document.getElementById("legend").textContent = `${seen.size} ${seen.size === 1 ? "país" : "países"} no roteiro · ${visited} ${visited === 1 ? "visitado" : "visitados"}`;
+})();
+
+/* ===== Créditos ===== */
+document.getElementById("credits").innerHTML = Object.entries(CREDITS).map(([n, u]) => `<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join("") + `<li>Wikimedia Commons, licenças livres</li>`;
+
+/* ===== Animação de entrada ===== */
+let io;
+function observe(){
+  const els = document.querySelectorAll(".reveal:not(.in)");
+  if (!("IntersectionObserver" in window)) { els.forEach(e => e.classList.add("in")); return; }
+  io = io || new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), {rootMargin: "0px 0px -8% 0px"});
+  els.forEach(e => io.observe(e));
+}
+renderPasses("all");
+</script>
 </body>
 </html>
