@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>O custo de esperar para negociar · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EAEDEC;--card:#F4F6F5;--ink:#0E2A24;--ink-soft:#3D544D;--line:#C9D2CF;--petrol:#12463B;--brass:#B07D2B;--sage:#3E7C6B;--steel:#4B6C86;--clay:#9E3B26;--muted:#7A8A85;--shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);}
+*{box-sizing:border-box}html{color-scheme:light;}html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:20px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;text-align:center;}
+h1 em{font-style:normal;color:#E7B968;}
+.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;text-align:center;margin-left:auto;margin-right:auto;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+.aviso{background:#f6efe4;border:1px solid #e0cfa8;color:#6b5417;border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:12.5px;line-height:1.5;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;}.affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}.affix input{padding-right:44px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 4px;}
+.colbox{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;}
+.colbox h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;color:var(--muted);}
+.colbox.trap h4{color:var(--clay);}.colbox.plan h4{color:var(--sage);}
+.colbox .big2{font-family:"Archivo",sans-serif;font-weight:800;font-size:21px;color:var(--ink);margin:2px 0;}
+.colbox .sub2{font-size:12px;color:var(--ink-soft);line-height:1.4;}
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;}.verdict .hl{color:#E9C77E;}.verdict .bad{color:#E9A48E;}
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}ul.read{padding-left:0;margin:0;}
+.factors{display:flex;flex-direction:column;gap:8px;margin:4px 0;}
+.factorbox{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.factorbox .fname{font-weight:600;font-size:13.5px;}
+.factorbox .fdesc{font-size:11.5px;color:var(--muted);margin-top:2px;}
+.factorbox .fweight{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--brass);font-weight:700;white-space:nowrap;}
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+@media (max-width:640px){.row2{grid-template-columns:1fr;}.cols2{grid-template-columns:1fr;}.factorbox{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>
+    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>O custo de <em>esperar para negociar</em></h1>
+    <p class="sub">Negociar uma dívida atrasada hoje custa menos do que negociar a mesma dívida daqui a alguns meses, mesmo com o mesmo desconto. Veja o número exato do seu caso.</p>
+  </header>
+
+  <div class="aviso">Score de crédito baixo não impede negociar dívida, mas encarece o crédito novo por anos depois de você já ter pago tudo. Quanto mais tempo em atraso, mais isso se acumula.</div>
+
+  <div class="eyebrow">Sua dívida em atraso</div>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Valor em atraso hoje</label>
+        <div class="affix"><input class="num" id="divida" type="number" min="0" step="100" value="" placeholder="ex: 5000"><span class="u">R$</span></div></div>
+      <div class="field"><label>Taxa de juros/multa enquanto não paga</label>
+        <div class="affix"><input class="num" id="taxaAtraso" type="number" min="0" step="0.5" value="" placeholder="ex: 12"><span class="u">% a.m.</span></div>
+        <div class="hint">some juros de mora, multa e correção; peça esse número ao credor</div></div>
+    </div>
+    <div class="field"><label>Quanto tempo você pretende esperar antes de negociar</label>
+      <div class="affix"><input class="num" id="tempoEspera" type="number" min="0" max="60" step="1" value="" placeholder="ex: 6"><span class="u">meses</span></div></div>
+  </div>
+
+  <div class="eyebrow">O acordo de negociação</div>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Desconto oferecido no acordo</label>
+        <div class="affix"><input class="num" id="desconto" type="number" min="0" max="90" step="1" value="" placeholder="ex: 40"><span class="u">%</span></div></div>
+      <div class="field"><label>Taxa do parcelamento do acordo</label>
+        <div class="affix"><input class="num" id="taxaAcordo" type="number" min="0" step="0.5" value="" placeholder="ex: 3"><span class="u">% a.m.</span></div></div>
+    </div>
+    <div class="field"><label>Número de parcelas do acordo</label>
+      <input class="num" id="parcelas" type="number" min="1" max="60" step="1" value="" placeholder="ex: 12"></div>
+  </div>
+
+  <div class="eyebrow">Negociar agora x negociar depois</div>
+  <div class="card">
+    <div class="cols2">
+      <div class="colbox plan">
+        <h4>Negociando agora</h4>
+        <div class="big2 num" id="r_agoraParcela">—</div>
+        <div class="sub2">valor de cada parcela</div>
+      </div>
+      <div class="colbox trap">
+        <h4>Negociando depois</h4>
+        <div class="big2 num" id="r_depoisParcela">—</div>
+        <div class="sub2">valor de cada parcela</div>
+      </div>
+    </div>
+    <div class="verdict" id="verdict">Preencha a dívida, a taxa de atraso e o acordo para ver o resultado.</div>
+  </div>
+
+  <div class="eyebrow">O que pesa no seu score de crédito</div>
+  <div class="card">
+    <div class="factors">
+      <div class="factorbox"><div><div class="fname">Histórico de pagamento</div><div class="fdesc">atrasos recentes pesam mais que atrasos antigos já resolvidos</div></div><div class="fweight">maior peso</div></div>
+      <div class="factorbox"><div><div class="fname">Dívidas em aberto</div><div class="fdesc">quanto você deve hoje, e para quantos credores diferentes</div></div><div class="fweight">alto</div></div>
+      <div class="factorbox"><div><div class="fname">Relacionamento com o mercado</div><div class="fdesc">tempo de CPF ativo em operações de crédito, sem grandes intermitências</div></div><div class="fweight">médio</div></div>
+      <div class="factorbox"><div><div class="fname">Diversidade de crédito</div><div class="fdesc">ter só cartão é diferente de ter cartão, financiamento e crédito consignado</div></div><div class="fweight">médio</div></div>
+      <div class="factorbox"><div><div class="fname">Novas buscas de crédito</div><div class="fdesc">muitas consultas ao seu CPF em pouco tempo indicam busca ativa por crédito</div></div><div class="fweight">menor peso</div></div>
+    </div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>O desconto do acordo costuma incidir sobre o saldo no momento da negociação, não sobre o valor original. Se a dívida cresce enquanto você espera, o mesmo % de desconto vira um valor menor em reais, porque a base ficou maior.</li>
+      <li>Negativação no Serasa/SCPC costuma ficar registrada por até 5 anos após o pagamento, mesmo que você já tenha quitado tudo; negociar antes reduz o tempo total nessa situação.</li>
+      <li>Se a taxa do acordo for menor que a taxa de atraso, cada mês de espera custa duplamente: a dívida cresce na taxa mais cara antes, e você só troca para a taxa mais barata depois.</li>
+    </ul>
+  </div>
+
+  <div class="seealso"><span class="lbl">Veja também</span><a href="cartao-rotativo.html">Cartão no rotativo</a><a href="quitar-ou-investir.html">Quitar dívida ou investir</a><a href="amortizacao.html">Amortização inteligente</a></div>
+
+  <footer>
+    <div>O custo de esperar para negociar · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo. Não é recomendação financeira nem consultoria individual.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const BRL=v=>(isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const val=id=>{const x=parseFloat(($(id).value+'').replace(',','.'));return isFinite(x)?x:null;};
+
+function pmt(pv,i,n){ if(i<=0) return pv/n; return pv*i/(1-Math.pow(1+i,-n)); }
+
+function compute(){
+  const divida=val('divida'), taxaAtrasoPct=val('taxaAtraso'), tempoEspera=val('tempoEspera')||0;
+  const descontoPct=val('desconto'), taxaAcordoPct=val('taxaAcordo'), parcelas=val('parcelas');
+  const ready = divida>0 && taxaAtrasoPct!==null && descontoPct!==null && taxaAcordoPct!==null && parcelas>0;
+  if(!ready){ setEmpty(); return; }
+
+  const taxaAtraso=taxaAtrasoPct/100, desconto=descontoPct/100, taxaAcordo=taxaAcordoPct/100;
+
+  const pvAgora = divida*(1-desconto);
+  const parcelaAgora = pmt(pvAgora, taxaAcordo, parcelas);
+  const totalAgora = parcelaAgora*parcelas;
+
+  const dividaFutura = divida*Math.pow(1+taxaAtraso, tempoEspera);
+  const pvDepois = dividaFutura*(1-desconto);
+  const parcelaDepois = pmt(pvDepois, taxaAcordo, parcelas);
+  const totalDepois = parcelaDepois*parcelas;
+
+  $('r_agoraParcela').textContent = BRL(parcelaAgora);
+  $('r_depoisParcela').textContent = BRL(parcelaDepois);
+
+  const custoEspera = totalDepois-totalAgora;
+  let msg='';
+  if(tempoEspera<=0){
+    msg = `Negociando agora, o acordo fica em <b>${parcelas}x de ${BRL(parcelaAgora)}</b>, total de ${BRL(totalAgora)}. Ajuste "quanto tempo pretende esperar" para ver o custo de adiar.`;
+  } else if(custoEspera>0){
+    msg = `Esperando ${tempoEspera} meses, a dívida cresce para ${BRL(dividaFutura)} antes do desconto, e o acordo passa a custar <b>${parcelas}x de ${BRL(parcelaDepois)}</b>, total de ${BRL(totalDepois)}. Isso é <span class="bad">${BRL(custoEspera)} mais caro</span> do que negociar agora.`;
+  } else {
+    msg = `Nesse cenário específico, esperar não piora o total pago, mas ainda estende o tempo com nome negativado e score baixo, o que tem custo fora do valor da dívida.`;
+  }
+  $('verdict').innerHTML=msg;
+}
+function setEmpty(){
+  ['r_agoraParcela','r_depoisParcela'].forEach(id=>$(id).textContent='—');
+  $('verdict').textContent='Preencha a dívida, a taxa de atraso e o acordo para ver o resultado.';
+}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',compute));
+compute();
+</script>
+</body>
+</html>

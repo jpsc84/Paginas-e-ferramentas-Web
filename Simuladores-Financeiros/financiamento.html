@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>Financiar ou pagar à vista · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EAEDEC;--card:#F4F6F5;--ink:#0E2A24;--ink-soft:#3D544D;--line:#C9D2CF;--petrol:#12463B;--brass:#B07D2B;--sage:#3E7C6B;--steel:#4B6C86;--clay:#9E3B26;--muted:#7A8A85;--shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);}
+*{box-sizing:border-box}html{color-scheme:light;}html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:22px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:6px;color:#9FB4AD;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;margin-bottom:14px;}
+.back:hover{color:#EAF1EE;}
+.brandline{display:flex;align-items:center;gap:10px;color:#9FB4AD;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
+.brandline span{white-space:nowrap;}.toolname{font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;color:#FFFFFF;letter-spacing:0;text-transform:none;}
+.ticks{flex:1;height:10px;background:repeating-linear-gradient(90deg,#3A554D 0 1px,transparent 1px 9px);opacity:.9;border-radius:1px;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;}
+h1 em{font-style:normal;color:#E7B968;}.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;}.affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}.affix input{padding-right:44px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;}
+.seg button{flex:1;border:none;background:transparent;padding:9px 6px;font-size:13px;cursor:pointer;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.seg button.on{background:var(--ink);color:#fff;}
+.big{padding:2px 0 4px;}.big .k{font-size:12px;color:var(--muted);}
+.big .v{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(26px,7vw,40px);letter-spacing:-.02em;line-height:1.04;margin-top:2px;}
+.big.avista .v{color:var(--petrol);} .big.financiar .v{color:var(--brass);}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0 4px;}
+.metric{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;}
+.metric .t{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-family:"IBM Plex Mono",monospace;}
+.metric .n{font-family:"Archivo",sans-serif;font-weight:700;font-size:17px;margin-top:3px;color:var(--ink);}
+.bal{border:1px solid var(--line);border-radius:12px;background:#fff;padding:2px 14px;margin:14px 0;}
+.bal .r{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;}
+.bal .r:last-child{border-bottom:none;}
+.bal .r .lab{color:var(--ink-soft);}
+.bal .r .v{font-family:"IBM Plex Mono",monospace;font-weight:600;white-space:nowrap;}
+.bal .base .v{color:var(--ink);}
+.bal .pos .v{color:var(--sage);}.bal .neg .v{color:var(--clay);}
+.bal .tot .lab{color:var(--ink);font-weight:700;}
+.bal .tot .v{font-family:"Archivo",sans-serif;font-size:19px;color:var(--brass);}
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;}.verdict .hl{color:#E9C77E;}
+.big .subv{font-size:13px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;margin-top:4px;}
+.chartwrap{margin:14px 0 2px;}.chart{width:100%;height:auto;display:block;}
+.clegend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;}
+.clegend div{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.clegend i{width:11px;height:11px;border-radius:3px;display:inline-block;flex:none;}.l1{background:var(--steel);}
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}ul.read{padding-left:0;margin:0;}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+@media (max-width:640px){.row2{grid-template-columns:1fr;}.metrics{grid-template-columns:1fr;}}
+
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}
+.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+header.top h1{text-align:center;}
+header.top .sub{text-align:center;margin-left:auto;margin-right:auto;}
+
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);transition:border-color .15s,background .15s;}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}
+.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>Compensa financiar ou <em>pagar à vista?</em></h1>
+    <p class="sub">A resposta não é sempre "à vista". Se você financia e mantém o dinheiro investido rendendo, às vezes sobra. Esta conta simula as duas opções e diz qual deixa você com mais dinheiro no fim.</p>
+  </header>
+
+  <div class="eyebrow">O bem e o financiamento</div>
+  <p class="note">Preencha o valor do bem e as condições do financiamento. O resultado aparece quando houver valor, taxa e prazo.</p>
+  <div class="card">
+    <div class="field"><label>Valor do bem à vista</label>
+      <div class="affix"><input class="num" id="valor" type="number" min="0" step="1000" value="" placeholder="ex: 140000"><span class="u">R$</span></div></div>
+    <div class="row2">
+      <div class="field"><label>Desconto se pagar à vista</label>
+        <div class="affix"><input class="num" id="desc" type="number" min="0" step="0.5" value="" placeholder="ex: 5"><span class="u">%</span></div>
+        <div class="hint">quanto o vendedor abate à vista</div></div>
+      <div class="field"><label>Entrada</label>
+        <div class="affix"><input class="num" id="entrada" type="number" min="0" step="1000" value="" placeholder="ex: 0"><span class="u">R$</span></div></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Taxa do financiamento</label>
+        <div class="affix"><input class="num" id="taxa" type="number" min="0" step="0.01" value="" placeholder="ex: 19,54"><span class="u">%</span></div></div>
+      <div class="field"><label>A taxa é</label>
+        <div class="seg" id="seg-forma"><button data-v="anual" class="on">Anual</button><button data-v="mensal">Mensal</button></div></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Prazo</label>
+        <div class="affix"><input class="num" id="prazo" type="number" min="1" step="1" value="" placeholder="ex: 96"><span class="u">meses</span></div></div>
+      <div class="field"><label>IOF e taxas (opcional)</label>
+        <div class="affix"><input class="num" id="iof" type="number" min="0" step="100" value="" placeholder="ex: 4000"><span class="u">R$</span></div></div>
+    </div>
+    <div class="field"><label>Sistema de amortização</label>
+      <div class="seg" id="seg-sistema"><button data-v="price" class="on">PRICE (parcela fixa)</button><button data-v="sac">SAC (decrescente)</button></div></div>
+    <div class="row2">
+      <div class="field"><label>Se investir, quanto renderia</label>
+        <div class="affix"><input class="num" id="rend" type="number" min="0" step="0.1" value="" placeholder="ex: 12"><span class="u">%</span></div></div>
+      <div class="field"><label>Esse rendimento é</label>
+        <div class="seg" id="seg-formaInv"><button data-v="anual" class="on">Anual</button><button data-v="mensal">Mensal</button></div></div>
+    </div>
+    <div class="hint" style="color:var(--muted);font-size:11.5px;margin-top:2px">Retorno do dinheiro que ficaria aplicado ao financiar. É o custo de oportunidade da opção à vista. Esse dinheiro rende enquanto paga as parcelas, então diminui a cada mês, não fica parado rendendo cheio.</div>
+    <div class="field"><label>IR sobre o rendimento</label>
+      <div class="affix"><input class="num" id="ir" type="number" min="0" max="100" step="0.5" value="" placeholder="ex: 15"><span class="u">%</span></div>
+      <div class="hint">imposto sobre o ganho do dinheiro investido; renda fixa longa ≈ 15, isento em 0</div></div>
+    <div class="field"><label>Outras taxas e custos</label>
+      <div class="affix"><input class="num" id="taxas" type="number" min="0" step="0.1" value="" placeholder="ex: 0,5"><span class="u">% a.a.</span></div>
+      <div class="hint">spread, corretora, custódia, taxa de administração, IOF em resgates curtos. Se não souber, de 0,3% a 1% ao ano é uma referência; fundos podem passar de 2%.</div></div>
+    <div class="field"><label>Inflação esperada (opcional)</label>
+      <div class="affix"><input class="num" id="inflacao" type="number" min="0" step="0.1" value="" placeholder="ex: 4,5"><span class="u">% a.a.</span></div>
+      <div class="hint">se preencher, mostramos a vantagem também em poder de compra de hoje</div></div>
+  </div>
+
+  <div class="eyebrow">O que compensa</div>
+  <div class="card">
+    <div class="big" id="bigbox"><div class="k" id="r_k">Resultado</div><div class="v num" id="r_diff">—</div><div class="subv num" id="r_real"></div></div>
+
+    <div class="bal" id="balbox"></div>
+
+    <div class="metrics">
+      <div class="metric"><div class="t">Preço à vista</div><div class="n num" id="r_pv">—</div></div>
+      <div class="metric"><div class="t">Total pago financiando</div><div class="n num" id="r_tot">—</div></div>
+      <div class="metric"><div class="t">Parcela</div><div class="n num" id="r_parc">—</div></div>
+    </div>
+    <div class="verdict" id="verdict">Preencha os campos para ver o resultado.</div>
+    <div class="chartwrap"><div id="chart"></div>
+      <div class="clegend"><div><i class="l1"></i>Dinheiro investido ao financiar (você saca as parcelas dele)</div></div>
+    </div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>O rendimento mostrado é menor do que o dinheiro renderia parado, e isso está certo: ao financiar, você saca a parcela desse dinheiro todo mês, então o valor aplicado encolhe e rende cada vez menos. Não é o valor cheio rendendo por todo o prazo.</li>
+      <li>A simulação assume que, ao financiar, você investe o dinheiro que gastaria à vista e saca a parcela dele todo mês. Se sobrar dinheiro no fim, financiar compensou. Se faltar, à vista foi melhor.</li>
+      <li>À vista quase sempre vence quando a taxa do financiamento é maior que o rendimento do investimento, o que é o caso comum no crédito ao consumidor.</li>
+      <li>Financiar pode compensar se o vendedor não der desconto à vista e você conseguir investir a um retorno próximo ou acima da taxa do financiamento.</li>
+      <li>A conta ignora disciplina e risco. Financiar só vence de verdade se você realmente investir o dinheiro em vez de gastá-lo, e se o investimento entregar o retorno esperado.</li>
+    </ul>
+  </div>
+  <div class="seealso"><span class="lbl">Veja também</span><a href="alugar.html">Financiar ou alugar</a><a href="consorcio.html">Consórcio</a><a href="amortizacao.html">Amortização</a><a href="assinatura-carro.html">Assinar carro ou financiar</a></div>
+
+
+  <footer>
+    <div>Financiar ou à Vista · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo. Não é recomendação financeira nem consultoria individual.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const BRL=v=>(isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const val=id=>{const x=parseFloat(($(id).value+'').replace(',','.'));return isFinite(x)?x:null;};
+const state={forma:'anual',sistema:'price',formaInv:'anual'};
+function pmt(rate,n,pv){if(n<=0)return pv;if(rate===0)return pv/n;return pv*rate/(1-Math.pow(1+rate,-n));}
+
+function parcelas(financiado,i,n,sistema){
+  const arr=[];
+  if(sistema==='price'){ const p=pmt(i,n,financiado); for(let m=1;m<=n;m++) arr.push(p); }
+  else { const amort=financiado/n; let saldo=financiado; for(let m=1;m<=n;m++){ const j=saldo*i; arr.push(amort+j); saldo-=amort; } }
+  return arr;
+}
+
+function compute(){
+  const valor=val('valor'), taxa=val('taxa'), n=val('prazo');
+  const desc=(val('desc')||0)/100, entrada=val('entrada')||0, iof=val('iof')||0, rend=val('rend')||0, ir=(val('ir')||0)/100;
+  const ready=valor>0 && taxa>0 && n>0;
+  if(!ready){ setEmpty(); $('verdict').innerHTML='Preencha o valor do bem, a taxa e o prazo para ver o resultado.'; return; }
+  const iLoan = state.forma==='mensal'?taxa/100:Math.pow(1+taxa/100,1/12)-1;
+  const _rAA=state.formaInv==='mensal'?(Math.pow(1+rend/100,12)-1)*100:rend; const iInv=Math.pow(1+(_rAA-(val('taxas')||0))/100,1/12)-1;
+  const Pv = valor*(1-desc);                       // preço à vista com desconto
+  const descPerdido = valor - Pv;                  // desconto que você abre mão ao financiar
+  const financiado = Math.max(0, valor - entrada + iof);  // IOF é financiado (entra nas parcelas)
+  const parc = parcelas(financiado,iLoan,n,state.sistema);
+  const totalPago = entrada + parc.reduce((a,b)=>a+b,0);  // entrada à vista + parcelas (IOF já está nas parcelas)
+  const custoCredito = totalPago - valor;          // juros + IOF: o que o crédito cobra a mais que o bem
+
+  // simulação: investe o que sobra depois da entrada, e saca a parcela todo mês
+  let bal = Pv - entrada, rendimento=0; const saldos=[{m:0,val:bal}];
+  for(let m=1;m<=n;m++){ const g=bal*iInv; rendimento+=g; bal = bal + g - parc[m-1]; saldos.push({m,val:bal}); }
+  const imposto = Math.max(0, rendimento*ir); rendimento = rendimento - imposto;   // rendimento líquido de IR
+  const S = bal - imposto;   // S = rendimento - custoCredito - descPerdido  (identidade exata)
+
+  $('r_pv').textContent=BRL(Pv);
+  $('r_tot').textContent=BRL(totalPago);
+  $('r_parc').textContent=BRL(parc[0]);
+  $('chart').innerHTML=svgChart(saldos);
+
+  // conta da decisão, linha a linha (soma exata ao total)
+  let rows='';
+  if(S<0){
+    // à vista vence: juros+IOF é a âncora (preto), rendimento abate (verde, −), desconto soma (vermelho, +)
+    rows+=`<div class="r base"><span class="lab">Juros e IOF do financiamento</span><span class="v num">${BRL(custoCredito)}</span></div>`;
+    rows+=`<div class="r pos"><span class="lab">− Rendimento do dinheiro investido</span><span class="v num">${BRL(rendimento)}</span></div>`;
+    if(descPerdido>0.5) rows+=`<div class="r neg"><span class="lab">+ Desconto à vista que você abre mão</span><span class="v num">${BRL(descPerdido)}</span></div>`;
+    rows+=`<div class="r tot"><span class="lab">Vantagem de pagar à vista</span><span class="v num">${BRL(-S)}</span></div>`;
+  } else {
+    // financiar vence: rendimento é a âncora (verde), juros e desconto abatem (vermelho, −)
+    rows+=`<div class="r base pos"><span class="lab">Rendimento do dinheiro investido</span><span class="v num">${BRL(rendimento)}</span></div>`;
+    rows+=`<div class="r neg"><span class="lab">− Juros e IOF do financiamento</span><span class="v num">${BRL(custoCredito)}</span></div>`;
+    if(descPerdido>0.5) rows+=`<div class="r neg"><span class="lab">− Desconto à vista que você abre mão</span><span class="v num">${BRL(descPerdido)}</span></div>`;
+    rows+=`<div class="r tot"><span class="lab">Sobra ao financiar</span><span class="v num">${BRL(S)}</span></div>`;
+  }
+  $('balbox').innerHTML=rows;
+
+  const box=$('bigbox');
+  if(S>=0){
+    box.className='big financiar'; $('r_k').textContent='Financiar deixa você com mais'; $('r_diff').textContent=BRL(S);
+    $('verdict').innerHTML=`Ao financiar, seu dinheiro investido rende <span class="hl">${BRL(rendimento)}</span>, mais do que os <b>${BRL(custoCredito)}</b> de juros e IOF do crédito. O rendimento cobre o custo do financiamento e ainda sobra <b>${BRL(S)}</b>. Financiar compensa, desde que você realmente invista o dinheiro.`;
+  } else {
+    box.className='big avista'; $('r_k').textContent='Pagar à vista economiza'; $('r_diff').textContent=BRL(-S);
+    $('verdict').innerHTML=`Os <b>${BRL(custoCredito)}</b> de juros e IOF do financiamento`+(descPerdido>0.5?`, mais o desconto à vista de ${BRL(descPerdido)},`:``)+` superam os <span class="hl">${BRL(rendimento)}</span> que seu dinheiro renderia investido. Pagar à vista economiza <b>${BRL(-S)}</b>.`;
+  }
+  const inf=(val('inflacao')||0)/100;
+  $('r_real').textContent = inf>0 ? ('equivale a '+BRL(Math.abs(S)/Math.pow(1+inf,n/12))+' em poder de compra de hoje') : '';
+}
+function setEmpty(){['r_diff','r_pv','r_tot','r_parc'].forEach(id=>$(id).textContent='—');$('r_real').textContent='';$('chart').innerHTML='';$('balbox').innerHTML='';$('bigbox').className='big';}
+
+function svgChart(s){
+  const W=680,H=250,padL=58,padR=14,padT=14,padB=28;const plotW=W-padL-padR,plotH=H-padT-padB;
+  const maxM=Math.max(s.length-1,1);
+  let yMin=0,yMax=0;s.forEach(p=>{if(p.val>yMax)yMax=p.val;if(p.val<yMin)yMin=p.val;});
+  yMax=yMax*1.05||1; yMin=Math.min(0,yMin*1.05);
+  const xs=m=>padL+(m/maxM)*plotW; const ys=v=>padT+(1-(v-yMin)/(yMax-yMin))*plotH;
+  const compact=v=>Math.abs(v)>=1e6?((v/1e6).toFixed(1).replace('.',',')+' mi'):Math.abs(v)>=1e3?(Math.round(v/1e3)+' mil'):(''+Math.round(v));
+  let g='';
+  [yMax,(yMax+yMin)/2,yMin].forEach(v=>{const y=ys(v);g+=`<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W-padR}" y2="${y.toFixed(1)}" stroke="#C9D2CF" stroke-width="1" ${Math.abs(v)<1e-6?'':'stroke-dasharray="3 5"'}/>`;g+=`<text x="${padL-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" fill="#7A8A85">R$ ${compact(v)}</text>`;});
+  [0,Math.round(maxM/2),maxM].forEach(m=>{g+=`<text x="${xs(m).toFixed(1)}" y="${H-8}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#7A8A85">mês ${m}</text>`;});
+  const pts=s.map(p=>`${xs(p.m).toFixed(1)},${ys(p.val).toFixed(1)}`).join(' ');
+  g+=`<polyline points="${pts}" fill="none" stroke="#4B6C86" stroke-width="2.5" stroke-linejoin="round"/>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saldo investido ao financiar">${g}</svg>`;
+}
+
+document.querySelectorAll('.seg').forEach(seg=>{const key=seg.id==='seg-forma'?'forma':seg.id==='seg-formaInv'?'formaInv':'sistema';seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state[key]=b.dataset.v;seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');compute();}));});
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',compute));
+compute();
+</script>
+</body>
+</html>

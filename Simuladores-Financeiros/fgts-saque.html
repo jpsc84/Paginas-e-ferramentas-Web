@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>FGTS: saque-aniversário ou saque-rescisão · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EAEDEC;--card:#F4F6F5;--ink:#0E2A24;--ink-soft:#3D544D;--line:#C9D2CF;--petrol:#12463B;--brass:#B07D2B;--sage:#3E7C6B;--steel:#4B6C86;--clay:#9E3B26;--muted:#7A8A85;--shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);}
+*{box-sizing:border-box}html{color-scheme:light;}html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:20px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;text-align:center;}
+h1 em{font-style:normal;color:#E7B968;}
+.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;text-align:center;margin-left:auto;margin-right:auto;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+.aviso{background:#f6efe4;border:1px solid #e0cfa8;color:#6b5417;border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:12.5px;line-height:1.5;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;}.affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}.affix input{padding-right:44px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;}
+.seg button{flex:1;border:none;background:transparent;padding:11px 6px;font-size:13px;cursor:pointer;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.seg button.on{background:var(--ink);color:#fff;}
+.subhead{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:8px 0;padding-top:14px;border-top:1px dashed var(--line);}
+.subhead:first-child{padding-top:0;border-top:none;}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 4px;}
+.colbox{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff;}
+.colbox h4{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;color:var(--muted);}
+.colbox.aniv h4{color:var(--steel);}.colbox.resc h4{color:var(--sage);}
+.colbox .big2{font-family:"Archivo",sans-serif;font-weight:800;font-size:21px;color:var(--ink);margin:2px 0;}
+.colbox .sub2{font-size:12px;color:var(--ink-soft);line-height:1.4;}
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;}.verdict .hl{color:#E9C77E;}.verdict .bad{color:#E9A48E;}
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}ul.read{padding-left:0;margin:0;}
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+@media (max-width:640px){.row2{grid-template-columns:1fr;}.cols2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>
+    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>FGTS: saque-aniversário <em>ou saque-rescisão</em></h1>
+    <p class="sub">Não é sobre qual paga mais, é sobre quando você quer acesso ao seu dinheiro: um pouco todo ano, ou tudo de uma vez se perder o emprego.</p>
+  </header>
+
+  <div class="aviso">O saque-aniversário dá uma parcela todo ano, mas quem opta perde o direito de sacar o saldo inteiro se for demitido sem justa causa, recebendo só a multa de 40% nesse caso. Voltar para o saque-rescisão depois tem carência de 24 meses. Tabela de alíquotas vigente pela Lei 8.036/90.</div>
+
+  <div class="eyebrow">Sua conta</div>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Saldo atual do FGTS</label>
+        <div class="affix"><input class="num" id="saldo0" type="number" min="0" step="100" value="" placeholder="ex: 8000"><span class="u">R$</span></div></div>
+      <div class="field"><label>Depósito mensal (8% do salário)</label>
+        <div class="affix"><input class="num" id="deposito" type="number" min="0" step="50" value="" placeholder="ex: 320"><span class="u">R$</span></div></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Horizonte de simulação</label>
+        <div class="affix"><input class="num" id="horizonte" type="number" min="1" max="30" step="1" value="" placeholder="ex: 5"><span class="u">anos</span></div></div>
+      <div class="field"><label>Rendimento do FGTS</label>
+        <div class="affix"><input class="num" id="rend" type="number" min="0" step="0.5" value="" placeholder="ex: 3"><span class="u">% a.a.</span></div>
+        <div class="hint">TR + 3% ao ano; a TR costuma ficar perto de zero</div></div>
+    </div>
+  </div>
+
+  <div class="eyebrow">E se você for demitido no meio do caminho?</div>
+  <div class="card">
+    <div class="field"><label>Cenário</label>
+      <div class="seg" id="seg-demissao"><button data-v="nao" class="on">Não saio do emprego</button><button data-v="sim">Sou demitido sem justa causa</button></div></div>
+    <div class="field" id="wrap-mes" style="display:none"><label>Em que mês da simulação?</label>
+      <div class="affix"><input class="num" id="mesDemissao" type="number" min="1" step="1" value="" placeholder="ex: 30"><span class="u">º mês</span></div></div>
+  </div>
+
+  <div class="eyebrow">O que você acessa</div>
+  <div class="card">
+    <div class="cols2">
+      <div class="colbox aniv">
+        <h4>Saque-aniversário</h4>
+        <div class="big2 num" id="r_aniv">—</div>
+        <div class="sub2" id="r_anivSub"></div>
+      </div>
+      <div class="colbox resc">
+        <h4>Saque-rescisão</h4>
+        <div class="big2 num" id="r_resc">—</div>
+        <div class="sub2" id="r_rescSub"></div>
+      </div>
+    </div>
+    <div class="verdict" id="verdict">Preencha o saldo, o depósito mensal e o horizonte para ver o resultado.</div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>Se você continuar empregado o tempo todo, o saque-aniversário te dá acesso a uma parte do próprio dinheiro todo ano; o saque-rescisão deixa tudo trancado até você sair do emprego, mesmo que o valor total acumulado seja parecido.</li>
+      <li>Se você for demitido sem justa causa, a diferença é grande de verdade: no saque-rescisão você recebe o saldo inteiro mais a multa de 40%; no saque-aniversário, só a multa, o resto continua saindo em parcelas anuais.</li>
+      <li>A multa de 40% é paga pelo empregador nos dois casos, sempre que a demissão é sem justa causa. Ela não muda entre as modalidades, o que muda é o acesso ao saldo que já é seu.</li>
+      <li>Quem tem estabilidade alta no emprego tende a ganhar mais com a liquidez do aniversário. Quem tem risco real de ser demitido tende a preferir a proteção do saque-rescisão como colchão de segurança.</li>
+    </ul>
+  </div>
+
+  <div class="seealso"><span class="lbl">Veja também</span><a href="reserva.html">Reserva de emergência</a><a href="patrimonio.html">Patrimônio líquido</a><a href="independencia.html">Independência financeira</a><a href="mei-clt-pj.html">MEI, CLT ou PJ</a></div>
+
+  <footer>
+    <div>FGTS: saque-aniversário ou saque-rescisão · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo, simplificado. Não substitui a consulta oficial no app FGTS nem orientação trabalhista.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const BRL=v=>(isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const val=id=>{const x=parseFloat(($(id).value+'').replace(',','.'));return isFinite(x)?x:null;};
+const state={demissao:'nao'};
+
+function faixaSaque(saldo){
+  if(saldo<=500) return saldo*0.50;
+  if(saldo<=1000) return saldo*0.40+50;
+  if(saldo<=5000) return saldo*0.30+150;
+  if(saldo<=10000) return saldo*0.20+650;
+  if(saldo<=15000) return saldo*0.15+1150;
+  if(saldo<=20000) return saldo*0.10+1900;
+  return saldo*0.05+2900;
+}
+
+function compute(){
+  const saldo0=val('saldo0')||0, deposito=val('deposito')||0, horizonte=val('horizonte'), rendAno=(val('rend')===null?3:val('rend'));
+  const mesDemissao = state.demissao==='sim' ? val('mesDemissao') : null;
+  const ready = horizonte>0 && (saldo0>0 || deposito>0) && (state.demissao==='nao' || mesDemissao>0);
+  if(!ready){ setEmpty(); return; }
+
+  const nMeses = Math.round(horizonte*12);
+  const rendM = Math.pow(1+rendAno/100,1/12)-1;
+  const alvoDemissao = mesDemissao ? Math.min(mesDemissao, nMeses) : null;
+
+  // simula saque-aniversário mês a mês, sacando a cada 12 meses
+  let saldoA = saldo0, totalSacado=0, multaNaDemissao=null, sacadoAteDemissao=0;
+  for(let m=1;m<=nMeses;m++){
+    saldoA = saldoA*(1+rendM) + deposito;
+    if(m%12===0){
+      const saque = faixaSaque(saldoA);
+      saldoA -= saque; totalSacado += saque;
+    }
+    if(alvoDemissao && m===alvoDemissao){
+      multaNaDemissao = saldoA*0.40;
+      sacadoAteDemissao = totalSacado;
+    }
+  }
+  const saldoFinalAniv = saldoA;
+
+  // simula saque-rescisão: sem saques, só acumula
+  let saldoR = saldo0, multaR=null;
+  for(let m=1;m<=nMeses;m++){
+    saldoR = saldoR*(1+rendM) + deposito;
+    if(alvoDemissao && m===alvoDemissao){ multaR = saldoR*0.40; }
+  }
+  const saldoFinalResc = saldoR;
+
+  if(state.demissao==='sim' && alvoDemissao){
+    const acessoAniv = sacadoAteDemissao + multaNaDemissao;
+    const acessoResc = saldoFinalResc + multaR; // saldoFinalResc no momento da demissão == saldo acumulado até ali (sem saques antes, valor certo)
+    // como não houve saque no saque-rescisão, saldoR no mês da demissão é o valor correto ali; mas o loop já rodou até nMeses.
+    // recalcula saldoR exatamente no mês da demissão para exibir:
+    let s=saldo0;
+    for(let m=1;m<=alvoDemissao;m++){ s=s*(1+rendM)+deposito; }
+    const saldoNoMomento=s;
+    const acessoRescCorrigido = saldoNoMomento + saldoNoMomento*0.40;
+
+    $('r_aniv').textContent=BRL(sacadoAteDemissao+multaNaDemissao);
+    $('r_anivSub').textContent=`${BRL(sacadoAteDemissao)} sacados até lá + ${BRL(multaNaDemissao)} de multa. O resto, ${BRL(saldoA)}, fica retido para os próximos aniversários.`;
+    $('r_resc').textContent=BRL(acessoRescCorrigido);
+    $('r_rescSub').textContent=`${BRL(saldoNoMomento)} de saldo integral + ${BRL(saldoNoMomento*0.40)} de multa, tudo liberado na hora.`;
+
+    const diff=acessoRescCorrigido-(sacadoAteDemissao+multaNaDemissao);
+    $('verdict').innerHTML = diff>0
+      ? `Sendo demitido no mês ${alvoDemissao}, o saque-rescisão libera <span class="hl">${BRL(diff)}</span> mais na hora do que o saque-aniversário, porque entrega o saldo inteiro, não só a multa. É o cenário em que a proteção do saque-rescisão pesa de verdade.`
+      : `Nesse cenário os valores ficam próximos, mas o saque-rescisão ainda libera tudo de uma vez, sem depender de aniversários futuros.`;
+  } else {
+    $('r_aniv').textContent=BRL(totalSacado+saldoFinalAniv);
+    $('r_anivSub').textContent=`${BRL(totalSacado)} já sacados ao longo do período + ${BRL(saldoFinalAniv)} que ainda ficam na conta.`;
+    $('r_resc').textContent=BRL(saldoFinalResc);
+    $('r_rescSub').textContent=`Nada sacado no caminho; todo o valor segue trancado até você sair do emprego.`;
+    $('verdict').innerHTML = `Continuando empregado, as duas modalidades acumulam valor parecido, <b>${BRL(totalSacado+saldoFinalAniv)}</b> no aniversário contra <b>${BRL(saldoFinalResc)}</b> na rescisão; a diferença é que o aniversário já te deu <span class="hl">${BRL(totalSacado)}</span> na mão ao longo do caminho, enquanto no saque-rescisão esse valor só existe no papel, sem acesso até você sair do emprego.`;
+  }
+}
+function setEmpty(){
+  ['r_aniv','r_resc'].forEach(id=>$(id).textContent='—');
+  $('r_anivSub').textContent=''; $('r_rescSub').textContent='';
+  $('verdict').textContent='Preencha o saldo, o depósito mensal e o horizonte para ver o resultado.';
+}
+document.querySelectorAll('#seg-demissao button').forEach(b=>b.addEventListener('click',()=>{
+  state.demissao=b.dataset.v;
+  document.querySelectorAll('#seg-demissao button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  $('wrap-mes').style.display = state.demissao==='sim' ? '' : 'none';
+  compute();
+}));
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',compute));
+compute();
+</script>
+</body>
+</html>

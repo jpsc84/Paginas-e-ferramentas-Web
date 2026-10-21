@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>Quando posso me aposentar · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EAEDEC;--card:#F4F6F5;--ink:#0E2A24;--ink-soft:#3D544D;--line:#C9D2CF;--petrol:#12463B;--brass:#B07D2B;--sage:#3E7C6B;--steel:#4B6C86;--clay:#9E3B26;--muted:#7A8A85;--shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);}
+*{box-sizing:border-box}html{color-scheme:light;}html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:20px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;text-align:center;}
+h1 em{font-style:normal;color:#E7B968;}
+.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;text-align:center;margin-left:auto;margin-right:auto;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+.aviso{background:#f6efe4;border:1px solid #e0cfa8;color:#6b5417;border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:12.5px;line-height:1.5;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;}.affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}.affix input{padding-right:44px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;}
+.seg button{flex:1;border:none;background:transparent;padding:11px 6px;font-size:13px;cursor:pointer;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.seg button.on{background:var(--ink);color:#fff;}
+.rules{display:flex;flex-direction:column;gap:8px;margin:14px 0 4px;}
+.rulebox{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.rulebox.best{border-color:var(--sage);background:#eef6f2;}
+.rulebox .rname{font-weight:600;font-size:13.5px;color:var(--ink);}
+.rulebox .rdesc{font-size:11.5px;color:var(--muted);margin-top:2px;}
+.rulebox .rwhen{font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap;}
+.rulebox.best .rwhen{color:var(--sage);}
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;}.verdict .hl{color:#E9C77E;}.verdict .bad{color:#E9A48E;}
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}ul.read{padding-left:0;margin:0;}
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+@media (max-width:640px){.row2{grid-template-columns:1fr;}.rulebox{flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>
+    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>Quando posso <em>me aposentar</em></h1>
+    <p class="sub">A Reforma de 2019 deixou várias portas abertas para quem já contribuía antes dela. Veja qual regra chega primeiro no seu caso e uma estimativa do valor do benefício.</p>
+  </header>
+
+  <div class="aviso">Cobre regime geral (CLT/autônomo), regras de transição da EC 103/2019, valores de 2026. Não considera aposentadoria especial, professor, PCD, contagem rural nem carência; se seu caso envolve algum desses, o resultado aqui é só um ponto de partida.</div>
+
+  <div class="eyebrow">Seus dados</div>
+  <div class="card">
+    <div class="field"><label>Sexo (para fins de regras do INSS)</label>
+      <div class="seg" id="seg-sexo"><button data-v="F" class="on">Mulher</button><button data-v="M">Homem</button></div></div>
+    <div class="field"><label>Já contribuía para o INSS em 13/11/2019?</label>
+      <div class="seg" id="seg-antes"><button data-v="sim" class="on">Sim</button><button data-v="nao">Não</button></div>
+      <div class="hint">se não, só a regra permanente (idade mínima) se aplica ao seu caso</div></div>
+    <div class="row2">
+      <div class="field"><label>Idade atual</label>
+        <input class="num" id="idade" type="number" min="14" max="90" step="1" value="" placeholder="ex: 48"></div>
+      <div class="field"><label>Tempo de contribuição até hoje</label>
+        <div class="affix"><input class="num" id="tempoContrib" type="number" min="0" max="60" step="0.5" value="" placeholder="ex: 24"><span class="u">anos</span></div></div>
+    </div>
+    <div class="field"><label>Média dos salários de contribuição</label>
+      <div class="affix"><input class="num" id="mediaSalarial" type="number" min="0" step="100" value="" placeholder="ex: 4500"><span class="u">R$</span></div>
+      <div class="hint">use um valor aproximado se não souber exatamente; teto do INSS em 2026 é R$ 8.475,55</div></div>
+  </div>
+
+  <div class="eyebrow">Regras possíveis para você</div>
+  <div class="card">
+    <div class="rules" id="rules"></div>
+    <div class="verdict" id="verdict">Preencha idade e tempo de contribuição para ver as regras.</div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>As regras de pontos e o pedágio de 50% garantem 100% da média salarial, sem redutor. As demais regras (idade mínima progressiva, pedágio de 100% e regra permanente) usam 60% da média mais 2% por ano de contribuição acima do mínimo, o que costuma gerar um benefício menor.</li>
+      <li>O pedágio de 50% só existe para quem, em 13/11/2019, estava a até 2 anos de completar o tempo de contribuição da regra antiga (30 anos mulher, 35 anos homem). Se esse não é seu caso, a ferramenta não mostra essa opção.</li>
+      <li>A regra que chega primeiro no calendário nem sempre é a que paga mais. Vale comparar a data de cada uma com o valor estimado antes de decidir.</li>
+    </ul>
+  </div>
+
+  <div class="seealso"><span class="lbl">Veja também</span><a href="salario-servidor.html">Salário líquido do servidor</a><a href="independencia.html">Independência financeira</a><a href="pgbl-vgbl.html">PGBL x VGBL</a></div>
+
+  <footer>
+    <div>Quando posso me aposentar · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo, simplificado. Não substitui simulação oficial no Meu INSS nem orientação previdenciária.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const BRL=v=>(isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const val=id=>{const x=parseFloat(($(id).value+'').replace(',','.'));return isFinite(x)?x:null;};
+const state={sexo:'F', antes:'sim'};
+const TETO_INSS=8475.55;
+const ANO_ATUAL=2026;
+
+function pontosNecessarios(ano, sexo){ const base=sexo==='F'?86:96, teto=sexo==='F'?100:105; return Math.min(base+(ano-2019), teto); }
+function idadeMinProgressiva(ano, sexo){ const base=sexo==='F'?56:61, teto=sexo==='F'?62:65; return Math.min(base+0.5*(ano-2019), teto); }
+
+function beneficio60mais2(mediaSal, anosContrib, minAnos){
+  const pct = Math.min(1, 0.60 + 0.02*Math.max(0, anosContrib-minAnos));
+  return Math.min(mediaSal, TETO_INSS)*pct;
+}
+
+function compute(){
+  const idade=val('idade'), tempo=val('tempoContrib'), mediaSal=val('mediaSalarial')||0;
+  const sexo=state.sexo, minAnosContrib = sexo==='F'?30:35, minAnosPermanente = sexo==='F'?15:20;
+  const ready = idade>0 && tempo>=0;
+  if(!ready){ setEmpty(); return; }
+
+  const regras=[];
+
+  // Regra permanente (idade mínima 62F/65M, tempo min 15F/20M)
+  {
+    const idadeAlvo = sexo==='F'?62:65;
+    const anosIdade = Math.max(0, idadeAlvo-idade);
+    const anosTempo = Math.max(0, minAnosPermanente-tempo);
+    const anosEspera = Math.max(anosIdade, anosTempo);
+    const tempoNaData = tempo+anosEspera;
+    regras.push({nome:'Regra permanente', desc:`idade ${idadeAlvo} + ${minAnosPermanente} anos de contribuição`, anos:anosEspera, beneficio:beneficio60mais2(mediaSal, tempoNaData, minAnosPermanente)});
+  }
+
+  if(state.antes==='sim'){
+    // Regra dos pontos
+    {
+      let anos=0, achou=false;
+      for(let a=0;a<=40;a++){
+        const anoFuturo=ANO_ATUAL+a;
+        const pontosNecess=pontosNecessarios(anoFuturo, sexo);
+        const pontosNoAno=(idade+a)+(tempo+a);
+        if(pontosNoAno>=pontosNecess && (tempo+a)>=minAnosContrib){ anos=a; achou=true; break; }
+      }
+      if(achou) regras.push({nome:'Regra dos pontos', desc:`idade + tempo de contribuição soma ${pontosNecessarios(ANO_ATUAL+anos, sexo)} pontos`, anos, beneficio:Math.min(mediaSal,TETO_INSS)});
+    }
+    // Idade mínima progressiva
+    {
+      let anos=0, achou=false;
+      for(let a=0;a<=40;a++){
+        const anoFuturo=ANO_ATUAL+a;
+        const idadeNecess=idadeMinProgressiva(anoFuturo, sexo);
+        if((idade+a)>=idadeNecess && (tempo+a)>=minAnosContrib){ anos=a; achou=true; break; }
+      }
+      if(achou) regras.push({nome:'Idade mínima progressiva', desc:`idade ${idadeMinProgressiva(ANO_ATUAL+anos,sexo)} + ${minAnosContrib} anos de contribuição`, anos, beneficio:beneficio60mais2(mediaSal, tempo+anos, minAnosPermanente)});
+    }
+    // Pedágio 50%: só se em 13/11/2019 faltavam até 2 anos para completar minAnosContrib
+    {
+      const tempoEm2019 = tempo-(ANO_ATUAL-2019+ (new Date().getMonth()>=10?0:0)); // aproximação por ano
+      const faltavaEm2019 = minAnosContrib-tempoEm2019;
+      if(faltavaEm2019>0 && faltavaEm2019<=2){
+        const tempoNecessario = minAnosContrib + faltavaEm2019*0.5;
+        const anos = Math.max(0, tempoNecessario-tempo);
+        regras.push({nome:'Pedágio de 50%', desc:`termina o tempo que faltava em 2019 + 50% desse período, sem idade mínima`, anos, beneficio:Math.min(mediaSal,TETO_INSS)});
+      }
+    }
+    // Pedágio 100%
+    {
+      const idadeAlvo = sexo==='F'?57:60;
+      const tempoEm2019 = tempo-(ANO_ATUAL-2019);
+      const faltavaEm2019 = Math.max(0, minAnosContrib-tempoEm2019);
+      const tempoNecessario = minAnosContrib + faltavaEm2019;
+      const anosIdade = Math.max(0, idadeAlvo-idade);
+      const anosTempo = Math.max(0, tempoNecessario-tempo);
+      const anos = Math.max(anosIdade, anosTempo);
+      regras.push({nome:'Pedágio de 100%', desc:`idade ${idadeAlvo} + dobro do tempo que faltava em 2019`, anos, beneficio:beneficio60mais2(mediaSal, tempo+anos, minAnosPermanente)});
+    }
+  }
+
+  regras.sort((a,b)=>a.anos-b.anos);
+  const melhorAnos = regras[0].anos;
+
+  const rulesHtml = regras.map(r=>{
+    const isBest = r.anos===melhorAnos;
+    const quando = r.anos<=0 ? 'já dá' : (r.anos<1 ? `${Math.round(r.anos*12)} meses` : `${r.anos.toFixed(1)} anos`);
+    return `<div class="rulebox ${isBest?'best':''}"><div><div class="rname">${r.nome}</div><div class="rdesc">${r.desc} · benefício estimado ${BRL(r.beneficio)}</div></div><div class="rwhen">${quando}</div></div>`;
+  }).join('');
+  $('rules').innerHTML = rulesHtml;
+
+  const melhor = regras[0];
+  $('verdict').innerHTML = melhorAnos<=0
+    ? `Pelos dados informados, a <b>${melhor.nome}</b> já está disponível hoje, com benefício estimado em <span class="hl">${BRL(melhor.beneficio)}</span>.`
+    : `A regra que chega primeiro é a <b>${melhor.nome}</b>, em cerca de <span class="hl">${melhor.anos.toFixed(1)} anos</span>, com benefício estimado em ${BRL(melhor.beneficio)}. Vale comparar com as outras regras da lista, porque a mais rápida nem sempre paga mais.`;
+}
+function setEmpty(){
+  $('rules').innerHTML='';
+  $('verdict').textContent='Preencha idade e tempo de contribuição para ver as regras.';
+}
+document.querySelectorAll('#seg-sexo button').forEach(b=>b.addEventListener('click',()=>{
+  state.sexo=b.dataset.v;
+  document.querySelectorAll('#seg-sexo button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); compute();
+}));
+document.querySelectorAll('#seg-antes button').forEach(b=>b.addEventListener('click',()=>{
+  state.antes=b.dataset.v;
+  document.querySelectorAll('#seg-antes button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); compute();
+}));
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',compute));
+compute();
+</script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>Assinar carro ou financiar · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EAEDEC;--card:#F4F6F5;--ink:#0E2A24;--ink-soft:#3D544D;--line:#C9D2CF;--petrol:#12463B;--brass:#B07D2B;--sage:#3E7C6B;--steel:#4B6C86;--clay:#9E3B26;--muted:#7A8A85;--shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);}
+*{box-sizing:border-box}html{color-scheme:light;}html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:20px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;text-align:center;}
+h1 em{font-style:normal;color:#E7B968;}
+.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;text-align:center;margin-left:auto;margin-right:auto;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;}.affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}.affix input{padding-right:44px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;}
+.seg button{flex:1;border:none;background:transparent;padding:9px 6px;font-size:13px;cursor:pointer;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.seg button.on{background:var(--ink);color:#fff;}
+.subhead{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:8px 0;padding-top:14px;border-top:1px dashed var(--line);}
+.subhead:first-child{padding-top:0;border-top:none;}
+.big{padding:2px 0 4px;}.big .k{font-size:12px;color:var(--muted);}
+.big .v{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(26px,7vw,40px);letter-spacing:-.02em;line-height:1.05;margin-top:2px;}
+.big.assinar .v{color:var(--steel);}.big.financiar .v{color:var(--sage);}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0 4px;}
+.metric{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;}
+.metric .t{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-family:"IBM Plex Mono",monospace;}
+.metric .n{font-family:"Archivo",sans-serif;font-weight:700;font-size:17px;margin-top:3px;color:var(--ink);}
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;}.verdict .hl{color:#E9C77E;}
+.barwrap{margin:14px 0 2px;}.barwrap h4{font-family:"Archivo",sans-serif;font-weight:700;font-size:13.5px;margin:8px 0 6px;color:var(--ink-soft);}
+.bal{border:1px solid var(--line);border-radius:12px;background:#fff;padding:2px 14px;margin:14px 0;}
+.bal .r{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
+.bal .r:last-child{border-bottom:none;}.bal .r .lab{color:var(--ink-soft);}.bal .r .lab small{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:11px;}
+.bal .r .v{font-family:"IBM Plex Mono",monospace;font-weight:600;white-space:nowrap;}
+.bal .pos .v{color:var(--clay);}.bal .neg .v{color:var(--sage);}
+.bal .v.alagado{color:var(--clay);}
+.bal .alerta{background:#f6e9e4;border-radius:9px;padding:9px 11px;margin:4px 0 8px;font-size:12.5px;color:#7d2f1c;line-height:1.5;}
+.pcalc{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 10px;margin:10px 0 14px;padding:14px 10px;background:#fff;border:1px solid var(--line);border-radius:12px;}
+.pchip{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:84px;}
+.pchip .pl{font-size:10px;letter-spacing:.03em;color:var(--muted);font-family:"IBM Plex Mono",monospace;text-align:center;line-height:1.25;}
+.pchip .pv{font-family:"Archivo",sans-serif;font-weight:700;font-size:16px;color:var(--ink);}
+.pchip.carro .pv{color:var(--sage);}.pchip.divida .pv{color:var(--clay);}
+.pchip.result{padding:6px 10px;border-radius:9px;background:var(--card);border:1px solid var(--line);}
+.pchip.result .pv{font-size:19px;}.pchip.result .pv.alagado{color:var(--clay);}
+.pop{font-family:"Archivo",sans-serif;font-weight:800;font-size:20px;color:var(--muted);}
+.bal .tot .lab{color:var(--ink);font-weight:700;}.bal .tot .v{font-family:"Archivo",sans-serif;font-size:18px;}
+.bal h5{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin:12px 0 2px;}
+.bal h5:first-child{margin-top:10px}
+.livecalc{font-size:11.5px;color:var(--muted);font-family:"IBM Plex Mono",monospace;margin-top:-6px;}
+.bar2{display:grid;gap:8px;}
+.brow{display:grid;grid-template-columns:84px 1fr auto;align-items:center;gap:10px;}
+.brow .lab{font-size:12.5px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.brow .track{height:22px;border-radius:6px;background:#fff;border:1px solid var(--line);overflow:hidden;}
+.brow .fill{height:100%;border-radius:6px 0 0 6px;}
+.brow.a .fill{background:var(--steel);}.brow.f .fill{background:var(--sage);}
+.brow .val{font-size:12.5px;font-family:"IBM Plex Mono",monospace;color:var(--ink);white-space:nowrap;}
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}ul.read{padding-left:0;margin:0;}
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+@media (max-width:640px){.row2{grid-template-columns:1fr;}.metrics{grid-template-columns:1fr;}.brow{grid-template-columns:64px 1fr auto;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>
+    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>Assinar carro ou <em>financiar</em></h1>
+    <p class="sub">A assinatura já embute seguro, manutenção e IPVA numa mensalidade só. O financiamento cobra isso à parte, mas no fim te deixa com um carro. Comparamos o custo líquido dos dois, patrimônio incluso.</p>
+  </header>
+
+  <div class="eyebrow">O carro e o horizonte</div>
+  <p class="note">Pense no mesmo carro nos dois cenários, para a comparação valer. O horizonte é por quanto tempo você pretende usá-lo.</p>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Valor do carro (tabela ou 0km)</label>
+        <div class="affix"><input class="num" id="valorCarro" type="number" min="0" step="1000" value="" placeholder="ex: 90000"><span class="u">R$</span></div></div>
+      <div class="field"><label>Horizonte de uso</label>
+        <div class="affix"><input class="num" id="horizonte" type="number" min="1" step="1" value="" placeholder="ex: 36"><span class="u">meses</span></div>
+        <div class="hint">não precisa ser igual ao prazo do financiamento: se você pretende revender o carro antes de quitar, ou continuar usando depois de quitado, ponha um valor diferente. A conta ajusta sozinha</div></div>
+    </div>
+    <div class="field"><label>Depreciação do carro</label>
+      <div class="affix"><input class="num" id="depAnual" type="number" min="0" step="0.5" value="" placeholder="ex: 15"><span class="u">% a.a.</span></div>
+      <div class="hint">quanto o carro perde de valor por ano. Populares giram em 12% a 18%</div></div>
+  </div>
+
+  <div class="eyebrow">Se assinar</div>
+  <div class="card">
+    <div class="field"><label>Mensalidade da assinatura</label>
+      <div class="affix"><input class="num" id="mensalidade" type="number" min="0" step="50" value="" placeholder="ex: 2800"><span class="u">R$</span></div>
+      <div class="hint">use o valor do plano que já inclui seguro, manutenção preventiva e IPVA</div></div>
+  </div>
+
+  <div class="eyebrow">Se financiar</div>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Entrada</label>
+        <div class="affix"><input class="num" id="entrada" type="number" min="0" step="1000" value="" placeholder="ex: 0"><span class="u">R$</span></div></div>
+      <div class="field"><label>Prazo do financiamento</label>
+        <div class="affix"><input class="num" id="prazoFin" type="number" min="1" step="1" value="" placeholder="ex: 48"><span class="u">meses</span></div>
+        <div class="hint"><a href="#" id="copyPrazo" style="color:var(--sage);font-weight:600;text-decoration:none">usar este valor também no horizonte de uso →</a></div></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Taxa de juros</label>
+        <div class="affix"><input class="num" id="taxa" type="number" min="0" step="0.01" value="" placeholder="ex: 22"><span class="u">%</span></div></div>
+      <div class="field"><label>A taxa é</label>
+        <div class="seg" id="seg-forma"><button data-v="anual" class="on">Anual</button><button data-v="mensal">Mensal</button></div></div>
+    </div>
+    <div class="field"><label>Sistema</label>
+      <div class="seg" id="seg-sistema"><button data-v="price" class="on">PRICE</button><button data-v="sac">SAC</button></div></div>
+    <div class="livecalc" id="parcelaLive"></div>
+
+    <div class="subhead">Custos que a assinatura já inclui, e o financiamento não</div>
+    <p class="note" style="margin:-4px 0 10px">Seguro e IPVA se repetem todo ano em que você tem o carro. Se o horizonte é de 3 anos, o valor que você digitar aqui entra <b>3 vezes</b> na conta, uma para cada ano, não uma vez só.</p>
+    <div class="row2">
+      <div class="field"><label>Seguro (todo ano que tiver o carro)</label>
+        <div class="affix"><input class="num" id="seguro" type="number" min="0" step="100" value="" placeholder="ex: 3600"><span class="u">R$/ano</span></div></div>
+      <div class="field"><label>IPVA</label>
+        <div class="affix"><input class="num" id="ipva" type="number" min="0" step="100" value="" placeholder="ex: 2700"><span class="u">R$/ano</span></div>
+        <div class="hint">também anual, também se repete</div></div>
+    </div>
+    <div class="livecalc" id="livecalc"></div>
+    <div class="field"><label>Manutenção preventiva</label>
+      <div class="affix"><input class="num" id="manut" type="number" min="0" step="50" value="" placeholder="ex: 150"><span class="u">R$/mês</span></div>
+      <div class="hint">revisões, troca de óleo e itens de desgaste, em média por mês</div></div>
+  </div>
+
+  <div class="eyebrow">O que sai mais barato</div>
+  <div class="card">
+    <div class="big" id="bigbox"><div class="k" id="r_k">Resultado</div><div class="v num" id="r_diff">—</div></div>
+    <div class="metrics">
+      <div class="metric"><div class="t">Custo líquido do veículo, assinando</div><div class="n num" id="m_assin">—</div></div>
+      <div class="metric"><div class="t">Custo líquido do veículo, financiando</div><div class="n num" id="m_fin">—</div></div>
+      <div class="metric"><div class="t">Patrimônio no fim (financiando)</div><div class="n num" id="m_patrim">—</div></div>
+    </div>
+    <div class="verdict" id="verdict">Preencha os campos para ver o resultado.</div>
+
+    <div class="bal" id="balbox" style="display:none">
+      <h5>De onde vem o custo líquido do veículo, financiando</h5>
+      <div class="r"><span class="lab">Entrada</span><span class="v num" id="b_entrada">—</span></div>
+      <div class="r pos"><span class="lab">+ Parcelas pagas <small id="b_parclabel"></small></span><span class="v num" id="b_parcelas">—</span></div>
+      <div class="r pos"><span class="lab">+ Seguro <small id="b_seglabel"></small></span><span class="v num" id="b_seguro">—</span></div>
+      <div class="r pos"><span class="lab">+ IPVA <small id="b_ipvalabel"></small></span><span class="v num" id="b_ipva">—</span></div>
+      <div class="r pos"><span class="lab">+ Manutenção <small id="b_manutlabel"></small></span><span class="v num" id="b_manut">—</span></div>
+      <div class="r"><span class="lab">= Total desembolsado</span><span class="v num" id="b_desembolso">—</span></div>
+      <h5>O que fica de patrimônio</h5>
+      <div class="pcalc" id="pcalc">
+        <div class="pchip carro"><span class="pl">Carro hoje<br>(revenda)</span><span class="pv num" id="pc_carro">—</span></div>
+        <div class="pop" id="pc_op" style="display:none">−</div>
+        <div class="pchip divida" id="pc_dividaChip" style="display:none"><span class="pl">Dívida que<br>ainda resta</span><span class="pv num" id="pc_divida">—</span></div>
+        <div class="pop">=</div>
+        <div class="pchip result"><span class="pl">Seu patrimônio</span><span class="pv num" id="pc_patrim">—</span></div>
+      </div>
+      <div class="alerta" id="b_alerta" style="display:none"></div>
+      <div class="r tot"><span class="lab">Custo líquido do veículo</span><span class="v num" id="b_final">—</span></div>
+    </div>
+    <div class="barwrap">
+      <h4>Custo líquido no horizonte, lado a lado</h4>
+      <div class="bar2">
+        <div class="brow a"><span class="lab">Assinar</span><div class="track"><div class="fill" id="bar_a" style="width:0%"></div></div><span class="val num" id="barv_a">—</span></div>
+        <div class="brow f"><span class="lab">Financiar</span><div class="track"><div class="fill" id="bar_f" style="width:0%"></div></div><span class="val num" id="barv_f">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>O custo líquido do financiamento é tudo que saiu do seu bolso, entrada, parcelas, seguro, IPVA e manutenção, menos o patrimônio que sobra: o valor de revenda do carro já depreciado, descontado o saldo devedor que ainda restar se o horizonte terminar antes do financiamento. O extrato logo acima do resultado mostra cada uma dessas linhas separada, para nada ficar escondido dentro de uma conta só.</li>
+      <li>Seguro e IPVA são anuais e se repetem todo ano que você tiver o carro: num horizonte de 3 anos, o valor que você digita entra 3 vezes na conta, não uma vez só. A nota logo abaixo dos campos já mostra esse total somado antes mesmo de calcular o resultado.</li>
+      <li>Horizonte de uso e prazo do financiamento não precisam ser o mesmo número. Financiar em 60 meses mas revender o carro aos 36 é comum, e nesse caso a ferramenta desconta do patrimônio o saldo que ainda restar devendo. Se o horizonte passar do prazo, o carro já está quitado e só rodam os custos paralelos. Use valores diferentes de propósito se for esse o seu plano.</li>
+      <li>O patrimônio pode ficar negativo: é o carro "alagado", quando ele vale menos do que o saldo que ainda se deve. Acontece quando a depreciação é rápida e o financiamento amortiza devagar, mais comum sem entrada e logo nos primeiros meses. Nesse caso o número soma ao custo do financiamento em vez de abater, e a ferramenta mostra o motivo direto no extrato.</li>
+      <li>Na assinatura o custo líquido é só a soma das mensalidades, porque no fim você devolve o carro e não fica com nada, mas também não teve entrada, nem burocracia de venda, nem risco de manutenção acima da média.</li>
+      <li>Combustível fica de fora da conta de propósito: é o mesmo carro, o mesmo uso, então o gasto com combustível é igual nos dois cenários e não muda a decisão.</li>
+      <li>A assinatura costuma ter franquia de km e multa por cancelamento antecipado, e o financiamento tem menos flexibilidade para trocar de carro no meio do caminho. São diferenças reais que este número não captura, pese elas também.</li>
+    </ul>
+  </div>
+
+  <div class="seealso"><span class="lbl">Veja também</span><a href="financiamento.html">Financiar ou à vista</a><a href="alugar.html">Financiar ou alugar</a><a href="carro.html">Custo do carro</a></div>
+
+  <footer>
+    <div>Assinar carro ou financiar · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo. Não é recomendação financeira nem consultoria individual.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const BRL=v=>(isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const val=id=>{const x=parseFloat(($(id).value+'').replace(',','.'));return isFinite(x)?x:null;};
+const state={forma:'anual',sistema:'price'};
+function pmt(i,n,pv){ if(n<=0) return pv; if(i===0) return pv/n; return pv*i/(1-Math.pow(1+i,-n)); }
+
+function simulaFinanciamento(pv,i,n,sistema,H){
+  let saldo=pv, pago=0;
+  const passos=Math.min(H,n);
+  if(sistema==='price'){
+    const parcela=pmt(i,n,pv);
+    for(let m=0;m<passos;m++){ pago+=parcela; saldo=saldo*(1+i)-parcela; }
+  } else {
+    const amort=pv/n;
+    for(let m=0;m<passos;m++){ const parc=amort+saldo*i; pago+=parc; saldo-=amort; }
+  }
+  return {pago, saldo:Math.max(0,saldo)};
+}
+
+function anos(H){ const a=H/12; return a===1?'1 ano':(Number.isInteger(a)?a+' anos':a.toFixed(1).replace('.',',')+' anos'); }
+
+function parcelaLive(){
+  const valorCarro=val('valorCarro'), entrada=val('entrada')||0, taxa=val('taxa'), prazoFin=val('prazoFin');
+  const el=$('parcelaLive');
+  if(!(valorCarro>0 && taxa>0 && prazoFin>0)){ el.textContent=''; return; }
+  const i = state.forma==='mensal' ? taxa/100 : Math.pow(1+taxa/100,1/12)-1;
+  const financiado=Math.max(0, valorCarro-entrada);
+  let parcela, label;
+  if(state.sistema==='price'){ parcela=pmt(i,prazoFin,financiado); label='fixa'; }
+  else { parcela=financiado/prazoFin + financiado*i; label='inicial, cai a cada mês'; }
+  el.textContent = `Parcela ${label}: ${BRL(parcela)}/mês`;
+}
+function liveCalc(){
+  const H=val('horizonte'), seguro=val('seguro')||0, ipva=val('ipva')||0;
+  const el=$('livecalc');
+  if(!H || (seguro<=0 && ipva<=0)){ el.textContent=''; return; }
+  const total=(seguro+ipva)*(H/12);
+  el.textContent = `= ${BRL(total)} somados ao longo de ${anos(H)} (${BRL(seguro+ipva)}/ano × ${anos(H)})`;
+}
+
+function compute(){
+  const valorCarro=val('valorCarro'), H=val('horizonte'), depAnual=val('depAnual')||0;
+  const mensalidade=val('mensalidade');
+  const entrada=val('entrada')||0, taxa=val('taxa'), prazoFin=val('prazoFin');
+  const seguro=val('seguro')||0, ipva=val('ipva')||0, manut=val('manut')||0;
+
+  const ready = valorCarro>0 && H>0 && mensalidade>0 && taxa>0 && prazoFin>0;
+  if(!ready){ setEmpty(); $('verdict').innerHTML='Preencha o valor do carro, o horizonte, a mensalidade da assinatura, a taxa e o prazo do financiamento para ver o resultado.'; return; }
+
+  const i = state.forma==='mensal' ? taxa/100 : Math.pow(1+taxa/100,1/12)-1;
+  const financiado = Math.max(0, valorCarro-entrada);
+  const {pago, saldo} = simulaFinanciamento(financiado, i, prazoFin, state.sistema, H);
+
+  const custoSeguro = seguro*(H/12), custoIpva = ipva*(H/12), custoManut = manut*H;
+  const custosParalelos = custoSeguro + custoIpva + custoManut;
+  const desembolsoFin = entrada + pago + custosParalelos;
+  const valorResidual = valorCarro * Math.pow(1-depAnual/100, H/12);
+  const patrimonioFin = valorResidual - saldo;   // pode ficar negativo: carro "alagado"
+  const custoLiquidoFin = desembolsoFin - patrimonioFin;
+
+  const custoLiquidoAssin = mensalidade * H;
+  const diff = custoLiquidoAssin - custoLiquidoFin;   // >0 => financiar mais barato
+
+  $('m_assin').textContent=BRL(custoLiquidoAssin);
+  $('m_fin').textContent=BRL(custoLiquidoFin);
+  $('m_patrim').textContent=BRL(patrimonioFin);
+  $('m_patrim').style.color = patrimonioFin<0 ? 'var(--clay)' : '';
+
+  // extrato linha a linha
+  $('balbox').style.display='';
+  $('b_entrada').textContent=BRL(entrada);
+  $('b_parclabel').textContent=`(${Math.min(H,prazoFin)}x)`;
+  $('b_parcelas').textContent=BRL(pago);
+  $('b_seglabel').textContent=`(${anos(H)})`;
+  $('b_seguro').textContent=BRL(custoSeguro);
+  $('b_ipvalabel').textContent=`(${anos(H)})`;
+  $('b_ipva').textContent=BRL(custoIpva);
+  $('b_manutlabel').textContent=`(${H}x)`;
+  $('b_manut').textContent=BRL(custoManut);
+  $('b_desembolso').textContent=BRL(desembolsoFin);
+  $('pc_carro').textContent=BRL(valorResidual);
+  const temDivida = saldo>0.5;
+  $('pc_op').style.display = temDivida ? '' : 'none';
+  $('pc_dividaChip').style.display = temDivida ? '' : 'none';
+  $('pc_divida').textContent=BRL(saldo);
+  $('pc_patrim').textContent=BRL(patrimonioFin);
+  $('pc_patrim').classList.toggle('alagado', patrimonioFin<0);
+  if(patrimonioFin<0){
+    $('b_alerta').style.display='';
+    $('b_alerta').innerHTML=`<b>Patrimônio negativo: o carro está "alagado".</b> O valor de revenda (${BRL(valorResidual)}) ficou abaixo do saldo que ainda se deve (${BRL(saldo)}). Isso acontece quando o carro deprecia mais rápido do que a dívida é amortizada, comum sem entrada e nos primeiros meses do financiamento. Se você vendesse o carro agora, ainda sobraria uma dívida de ${BRL(-patrimonioFin)} para pagar do próprio bolso.`;
+  } else {
+    $('b_alerta').style.display='none';
+  }
+  $('b_final').textContent=BRL(custoLiquidoFin);
+
+  const maxV=Math.max(custoLiquidoAssin,custoLiquidoFin)||1;
+  $('bar_a').style.width=(custoLiquidoAssin/maxV*100)+'%';
+  $('bar_f').style.width=(custoLiquidoFin/maxV*100)+'%';
+  $('barv_a').textContent=BRL(custoLiquidoAssin);
+  $('barv_f').textContent=BRL(custoLiquidoFin);
+
+  const box=$('bigbox');
+  if(diff>=0){
+    box.className='big financiar'; $('r_k').textContent='Financiar sai mais barato'; $('r_diff').textContent=BRL(diff);
+    $('verdict').innerHTML=`No horizonte de ${anos(H)}, financiando você desembolsa <b>${BRL(desembolsoFin)}</b> ao todo, mas fica com um carro que vale <b>${BRL(valorResidual)}</b>${saldo>0.5?`, com ${BRL(saldo)} ainda devendo`:``}. ${patrimonioFin<0?`Aqui o carro vale menos do que ainda se deve, um patrimônio negativo de ${BRL(-patrimonioFin)}, que soma ao custo em vez de abater.`:`Descontando esse patrimônio de ${BRL(patrimonioFin)}`}, o custo líquido é <b>${BRL(custoLiquidoFin)}</b>, contra <b>${BRL(custoLiquidoAssin)}</b> assinando. Financiar sai <span class="hl">${BRL(diff)}</span> mais barato. Veja o extrato completo abaixo.`;
+  } else {
+    box.className='big assinar'; $('r_k').textContent='Assinar sai mais barato'; $('r_diff').textContent=BRL(-diff);
+    $('verdict').innerHTML=`Mesmo contando o carro que sobra no fim, valendo <b>${BRL(valorResidual)}</b>${saldo>0.5?` (com ${BRL(saldo)} ainda devendo)`:``}${patrimonioFin<0?`, aqui o patrimônio ficou negativo em ${BRL(-patrimonioFin)}, o carro vale menos do que a dívida restante`:``}, o custo líquido do financiamento é <b>${BRL(custoLiquidoFin)}</b>, acima dos <b>${BRL(custoLiquidoAssin)}</b> da assinatura. Assinar sai <span class="hl">${BRL(-diff)}</span> mais barato, sem entrada e sem lidar com revenda. Veja o extrato completo abaixo.`;
+  }
+}
+function setEmpty(){
+  ['m_assin','m_fin','m_patrim'].forEach(id=>$(id).textContent='—');
+  $('m_patrim').style.color='';
+  $('b_alerta').style.display='none'; $('pc_patrim').classList.remove('alagado');
+  ['pc_carro','pc_divida','pc_patrim'].forEach(id=>$(id).textContent='—');
+  $('pc_op').style.display='none'; $('pc_dividaChip').style.display='none';
+  $('r_diff').textContent='—'; $('bigbox').className='big';
+  $('bar_a').style.width='0%'; $('bar_f').style.width='0%'; $('barv_a').textContent='—'; $('barv_f').textContent='—';
+  $('balbox').style.display='none';
+}
+document.querySelectorAll('.seg').forEach(seg=>{const key=seg.id==='seg-forma'?'forma':'sistema';seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state[key]=b.dataset.v;seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');compute();parcelaLive();}));});
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{compute();liveCalc();parcelaLive();}));
+liveCalc();
+parcelaLive();
+compute();
+$('copyPrazo').addEventListener('click',e=>{
+  e.preventDefault();
+  const p=$('prazoFin').value;
+  if(p){ $('horizonte').value=p; compute(); liveCalc(); parcelaLive(); }
+});
+</script>
+</body>
+</html>

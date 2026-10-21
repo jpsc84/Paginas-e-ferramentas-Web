@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>Amortização Inteligente · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EAEDEC; --card:#F4F6F5; --ink:#0E2A24; --ink-soft:#3D544D; --line:#C9D2CF;
+  --petrol:#12463B; --brass:#B07D2B; --sage:#3E7C6B; --steel:#4B6C86; --clay:#9E3B26; --muted:#7A8A85;
+  --shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);
+}
+*{box-sizing:border-box}
+html{color-scheme:light;}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:22px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:6px;color:#9FB4AD;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.04em;margin-bottom:14px;}
+.back:hover{color:#EAF1EE;}
+.brandline{display:flex;align-items:center;gap:10px;color:#9FB4AD;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;}
+.brandline span{white-space:nowrap;}
+.toolname{font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;color:#FFFFFF;letter-spacing:0;text-transform:none;}
+.ticks{flex:1;height:10px;background:repeating-linear-gradient(90deg,#3A554D 0 1px,transparent 1px 9px);opacity:.9;border-radius:1px;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;}
+h1 em{font-style:normal;color:#E7B968;}
+.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;}
+
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}
+.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;} .affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}
+.affix input{padding-right:40px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;}
+.seg button{flex:1;border:none;background:transparent;padding:9px 6px;font-size:13px;cursor:pointer;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.seg button.on{background:var(--ink);color:#fff;}
+.divider{border:none;border-top:1px dashed var(--line);margin:16px 0 6px;}
+.subhead{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:8px 0 8px;}
+
+.big{padding:2px 0 4px;}
+.big .k{font-size:12px;color:var(--muted);}
+.big .v{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(28px,7.5vw,42px);letter-spacing:-.02em;line-height:1.02;margin-top:2px;color:var(--sage);}
+.big .pct{font-size:13px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;margin-top:3px;}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0 4px;}
+.metric{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;}
+.metric .t{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-family:"IBM Plex Mono",monospace;}
+.metric .n{font-family:"Archivo",sans-serif;font-weight:700;font-size:17px;margin-top:3px;color:var(--ink);}
+
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;} .verdict .hl{color:#9BD6B0;}
+
+.chartwrap{margin:14px 0 2px;}
+.chart{width:100%;height:auto;display:block;}
+.clegend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;}
+.clegend div{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.clegend i{width:11px;height:11px;border-radius:3px;display:inline-block;flex:none;}
+.l1{background:var(--steel);} .l2{background:var(--brass);}
+
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}
+ul.read{padding-left:0;margin:0;}
+
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+
+@media (max-width:640px){ .row2{grid-template-columns:1fr;} .metrics{grid-template-columns:1fr;} }
+
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}
+.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+header.top h1{text-align:center;}
+header.top .sub{text-align:center;margin-left:auto;margin-right:auto;}
+
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);transition:border-color .15s,background .15s;}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}
+.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>Quanto você economiza <em>amortizando</em></h1>
+    <p class="sub">Veja o efeito de adiantar parcelas do seu financiamento ou empréstimo. Compare o cenário com e sem amortização extra e descubra quanto de juros você corta e quantas parcelas deixa de pagar.</p>
+  </header>
+
+  <div class="eyebrow">O que você quer fazer</div>
+  <div class="card">
+    <div class="seg" id="seg-modo">
+      <button data-v="extra" class="on">Adiantar parte, mês a mês</button>
+      <button data-v="quitar">Quitar tudo hoje</button>
+    </div>
+  </div>
+
+  <div class="eyebrow">Seu financiamento</div>
+  <p class="note">Preencha os dados do contrato. O resultado aparece sozinho quando houver valor, taxa e prazo.</p>
+  <div class="card">
+    <div class="field"><label>Valor financiado (saldo do contrato)</label>
+      <div class="affix"><input class="num" id="principal" type="number" min="0" step="1000" value="" placeholder="ex: 145214,92"><span class="u">R$</span></div>
+      <div class="hint">o valor total financiado, ou o saldo devedor de hoje</div></div>
+
+    <div class="row2">
+      <div class="field"><label>Taxa de juros</label>
+        <div class="affix"><input class="num" id="taxa" type="number" min="0" step="0.01" value="" placeholder="ex: 19,56"><span class="u">%</span></div></div>
+      <div class="field"><label>A taxa é</label>
+        <div class="seg" id="seg-forma">
+          <button data-v="anual" class="on">Anual</button>
+          <button data-v="mensal">Mensal</button>
+        </div></div>
+    </div>
+
+    <div class="row2">
+      <div class="field"><label>Prazo total</label>
+        <div class="affix"><input class="num" id="prazo" type="number" min="1" step="1" value="" placeholder="ex: 96"><span class="u">meses</span></div></div>
+      <div class="field"><label>Parcelas já pagas</label>
+        <input class="num" id="pagas" type="number" min="0" step="1" value="" placeholder="ex: 3"></div>
+    </div>
+
+    <div class="field"><label>Sistema de amortização</label>
+      <div class="seg" id="seg-sistema">
+        <button data-v="price" class="on">PRICE (parcela fixa)</button>
+        <button data-v="sac">SAC (parcela decrescente)</button>
+      </div></div>
+
+    <hr class="divider" id="div-extra">
+    <div id="bloco-extra">
+    <div class="subhead">Amortização extra</div>
+
+    <div class="field"><label>Ao amortizar, você quer</label>
+      <div class="seg" id="seg-obj">
+        <button data-v="prazo" class="on">Reduzir o prazo</button>
+        <button data-v="parcela">Reduzir a parcela</button>
+      </div>
+      <div class="hint">reduzir prazo economiza mais juros. reduzir parcela alivia o mês</div></div>
+
+    <div class="row2">
+      <div class="field"><label>Extra por mês</label>
+        <div class="affix"><input class="num" id="extraM" type="number" min="0" step="100" value="" placeholder="ex: 500"><span class="u">R$</span></div></div>
+      <div class="field"><label>Extra por ano (a cada 12 meses)</label>
+        <div class="affix"><input class="num" id="extraA" type="number" min="0" step="1000" value="" placeholder="ex: 10000"><span class="u">R$</span></div></div>
+    </div>
+    <div class="hint" style="color:var(--muted);font-size:11.5px">Preencha ao menos um dos dois extras para ver a economia.</div>
+    </div>
+
+    <div id="bloco-quitar" style="display:none">
+    <hr class="divider">
+    <div class="subhead">Quitação total antecipada</div>
+    <div class="field"><label>Valor da parcela no contrato</label>
+      <div class="affix"><input class="num" id="parcelaReal" type="number" min="0" step="1" value="" placeholder="ex: 2854,17"><span class="u">R$</span></div>
+      <div class="hint">o valor exato que sai do seu contracheque ou boleto. Preenchendo aqui, calculamos o saldo a partir da parcela real, mais preciso do que usar só o valor financiado, que às vezes traz custos embutidos não detalhados.</div></div>
+    <div class="row2">
+      <div class="field"><label>Vencimento da 1ª parcela</label>
+        <input type="date" id="dataPrimeira">
+        <div class="hint">não é a data do contrato; é quando a parcela nº1 venceu, geralmente algumas semanas depois</div></div>
+      <div class="field"><label>Data da quitação</label>
+        <input type="date" id="dataQuitacao"></div>
+    </div>
+    <div class="hint">usamos as parcelas já pagas (acima) e essas duas datas para calcular os dias corridos desde o vencimento da última parcela paga até o dia da quitação.</div>
+    </div>
+  </div>
+
+  <div class="eyebrow" id="eyebrow-economia">Sua economia</div>
+  <div class="card" id="card-economia">
+    <div class="big"><div class="k">Juros que você economiza</div><div class="v num" id="r_econ">—</div><div class="pct num" id="r_pct"></div></div>
+
+    <div class="metrics">
+      <div class="metric"><div class="t">Juros sem amortizar</div><div class="n num" id="r_jsem">—</div></div>
+      <div class="metric"><div class="t">Juros amortizando</div><div class="n num" id="r_jcom">—</div></div>
+      <div class="metric"><div class="t" id="r_pl">Parcela</div><div class="n num" id="r_parc">—</div></div>
+    </div>
+
+    <div class="verdict" id="verdict">Preencha os campos para ver o resultado.</div>
+
+    <div class="chartwrap">
+      <div id="chart"></div>
+      <div class="clegend">
+        <div><i class="l1"></i>Saldo sem amortizar</div>
+        <div><i class="l2"></i>Saldo amortizando</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="eyebrow" id="eyebrow-quitar" style="display:none">Valor para quitar hoje</div>
+  <div class="card" id="card-quitar" style="display:none">
+    <div class="big"><div class="k">Valor para quitação total antecipada</div><div class="v num" id="q_valor">—</div><div class="pct num" id="q_dias"></div></div>
+
+    <div class="metrics">
+      <div class="metric"><div class="t">Saldo devedor teórico</div><div class="n num" id="q_saldo">—</div></div>
+      <div class="metric"><div class="t">Juros pro-rata do período</div><div class="n num" id="q_prorata">—</div></div>
+      <div class="metric"><div class="t">Economia vs. seguir pagando</div><div class="n num" id="q_econ">—</div></div>
+    </div>
+
+    <div class="verdict" id="q_verdict">Preencha os dados do contrato e as duas datas para ver o valor de quitação.</div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>Reduzir o prazo mantém a parcela igual e usa o extra para quitar antes. É o que mais economiza juros, porque encurta o tempo em que o saldo rende juros para o banco.</li>
+      <li>No modo "Quitar tudo hoje", o valor é o saldo devedor teórico do sistema escolhido, corrigido pelos dias corridos desde o vencimento da sua última parcela paga até a data de quitação. É assim que bancos calculam a liquidação antecipada de empréstimos como o consignado.</li>
+      <li>Por lei não existe multa para quitação antecipada. O valor pode variar um pouco do saldo informado pelo banco por causa de arredondamento, ou de um seguro prestamista embutido no contrato, que algumas instituições descontam ou devolvem proporcionalmente.</li>
+      <li>Reduzir a parcela mantém o prazo e diminui o valor mensal. Alivia o orçamento agora, mas economiza menos juros no total.</li>
+      <li>A amortização abate o principal antes de incidir juros no mês, por isso cada real adiantado vale mais quanto mais cedo você o coloca.</li>
+      <li>Compare sempre com aplicar esse dinheiro. Se um investimento seguro rende mais que a taxa do financiamento, pode valer mais investir do que amortizar. Aqui você vê o lado da dívida.</li>
+    </ul>
+  </div>
+  <div class="seealso"><span class="lbl">Veja também</span><a href="financiamento.html">Financiar ou à vista</a><a href="consorcio.html">Consórcio</a><a href="alugar.html">Financiar ou alugar</a><a href="cartao-rotativo.html">Cartão no rotativo</a><a href="negociar-divida.html">O custo de esperar para negociar</a></div>
+
+
+  <footer>
+    <div>Amortização Inteligente · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo. Não é recomendação financeira nem consultoria individual. Confira as regras do seu contrato antes de amortizar.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const BRL = v => (isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const BRLc = v => (isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:2});
+const val = id => { const x=parseFloat(($(id).value+'').replace(',','.')); return isFinite(x)?x:null; };
+const state = { forma:'anual', sistema:'price', obj:'prazo', modo:'extra' };
+
+function pmt(rate,nper,pv){ if(nper<=0) return pv; if(rate===0) return pv/nper; return pv*rate/(1-Math.pow(1+rate,-nper)); }
+
+function schedule(principal,i,n,sistema,obj,jaPagas,extraM,extraA){
+  const pmtFix=pmt(i,n,principal);
+  const sacAmort=principal/n;
+  let saldo=principal, jurosRest=0;
+  const saldos=[{m:0,val:principal}];
+  let m=0, guard=n*3+24;
+  while(saldo>0.004 && m<guard){
+    m++;
+    const extra = (m<=jaPagas)?0:Math.min((extraM||0)+((m%12===0)?(extraA||0):0), saldo);
+    const base = saldo - extra;
+    const juros = base*i;
+    let amort;
+    if(sistema==='price'){
+      amort = (obj==='parcela') ? pmt(i,Math.max(n-(m-1),1),base)-base*i : pmtFix-base*i;
+    } else {
+      amort = (obj==='parcela') ? base/Math.max(n-(m-1),1) : sacAmort;
+    }
+    amort=Math.min(Math.max(amort,0),base);
+    const saldoFim=Math.max(base-amort,0);
+    if(m>jaPagas) jurosRest+=juros;
+    saldos.push({m, val:saldoFim, parcela:juros+amort});
+    saldo=saldoFim;
+  }
+  return {saldos, jurosRest, prazoFinal:m};
+}
+
+function saldoTeorico(principal,i,n,sistema,k){
+  // saldo devedor logo após a k-ésima parcela paga (k=0 => nada pago ainda)
+  if(sistema==='price'){
+    const rest=n-k; if(rest<=0) return 0;
+    const pmtFix=pmt(i,n,principal);
+    return i===0 ? pmtFix*rest : pmtFix*(1-Math.pow(1+i,-rest))/i;
+  } else {
+    return Math.max(0, principal*(n-k)/n);
+  }
+}
+function addMonths(dateStr,months){
+  const d=new Date(dateStr+'T00:00:00');
+  d.setMonth(d.getMonth()+months);
+  return d;
+}
+function pvFromPmt(i,n,parcela){ return i===0 ? parcela*n : parcela*(1-Math.pow(1+i,-n))/i; }
+function computeQuitacao(principal,i,n,jaPagas){
+  const dp=$('dataPrimeira').value, dq=$('dataQuitacao').value;
+  const parcelaReal=val('parcelaReal');
+  const usaParcela = state.sistema==='price' && parcelaReal>0;
+  const pv = usaParcela ? pvFromPmt(i,n,parcelaReal) : principal;
+  const parcelaCalc = usaParcela ? parcelaReal : (state.sistema==='price' ? pmt(i,n,pv) : null);
+
+  const saldo=saldoTeorico(pv,i,n,state.sistema,jaPagas);
+  $('q_saldo').textContent=BRLc(saldo);
+
+  if(!dp || !dq){
+    $('q_valor').textContent=BRLc(saldo); $('q_dias').textContent='sem as datas, mostramos o saldo teórico, sem os dias pro-rata';
+    $('q_prorata').textContent='—'; $('q_econ').textContent='—';
+    $('q_verdict').innerHTML=`Sem as duas datas, este é o saldo devedor teórico na parcela ${jaPagas}, sem os dias corridos desde o último vencimento. Preencha as datas para o valor exato de hoje.`+(usaParcela?` Calculado a partir da parcela real que você informou, mais preciso que o valor financiado.`:``);
+    return;
+  }
+  const dataBase = addMonths(dp, jaPagas-1);   // vencimento da última parcela paga (ou véspera da 1ª, se jaPagas=0)
+  const dataQ = new Date(dq+'T00:00:00');
+  const dias = Math.round((dataQ - dataBase)/86400000);
+
+  if(dias<0){
+    $('q_valor').textContent='—'; $('q_dias').textContent='';
+    $('q_prorata').textContent='—'; $('q_econ').textContent='—';
+    $('q_verdict').innerHTML=`A data de quitação é anterior ao vencimento da última parcela paga (${dataBase.toLocaleDateString('pt-BR')}). Confira as datas.`;
+    return;
+  }
+  const valorQuitacao = saldo*Math.pow(1+i, dias/30);
+  const prorata = valorQuitacao - saldo;
+  let totalRestante;
+  if(state.sistema==='price'){ totalRestante = parcelaCalc*(n-jaPagas); }
+  else { let s=saldo,tot=0; const a=pv/n; for(let m=0;m<(n-jaPagas);m++){ tot+=a+s*i; s-=a; } totalRestante=tot; }
+  const economia = totalRestante - valorQuitacao;
+
+  $('q_valor').textContent=BRLc(valorQuitacao);
+  $('q_dias').textContent=`${dias} dias corridos desde ${dataBase.toLocaleDateString('pt-BR')}`;
+  $('q_prorata').textContent=BRLc(prorata);
+  $('q_econ').textContent=BRLc(economia);
+  $('q_verdict').innerHTML=`Quitando em ${dataQ.toLocaleDateString('pt-BR')}, o valor teórico é <b>${BRLc(valorQuitacao)}</b>: o saldo devedor de ${BRLc(saldo)} mais ${BRLc(prorata)} de juros pro-rata por ${dias} dias desde o último vencimento. Continuando a pagar as ${n-jaPagas} parcelas restantes, você desembolsaria ${BRLc(totalRestante)} ao todo, então quitar agora economiza <span style="color:#E9C77E">${BRLc(economia)}</span> de juros futuros. Por lei não há multa nessa conta.`+(usaParcela?` Calculado a partir da parcela real do seu contrato, que costuma bater bem de perto com o valor exato do banco.`:` O valor real do banco pode variar um pouco por arredondamento ou por custos embutidos no valor financiado; se você souber a parcela exata, informe-a acima para um resultado mais preciso.`);
+}
+function compute(){
+  const principal=val('principal'), taxa=val('taxa'), n=val('prazo');
+  let jaPagas=val('pagas')||0; const extraM=val('extraM'), extraA=val('extraA');
+  const parcelaReal=val('parcelaReal');
+  const readyQuitar = state.modo==='quitar' && taxa>0 && n>0 && (principal>0 || parcelaReal>0);
+  const ready = readyQuitar || (principal>0 && taxa>0 && n>0);
+  if(!ready){ setEmpty(state.modo==='quitar' ? 'Preencha a taxa, o prazo e a parcela real (ou o valor financiado) para ver o resultado.' : 'Preencha valor financiado, taxa e prazo para ver o resultado.'); return; }
+  jaPagas=Math.max(0,Math.min(jaPagas,n-1));
+  const i = state.forma==='mensal' ? taxa/100 : Math.pow(1+taxa/100,1/12)-1;
+
+  if(state.modo==='quitar'){ computeQuitacao(principal,i,n,jaPagas); return; }
+
+  const base = schedule(principal,i,n,state.sistema,state.obj,jaPagas,0,0);        // sem extra
+  const extra= schedule(principal,i,n,state.sistema,state.obj,jaPagas,extraM||0,extraA||0); // com extra
+
+  const parcelaInicial = state.sistema==='price' ? pmt(i,n,principal) : principal/n + principal*i;
+  const jSem=base.jurosRest, jCom=extra.jurosRest;
+  const economia=Math.max(0,jSem-jCom);
+  const pct = jSem>0 ? economia/jSem : 0;
+  const prazoRestSem = n - jaPagas;
+  const prazoRestCom = Math.max(0, extra.prazoFinal - jaPagas);
+  const parcelasEcon = Math.max(0, prazoRestSem - prazoRestCom);
+
+  // nova parcela (se reduzir parcela): 1ª parcela após o ponto de amortização
+  const idx = jaPagas+1;
+  const novaParcela = (extra.saldos[idx] && extra.saldos[idx].parcela) ? extra.saldos[idx].parcela : parcelaInicial;
+
+  const temExtra=(extraM>0)||(extraA>0);
+
+  $('r_econ').textContent = temExtra?BRL(economia):BRL(0);
+  $('r_pct').textContent = temExtra?('corta '+Math.round(pct*100)+'% dos juros restantes'):'preencha um valor de amortização extra';
+  $('r_jsem').textContent = BRL(jSem);
+  $('r_jcom').textContent = BRL(jCom);
+  if(state.obj==='parcela' && temExtra){ $('r_pl').textContent='Nova parcela'; $('r_parc').textContent=BRLc(novaParcela); }
+  else { $('r_pl').textContent='Parcela'; $('r_parc').textContent=BRLc(parcelaInicial); }
+
+  $('chart').innerHTML = svgChart(base.saldos, extra.saldos, jaPagas);
+
+  if(!temExtra){
+    $('verdict').innerHTML=`Sua parcela é de <b>${BRLc(parcelaInicial)}</b> e os juros restantes somam <b>${BRL(jSem)}</b>. Informe uma amortização extra, mensal ou anual, para ver quanto isso cai.`;
+  } else if(state.obj==='prazo'){
+    $('verdict').innerHTML=`Amortizando, você economiza <span class="hl">${BRL(economia)}</span> em juros e quita <b>${parcelasEcon} parcela${parcelasEcon===1?'':'s'}</b> antes, mantendo a parcela em <b>${BRLc(parcelaInicial)}</b>. O prazo cai de ${prazoRestSem} para ${prazoRestCom} meses.`;
+  } else {
+    $('verdict').innerHTML=`Amortizando para reduzir a parcela, ela cai de <b>${BRLc(parcelaInicial)}</b> para <span class="hl">${BRLc(novaParcela)}</span>, e você economiza <b>${BRL(economia)}</b> em juros. O prazo vai de ${prazoRestSem} para ${prazoRestCom} meses. Para cortar ainda mais juros, escolha reduzir o prazo.`;
+  }
+}
+
+function setEmpty(msg){
+  ['r_econ','r_jsem','r_jcom','r_parc'].forEach(id=>$(id).textContent='—');
+  $('r_pct').textContent=''; $('r_parc').textContent='—'; $('chart').innerHTML=''; $('verdict').textContent=msg;
+}
+
+function svgChart(a,b,jaPagas){
+  const W=680,H=280,padL=58,padR=14,padT=14,padB=28;
+  const plotW=W-padL-padR, plotH=H-padT-padB;
+  const maxM=Math.max(a.length-1,b.length-1,1);
+  let yMax=0; a.concat(b).forEach(p=>{ if(p.val>yMax)yMax=p.val; }); yMax=yMax*1.05||1;
+  const xs=m=>padL+(m/maxM)*plotW;
+  const ys=v=>padT+(1-v/yMax)*plotH;
+  const compact=v=> v>=1e6?('R$ '+(v/1e6).toFixed(1).replace('.',',')+' mi'): v>=1e3?('R$ '+Math.round(v/1e3)+' mil'):('R$ '+Math.round(v));
+  let g='';
+  [0,yMax/2,yMax].forEach(v=>{ const y=ys(v);
+    g+=`<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W-padR}" y2="${y.toFixed(1)}" stroke="#C9D2CF" stroke-width="1" ${v===0?'':'stroke-dasharray="3 5"'}/>`;
+    g+=`<text x="${padL-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="12" fill="#7A8A85">${compact(v)}</text>`;
+  });
+  [0,Math.round(maxM/2),maxM].forEach(m=>{
+    g+=`<text x="${xs(m).toFixed(1)}" y="${H-8}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#7A8A85">mês ${m}</text>`;
+  });
+  const line=(arr,color)=>{ const pts=arr.map(p=>`${xs(p.m).toFixed(1)},${ys(p.val).toFixed(1)}`).join(' ');
+    return `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round"/>`; };
+  g+=line(a,'#4B6C86');
+  g+=line(b,'#B07D2B');
+  // ponto onde o cenário com extra zera
+  const last=b[b.length-1];
+  if(last && last.val<=0.004) g+=`<circle cx="${xs(last.m).toFixed(1)}" cy="${ys(0).toFixed(1)}" r="3.5" fill="#B07D2B"/>`;
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Saldo devedor com e sem amortização">${g}</svg>`;
+}
+
+document.querySelectorAll('.seg').forEach(seg=>{
+  const key = seg.id==='seg-forma'?'forma':seg.id==='seg-sistema'?'sistema':seg.id==='seg-modo'?'modo':'obj';
+  seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    state[key]=b.dataset.v;
+    seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    if(key==='modo'){
+      const q = state.modo==='quitar';
+      $('bloco-extra').style.display = q?'none':'';
+      $('bloco-quitar').style.display = q?'':'none';
+      $('eyebrow-economia').style.display = q?'none':'';
+      $('card-economia').style.display = q?'none':'';
+      $('eyebrow-quitar').style.display = q?'':'none';
+      $('card-quitar').style.display = q?'':'none';
+    }
+    compute();
+  }));
+});
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',compute));
+compute();
+</script>
+</body>
+</html>

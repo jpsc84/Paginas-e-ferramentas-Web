@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>Aposentadoria pelo INSS · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EAEDEC;--card:#F4F6F5;--ink:#0E2A24;--ink-soft:#3D544D;--line:#C9D2CF;--petrol:#12463B;--brass:#B07D2B;--sage:#3E7C6B;--steel:#4B6C86;--clay:#9E3B26;--muted:#7A8A85;--shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);}
+*{box-sizing:border-box}html{color-scheme:light;}html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:20px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;text-align:center;}
+h1 em{font-style:normal;color:#E7B968;}
+.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;text-align:center;margin-left:auto;margin-right:auto;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+.aviso{background:#f6efe4;border:1px solid #e0cfa8;color:#6b5417;border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:12.5px;line-height:1.5;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;}.affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}.affix input{padding-right:44px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;}
+.seg button{flex:1;border:none;background:transparent;padding:11px 6px;font-size:13.5px;cursor:pointer;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.seg button.on{background:var(--ink);color:#fff;}
+.big{padding:2px 0 4px;}.big .k{font-size:12px;color:var(--muted);}
+.big .v{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(26px,7vw,40px);letter-spacing:-.02em;line-height:1.05;margin-top:2px;color:var(--petrol);}
+.big .subv{font-size:13px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;margin-top:4px;}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0 4px;}
+.metric{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;}
+.metric .t{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-family:"IBM Plex Mono",monospace;}
+.metric .n{font-family:"Archivo",sans-serif;font-weight:700;font-size:17px;margin-top:3px;color:var(--ink);}
+table.res{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:13px;}
+table.res th,table.res td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);}
+table.res th{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+table.res td.n{font-family:"IBM Plex Mono",monospace;text-align:right;}
+table.res tr.win td{background:#e7f0ea;}table.res tr.win td:first-child{font-weight:700;border-left:3px solid var(--sage);}
+table.res tr.no td{color:var(--muted);}
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;}.verdict .hl{color:#E9C77E;}
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}ul.read{padding-left:0;margin:0;}
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+@media (max-width:640px){.row2{grid-template-columns:1fr;}.metrics{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>
+    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>Quando dá para <em>se aposentar pelo INSS</em></h1>
+    <p class="sub">Entre as regras de transição e a regra permanente, a ferramenta acha o caminho mais rápido para você, e estima o valor do benefício.</p>
+  </header>
+
+  <div class="aviso"><b>Estimativa, não é o cálculo oficial.</b> O INSS tem cinco regras de transição; esta ferramenta cobre as três mais comuns, regra de idade, regra de pontos e idade mínima progressiva, além da regra permanente. Pedágio de 50% e de 100% não estão aqui, e valem principalmente para quem já estava muito perto de se aposentar em nov/2019. Tempo rural, especial ou híbrido também ficam de fora. Confirme sempre no Meu INSS. Valores vigentes em 2026: teto R$ 8.475,55, piso R$ 1.621,00, regra de pontos 93 (mulher) / 103 (homem).</div>
+
+  <div class="eyebrow">Seus dados</div>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Idade atual</label>
+        <div class="affix"><input class="num" id="idade" type="number" min="14" max="90" step="1" value="" placeholder="ex: 48"><span class="u">anos</span></div></div>
+      <div class="field"><label>Sexo</label>
+        <div class="seg" id="seg-sexo"><button data-v="F" class="on">Feminino</button><button data-v="M">Masculino</button></div></div>
+    </div>
+    <div class="field"><label>Tempo de contribuição já cumprido</label>
+      <div class="affix"><input class="num" id="tempo" type="number" min="0" step="1" value="" placeholder="ex: 22"><span class="u">anos</span></div>
+      <div class="hint">o que aparece no seu extrato CNIS, no Meu INSS</div></div>
+    <div class="field"><label>Já contribuía antes de 13/11/2019?</label>
+      <div class="seg" id="seg-antes"><button data-v="sim" class="on">Sim</button><button data-v="nao">Não</button></div>
+      <div class="hint">se não, só a regra permanente vale para você; se sim, a ferramenta compara as regras de transição também</div></div>
+    <div class="field"><label>Média das suas contribuições (desde jul/1994)</label>
+      <div class="affix"><input class="num" id="media" type="number" min="0" step="100" value="" placeholder="ex: 3200"><span class="u">R$</span></div>
+      <div class="hint">se não souber exato, use sua remuneração atual como referência</div></div>
+  </div>
+
+  <div class="eyebrow">Quando e quanto</div>
+  <div class="card">
+    <div class="big"><div class="k">Você poderá se aposentar aos</div><div class="v num" id="r_idade">—</div><div class="subv num" id="r_quando"></div></div>
+    <div class="metrics">
+      <div class="metric"><div class="t">Regra usada</div><div class="n num" id="m_regra">—</div></div>
+      <div class="metric"><div class="t">Benefício estimado</div><div class="n num" id="m_beneficio">—</div></div>
+      <div class="metric"><div class="t">Coeficiente</div><div class="n num" id="m_coef">—</div></div>
+    </div>
+    <table class="res" id="tabela" style="display:none">
+      <thead><tr><th>Regra</th><th style="text-align:right">Falta</th><th style="text-align:right">Idade lá</th></tr></thead>
+      <tbody id="tabelabody"></tbody>
+    </table>
+    <div class="verdict" id="verdict">Preencha idade, tempo de contribuição e a média para ver o resultado.</div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>A ferramenta calcula as regras que valem para você e mostra qual chega primeiro. Quem já contribuía antes da reforma pode escolher a mais rápida entre as três; quem começou depois só tem a regra permanente.</li>
+      <li>O benefício é 60% da média salarial, mais 2% por ano de contribuição que passar de 20 anos (homem) ou 15 anos (mulher), até 100%. Por isso quem contribui mais tempo recebe uma fatia maior da média, não só quem ganha mais.</li>
+      <li>O benefício nunca fica abaixo do piso, um salário mínimo, nem acima do teto do INSS, mesmo que a média seja maior.</li>
+      <li>Para a regra de pontos e a idade mínima progressiva, a exigência sobe todo ano. A ferramenta já projeta essa subida para achar o ano em que você bate a meta, mas quanto mais distante no futuro, menos precisa é a estimativa.</li>
+    </ul>
+  </div>
+
+  <div class="seealso"><span class="lbl">Veja também</span><a href="independencia.html">Independência financeira</a><a href="aposentadoria.html">Simulação de aposentadoria</a><a href="reserva.html">Reserva de emergência</a></div>
+
+  <footer>
+    <div>Aposentadoria pelo INSS · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo, tabelas de 2026. Não substitui a simulação oficial no Meu INSS nem orientação previdenciária.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const BRL=v=>(isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const val=id=>{const x=parseFloat(($(id).value+'').replace(',','.'));return isFinite(x)?x:null;};
+const state={sexo:'F',antes:'sim'};
+const TETO=8475.55, PISO=1621.00;
+
+function anosParaPontos(idade0,tempo0,M){
+  const req0=M?103:93, cap=M?105:100, tempoMin=M?35:30;
+  for(let k=0;k<=60;k++){
+    const pontos=(idade0+k)+(tempo0+k);
+    const req=Math.min(cap, req0+k);
+    if(pontos>=req && (tempo0+k)>=tempoMin) return k;
+  }
+  return 60;
+}
+function anosParaProgressiva(idade0,tempo0,M){
+  const req0=M?64.5:59.5, cap=M?65:62, tempoMin=M?35:30;
+  for(let k=0;k<=60;k++){
+    const idadeReq=Math.min(cap, req0+0.5*k);
+    if((idade0+k)>=idadeReq && (tempo0+k)>=tempoMin) return k;
+  }
+  return 60;
+}
+function compute(){
+  const idade=val('idade'), tempo=val('tempo')||0, media=val('media');
+  const M=state.sexo==='M';
+  const ready = idade>0 && media>0;
+  if(!ready){ setEmpty(); return; }
+
+  const rotas=[];
+  if(state.antes==='sim'){
+    // 1) regra de transição por idade: 62F/65M + 15 anos (ambos)
+    const idadeReqT = M?65:62, tempoReqT=15;
+    const kT = Math.max(0, idadeReqT-idade, tempoReqT-tempo);
+    rotas.push({nome:'Transição por idade', anos:kT, idadeReq:idadeReqT});
+
+    // 2) regra de pontos: simulação ano a ano, respeitando o teto de pontos
+    const kPontos = anosParaPontos(idade,tempo,M);
+    rotas.push({nome:'Regra de pontos', anos:kPontos, idadeReq:null});
+
+    // 3) idade mínima progressiva: simulação ano a ano, respeitando o teto de idade
+    const kProg = anosParaProgressiva(idade,tempo,M);
+    rotas.push({nome:'Idade mínima progressiva', anos:kProg, idadeReq:null});
+  }
+  // 4) regra permanente: 62F/65M + 15F/20M anos (vale sempre, é o "pior caso" de quem não tem regra de transição)
+  const idadeReqPerm = M?65:62, tempoReqPerm = M?15:20;
+  const kPerm = Math.max(0, idadeReqPerm-idade, tempoReqPerm-tempo);
+  rotas.push({nome:'Regra permanente', anos:kPerm, idadeReq:idadeReqPerm});
+
+  rotas.sort((a,b)=>a.anos-b.anos);
+  const best=rotas[0];
+  const anosAte=best.anos;
+  const idadeApos=idade+anosAte;
+  const tempoApos=tempo+anosAte;
+  const anoApos=2026+Math.ceil(anosAte);
+
+  const baseMin = M?20:15;
+  const coef=Math.min(1, Math.max(0.6, 0.6+0.02*Math.max(0, tempoApos-baseMin)));
+  const baseCalc=Math.min(media, TETO);
+  let beneficio = baseCalc*coef;
+  beneficio = Math.max(PISO, Math.min(TETO, beneficio));
+
+  $('r_idade').textContent = idadeApos.toFixed(1).replace('.0','')+' anos';
+  $('r_quando').textContent = anosAte<0.1 ? 'você já cumpre os requisitos' : `em ${anosAte.toFixed(1).replace('.',',')} anos, por volta de ${anoApos}`;
+  $('m_regra').textContent = best.nome;
+  $('m_beneficio').textContent = BRL(beneficio);
+  $('m_coef').textContent = (coef*100).toFixed(0)+'%';
+
+  if(state.antes==='sim'){
+    $('tabela').style.display='';
+    $('tabelabody').innerHTML = rotas.map(r=>{
+      const win = r===best;
+      const falta = r.anos<0.1 ? 'já cumpre' : r.anos.toFixed(1).replace('.',',')+' anos';
+      const idadeLa = (idade+r.anos).toFixed(1).replace('.0','')+' anos';
+      return `<tr class="${win?'win':''}"><td>${r.nome}</td><td class="n">${falta}</td><td class="n">${idadeLa}</td></tr>`;
+    }).join('');
+  } else {
+    $('tabela').style.display='none';
+  }
+
+  $('verdict').innerHTML = anosAte<0.1
+    ? `Você já cumpre os requisitos, pela <b>${best.nome}</b>. O benefício estimado é <span class="hl">${BRL(beneficio)}</span>, com coeficiente de ${(coef*100).toFixed(0)}% sobre a média.`
+    : `O caminho mais rápido é a <b>${best.nome}</b>: faltam <b>${anosAte.toFixed(1).replace('.',',')} anos</b>, você se aposentaria aos <b>${idadeApos.toFixed(1).replace('.0','')} anos</b>, por volta de ${anoApos}. O benefício estimado nessa data é <span class="hl">${BRL(beneficio)}</span>, coeficiente de ${(coef*100).toFixed(0)}% sobre a média.`;
+}
+function setEmpty(){
+  ['r_idade','m_regra','m_beneficio','m_coef'].forEach(id=>$(id).textContent='—');
+  $('r_quando').textContent=''; $('tabela').style.display='none';
+  $('verdict').textContent='Preencha idade, tempo de contribuição e a média para ver o resultado.';
+}
+document.querySelectorAll('.seg').forEach(seg=>{const key=seg.id==='seg-sexo'?'sexo':'antes';seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state[key]=b.dataset.v;seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');compute();}));});
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',compute));
+compute();
+</script>
+</body>
+</html>

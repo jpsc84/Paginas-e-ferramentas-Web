@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/favicon.ico" sizes="any">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#12463B">
+<title>Aposentadoria do servidor · @juanpablodsc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EAEDEC;--card:#F4F6F5;--ink:#0E2A24;--ink-soft:#3D544D;--line:#C9D2CF;--petrol:#12463B;--brass:#B07D2B;--sage:#3E7C6B;--steel:#4B6C86;--clay:#9E3B26;--muted:#7A8A85;--shadow:0 1px 2px rgba(14,42,36,.06),0 8px 24px rgba(14,42,36,.06);}
+*{box-sizing:border-box}html{color-scheme:light;}html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+.wrap{max-width:820px;margin:0 auto;padding:18px 16px 64px;}
+header.top{background:var(--ink);color:#EAF1EE;border-radius:16px;padding:20px 18px 24px;margin-bottom:22px;box-shadow:var(--shadow);}
+.back{display:inline-flex;align-items:center;gap:7px;color:#EAF1EE;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.02em;font-weight:500;padding:8px 14px;border:1px solid #3A5A50;border-radius:9px;background:#0C2620;margin-bottom:16px;transition:background .15s,border-color .15s;}
+.back:hover{background:#16453A;border-color:#4E6E63;color:#fff;}
+.finrow{display:flex;justify-content:center;align-items:center;gap:13px;margin:6px 0 14px;}
+.finrow svg{width:24px;height:24px;flex:none;}.finrow .op{font-family:"IBM Plex Mono",monospace;font-size:18px;line-height:1;color:#E7B968;font-weight:600;}
+h1{font-family:"Archivo",sans-serif;font-weight:800;font-stretch:112%;color:#FFFFFF;font-size:clamp(26px,6vw,40px);line-height:1.02;letter-spacing:-.02em;margin:14px 0 6px;text-align:center;}
+h1 em{font-style:normal;color:#E7B968;}
+.sub{color:#C6D3CE;max-width:60ch;font-size:14.5px;text-align:center;margin-left:auto;margin-right:auto;}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);display:flex;align-items:center;gap:8px;margin:26px 0 12px;}
+.eyebrow::before{content:"";width:16px;height:1px;background:var(--brass);display:inline-block;}
+.note{color:var(--ink-soft);font-size:13.5px;margin:-4px 0 14px;max-width:72ch;line-height:1.5;}
+.aviso{background:#f6efe4;border:1px solid #e0cfa8;color:#6b5417;border-radius:12px;padding:12px 14px;margin:0 0 16px;font-size:12.5px;line-height:1.5;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);}
+.field{margin:12px 0;}.field>label{display:block;font-size:12px;color:var(--ink);font-weight:600;margin-bottom:5px;}
+.field input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font-size:16px;color:var(--ink);font-family:"IBM Plex Mono",monospace;}
+.field input:focus{outline:2px solid var(--sage);outline-offset:1px;border-color:transparent;}
+.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;}
+.affix{position:relative;}.affix .u{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;pointer-events:none;}.affix input{padding-right:44px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.seg{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:#fff;}
+.seg button{flex:1;border:none;background:transparent;padding:9px 6px;font-size:13px;cursor:pointer;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}
+.seg button.on{background:var(--ink);color:#fff;}
+.subhead{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);margin:8px 0;padding-top:14px;border-top:1px dashed var(--line);}
+.subhead:first-child{padding-top:0;border-top:none;}
+.big{padding:2px 0 4px;}.big .k{font-size:12px;color:var(--muted);}
+.big .v{font-family:"Archivo",sans-serif;font-weight:800;font-size:clamp(26px,7vw,40px);letter-spacing:-.02em;line-height:1.05;margin-top:2px;color:var(--petrol);}
+.big .subv{font-size:13px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;margin-top:4px;}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 0 4px;}
+.metric{border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fff;}
+.metric .t{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-family:"IBM Plex Mono",monospace;}
+.metric .n{font-family:"Archivo",sans-serif;font-weight:700;font-size:17px;margin-top:3px;color:var(--ink);}
+.metric .n.gap{color:var(--clay);}
+.verdict{background:var(--ink);color:#EAF1EE;border-radius:12px;padding:14px 15px;margin:14px 0;font-size:14.5px;line-height:1.5;}
+.verdict b{color:#fff;}.verdict .hl{color:#E9C77E;}.verdict .ok{color:#9BD6B0;}
+.bar{display:flex;height:30px;border-radius:7px;overflow:hidden;border:1px solid var(--line);background:#fff;margin-top:6px;}
+.bar span{height:100%;min-width:0;}.bRpps{background:var(--sage);}.bFun{background:var(--brass);}.bGap{background:#d9c3bc;}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:9px;}
+.legend div{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;}.legend i{width:11px;height:11px;border-radius:3px;flex:none;}
+.read li{color:var(--ink-soft);font-size:13.5px;margin:7px 0;line-height:1.5;list-style:none;padding-left:16px;position:relative;}
+.read li::before{content:"›";position:absolute;left:0;color:var(--brass);font-weight:700;}ul.read{padding-left:0;margin:0;}
+.seealso{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:9px 12px;}
+.seealso .lbl{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass);width:100%;}
+.seealso a{color:var(--petrol);text-decoration:none;font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:20px;padding:6px 13px;background:var(--card);}
+.seealso a:hover{border-color:var(--petrol);background:#e6ede9;}.seealso + footer{margin-top:18px;border-top:none;padding-top:0;}
+footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:11.5px;font-family:"IBM Plex Mono",monospace;line-height:1.6;}
+@media (max-width:640px){.row2{grid-template-columns:1fr;}.metrics{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="back" href="index.html">← Voltar</a>
+    <div class="finrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13" width="4" height="8" fill="#9FB4AD"/><rect x="10" y="8" width="4" height="13" fill="#E7B968"/><rect x="17" y="4" width="4" height="17" fill="#9FB4AD"/></svg>
+      <span class="op">+</span><span class="op">−</span><span class="op">×</span><span class="op">%</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#9FB4AD" stroke-width="2"/><path d="M12 12 L12 3 A9 9 0 0 1 21 12 Z" fill="#E7B968"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#E7B968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,17 9,11 13,15 21,6"/><polyline points="15,6 21,6 21,12"/></svg>
+    </div>
+    <h1>Aposentadoria do <em>servidor federal</em></h1>
+    <p class="sub">Regras da União. Quando você pode se aposentar, quanto vai receber do RPPS já com o teto, o gap entre o salário e o benefício, e quanto o Funpresp cobre desse gap.</p>
+  </header>
+
+  <div class="aviso"><b>Vale para o servidor federal.</b> Estados e municípios têm leis de RPPS próprias, com idade mínima, alíquota, teto e regra de cálculo diferentes, e devem conferir a legislação do seu ente. Estimativa educativa em base bruta, pelas regras pós-Reforma (EC 103/2019). As regras têm variações por categoria e data de ingresso (regra permanente, pedágios, transições). Não substitui a simulação oficial no Meu INSS / SouGov. Tabela e teto vigentes em 2026.</div>
+
+  <div class="eyebrow">Seus dados</div>
+  <div class="card">
+    <div class="row2">
+      <div class="field"><label>Idade atual</label>
+        <div class="affix"><input class="num" id="idade" type="number" min="18" max="90" step="1" value="" placeholder="ex: 40"><span class="u">anos</span></div></div>
+      <div class="field"><label>Sexo</label>
+        <div class="seg" id="seg-sexo"><button data-v="M" class="on">Masculino</button><button data-v="F">Feminino</button></div></div>
+    </div>
+    <div class="field"><label>Categoria</label>
+      <div class="seg" id="seg-cat"><button data-v="geral" class="on">Servidor geral</button><button data-v="policial">Policial</button></div></div>
+    <div class="row2">
+      <div class="field"><label>Tempo de contribuição já cumprido</label>
+        <div class="affix"><input class="num" id="contrib" type="number" min="0" step="1" value="" placeholder="ex: 7"><span class="u">anos</span></div></div>
+      <div class="field"><label>Tempo de serviço público já cumprido</label>
+        <div class="affix"><input class="num" id="servpub" type="number" min="0" step="1" value="" placeholder="ex: 7"><span class="u">anos</span></div></div>
+    </div>
+    <div class="field" id="wrap-efetivo"><label>Tempo de efetivo exercício policial</label>
+      <div class="affix"><input class="num" id="efetivo" type="number" min="0" step="1" value="" placeholder="ex: 7"><span class="u">anos</span></div>
+      <div class="hint">só para policiais</div></div>
+
+    <div class="subhead">Remuneração</div>
+    <div class="field"><label>Remuneração atual bruta (mensal)</label>
+      <div class="affix"><input class="num" id="remun" type="number" min="0" step="100" value="" placeholder="ex: 26000"><span class="u">R$</span></div></div>
+    <div class="field"><label>Média salarial de contribuição (mensal)</label>
+      <div class="affix"><input class="num" id="media" type="number" min="0" step="100" value="" placeholder="ex: 26000"><span class="u">R$</span></div>
+      <div class="hint">média das suas contribuições. na dúvida, use a remuneração atual</div></div>
+    <div class="row2">
+      <div class="field"><label>Sujeito ao teto do RPPS?</label>
+        <div class="seg" id="seg-teto"><button data-v="sim" class="on">Sim</button><button data-v="nao">Não</button></div>
+        <div class="hint">quem entrou após o Funpresp (2013) costuma estar</div></div>
+      <div class="field"><label>Teto do RPPS/INSS (mensal)</label>
+        <div class="affix"><input class="num" id="teto" type="number" min="0" step="0.01" value="8475.55"><span class="u">R$</span></div></div>
+    </div>
+  </div>
+
+  <div class="eyebrow">Quando e quanto</div>
+  <div class="card">
+    <div class="big"><div class="k">Você poderá se aposentar aos</div><div class="v num" id="r_idade">—</div><div class="subv num" id="r_quando"></div></div>
+    <div class="metrics">
+      <div class="metric"><div class="t">Benefício do RPPS</div><div class="n num" id="m_rpps">—</div></div>
+      <div class="metric"><div class="t">Taxa de reposição (RPPS)</div><div class="n num" id="m_repo">—</div></div>
+      <div class="metric"><div class="t">Gap mensal de renda</div><div class="n num gap" id="m_gap">—</div></div>
+    </div>
+    <div class="verdict" id="verdict">Preencha seus dados para ver o resultado.</div>
+  </div>
+
+  <div class="eyebrow">O Funpresp para cobrir o gap</div>
+  <div class="card">
+    <div class="note" style="margin-top:0">O Funpresp é a previdência complementar que aporta sobre o salário acima do teto, com contrapartida do patrocinador de até 8,5%, um dinheiro que você deixa na mesa se não aderir.</div>
+    <div class="row2">
+      <div class="field"><label>% de aporte seu</label>
+        <div class="affix"><input class="num" id="apServ" type="number" min="0" max="8.5" step="0.5" value="8.5"><span class="u">%</span></div></div>
+      <div class="field"><label>Saldo atual no Funpresp</label>
+        <div class="affix"><input class="num" id="saldo" type="number" min="0" step="1000" value="0"><span class="u">R$</span></div></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Rentabilidade real na acumulação</label>
+        <div class="affix"><input class="num" id="rAcum" type="number" min="0" step="0.5" value="4"><span class="u">% a.a.</span></div></div>
+      <div class="field"><label>Anos de usufruto da renda</label>
+        <div class="affix"><input class="num" id="usufruto" type="number" min="1" step="1" value="25"><span class="u">anos</span></div></div>
+    </div>
+    <div class="field"><label>Rentabilidade real no usufruto</label>
+      <div class="affix"><input class="num" id="rUsu" type="number" min="0" step="0.5" value="3"><span class="u">% a.a.</span></div></div>
+
+    <div class="metrics" style="margin-top:16px">
+      <div class="metric"><div class="t">Patrimônio no Funpresp</div><div class="n num" id="f_patrim">—</div></div>
+      <div class="metric"><div class="t">Renda mensal do Funpresp</div><div class="n num" id="f_renda">—</div></div>
+      <div class="metric"><div class="t">Renda total na aposentadoria</div><div class="n num" id="f_total">—</div></div>
+    </div>
+    <div class="verdict" id="verdictF">Preencha seus dados acima para ver a simulação do Funpresp.</div>
+    <div class="bar" id="bar"></div>
+    <div class="legend"><div><i class="bRpps"></i>RPPS</div><div><i class="bFun"></i>Funpresp</div><div><i class="bGap"></i>Gap não coberto</div></div>
+  </div>
+
+  <div class="eyebrow">Como ler o resultado</div>
+  <div class="card">
+    <ul class="read">
+      <li>O benefício do RPPS é limitado ao teto para quem entrou após 2013. Por isso quem ganha bem tem um gap grande entre o salário e a aposentadoria, e é aí que o Funpresp entra.</li>
+      <li>O coeficiente da regra é 60% da média mais 2% por ano de contribuição acima de 20 anos (homem) ou 15 (mulher). Quanto mais tempo, maior o benefício, até 100%.</li>
+      <li>A contrapartida do patrocinador no Funpresp é dinheiro grátis, até 8,5% do salário acima do teto. Não aderir com o aporte máximo é abrir mão desse valor.</li>
+      <li>A renda do Funpresp aqui é por prazo certo: consome o saldo ao longo dos anos de usufruto. Mais anos de usufruto significam renda mensal menor, porém por mais tempo.</li>
+    </ul>
+  </div>
+
+  <div class="seealso"><span class="lbl">Veja também</span><a href="servidor-salario.html">Salário líquido do servidor</a><a href="aposentadoria.html">Simulação de aposentadoria</a><a href="independencia.html">Independência financeira</a><a href="pgbl-vgbl.html">PGBL x VGBL</a></div>
+
+  <footer>
+    <div>Aposentadoria do servidor federal · ferramenta educativa @juanpablodsc</div>
+    <div>Conteúdo educativo, base bruta, regras EC 103/2019. Não substitui a simulação oficial (Meu INSS / SouGov) nem orientação jurídica.</div>
+  </footer>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const BRL=v=>(isFinite(v)?v:0).toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:2,maximumFractionDigits:2});
+const val=id=>{const x=parseFloat(($(id).value+'').replace(',','.'));return isFinite(x)?x:null;};
+const state={sexo:'M',cat:'geral',teto:'sim'};
+function pmt(rate,n,pv){if(n<=0)return pv;if(rate===0)return pv/n;return pv*rate/(1-Math.pow(1+rate,-n));}
+const ANO_ATUAL=2026;
+
+function compute(){
+  $('wrap-efetivo').style.display = state.cat==='policial'?'':'none';
+  const idade=val('idade'), contrib=val('contrib')||0, servpub=val('servpub')||0, efetivo=val('efetivo')||0;
+  const remun=val('remun'), media=val('media'), teto=val('teto')||0;
+  const M=state.sexo==='M', pol=state.cat==='policial', sujTeto=state.teto==='sim';
+  const ready = idade>0 && remun>0 && media>0;
+  if(!ready){ setEmpty(); return; }
+
+  // requisitos por categoria/sexo
+  const idadeMin = pol ? (M?55:52) : (M?65:62);
+  const contribExig = pol ? (M?30:25) : 25;
+  const servPubExig = 10;
+  const efetivoExig = pol ? (M?25:20) : 0;
+  // quando pode aposentar
+  const aIdade=Math.max(0,idadeMin-idade), aContrib=Math.max(0,contribExig-contrib), aServ=Math.max(0,servPubExig-servpub), aEfet=pol?Math.max(0,efetivoExig-efetivo):0;
+  const anosAte=Math.max(aIdade,aContrib,aServ,aEfet);
+  const idadeApos=idade+anosAte, anoApos=ANO_ATUAL+Math.ceil(anosAte);
+  // benefício RPPS
+  const contribTotal=contrib+anosAte;
+  const coef=Math.min(1,Math.max(0.6, 0.6+0.02*Math.max(0, contribTotal-(M?20:15))));
+  const base=sujTeto?Math.min(media,teto):media;
+  const bruto=base*coef;
+  const rpps=sujTeto?Math.min(bruto,teto):bruto;
+  const gap=Math.max(0,remun-rpps);
+  const repo=remun>0?rpps/remun:0;
+
+  $('r_idade').textContent=idadeApos+' anos';
+  $('r_quando').textContent = anosAte===0 ? 'você já cumpre os requisitos' : `em ${Math.ceil(anosAte)} ${Math.ceil(anosAte)===1?'ano':'anos'}, por volta de ${anoApos}`;
+  $('m_rpps').textContent=BRL(rpps);
+  $('m_repo').textContent=(repo*100).toFixed(0)+'%';
+  $('m_gap').textContent=BRL(gap);
+  $('verdict').innerHTML = anosAte===0
+    ? `Você já cumpre os requisitos para se aposentar. O benefício do RPPS seria <b>${BRL(rpps)}</b>, ou ${(repo*100).toFixed(0)}% da sua remuneração, deixando um gap de <span class="hl">${BRL(gap)}</span> por mês.`
+    : `Pelas regras da sua categoria, você poderá se aposentar aos <b>${idadeApos} anos</b>, por volta de ${anoApos}. O benefício do RPPS seria <b>${BRL(rpps)}</b>, cobrindo ${(repo*100).toFixed(0)}% do salário e deixando um gap de <span class="hl">${BRL(gap)}</span> por mês.`;
+
+  // Funpresp
+  computeFunpresp({remun,teto,sujTeto,anosAte,rpps,gap});
+}
+
+function computeFunpresp(ctx){
+  const apServ=(val('apServ')||0)/100, saldo=val('saldo')||0, rAcum=(val('rAcum')||0)/100, usufruto=val('usufruto')||25, rUsu=(val('rUsu')||0)/100;
+  const salParticip = ctx.sujTeto?Math.max(0,ctx.remun-ctx.teto):0;
+  const apServMes=salParticip*apServ;
+  const apPatr=salParticip*Math.min(apServ,0.085);   // contrapartida iguala o aporte, até 8,5%
+  const apTotal=apServMes+apPatr;
+  const iAcum=Math.pow(1+rAcum,1/12)-1;
+  const meses=Math.ceil(ctx.anosAte)*12;
+  const patrim = iAcum===0 ? saldo+apTotal*meses : saldo*Math.pow(1+iAcum,meses)+apTotal*((Math.pow(1+iAcum,meses)-1)/iAcum);
+  const iUsu=Math.pow(1+rUsu,1/12)-1;
+  const rendaFun = pmt(iUsu, usufruto*12, patrim);
+  const rendaTotal=rendaFun+ctx.rpps;
+  const gapCob = ctx.gap>0?Math.min(1,rendaFun/ctx.gap):1;
+  const repoTotal = ctx.remun>0?rendaTotal/ctx.remun:0;
+
+  $('f_patrim').textContent=BRL(patrim);
+  $('f_renda').textContent=BRL(rendaFun);
+  $('f_total').textContent=BRL(rendaTotal);
+  if(salParticip<=0){
+    $('verdictF').innerHTML=`Com o salário dentro do teto (ou sem sujeição ao teto), não há base para o Funpresp neste caso: o RPPS já cobre a maior parte da renda.`;
+    $('bar').innerHTML=`<span class="bRpps" style="width:100%"></span>`;
+    return;
+  }
+  $('verdictF').innerHTML=`Aportando ${(apServ*100).toLocaleString('pt-BR')}% com a contrapartida do patrocinador, você acumula <b>${BRL(patrim)}</b> até a aposentadoria. Isso vira uma renda de <span class="hl">${BRL(rendaFun)}</span> por mês por ${usufruto} anos, cobrindo <b>${(gapCob*100).toFixed(0)}%</b> do gap. Sua renda total sobe para <span class="ok">${BRL(rendaTotal)}</span>, ou ${(repoTotal*100).toFixed(0)}% do salário.`;
+  // barra: composição da remuneração -> rpps + funpresp + gap restante
+  const R=ctx.remun; const wR=Math.min(100,ctx.rpps/R*100), wF=Math.min(100-wR, rendaFun/R*100), wG=Math.max(0,100-wR-wF);
+  $('bar').innerHTML=`<span class="bRpps" style="width:${wR}%"></span><span class="bFun" style="width:${wF}%"></span><span class="bGap" style="width:${wG}%"></span>`;
+}
+
+function setEmpty(){
+  ['r_idade','m_rpps','m_repo','m_gap','f_patrim','f_renda','f_total'].forEach(id=>$(id).textContent='—');
+  $('r_quando').textContent=''; $('bar').innerHTML='';
+  $('verdict').textContent='Preencha seus dados para ver o resultado.';
+  $('verdictF').textContent='Preencha seus dados acima para ver a simulação do Funpresp.';
+}
+
+document.querySelectorAll('.seg').forEach(seg=>{const key=seg.id==='seg-sexo'?'sexo':seg.id==='seg-cat'?'cat':'teto';seg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state[key]=b.dataset.v;seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');compute();}));});
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',compute));
+compute();
+</script>
+</body>
+</html>
