@@ -1,5 +1,5 @@
 // Service worker do Acervo: permite abrir a página e o PDF sem internet.
-const CACHE = 'acervo-ia-v4.6-2ae492f8';
+const CACHE = 'acervo-ia-v4.7-45e2c380';
 const CORE = ['./', 'index.html', 'manifest.json', 'guia-comandos-prompts-ia-2026.pdf',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-192.png', 'icons/maskable-512.png',
   'icons/apple-touch-icon.png', 'icons/favicon.ico', 'icons/icon.svg'];
