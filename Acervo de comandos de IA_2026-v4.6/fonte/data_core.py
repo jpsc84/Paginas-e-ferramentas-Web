@@ -4,7 +4,7 @@ VERIFIED = "06/10/2026"
 META = {
     "title": "Acervo de Comandos e Prompts de IA 2026",
     "subtitle": "Acervo diário de uso geral para as principais IAs",
-    "version": "4.6",
+    "version": "4.7",
     "date": "19/10/2026",
     "date_iso": "2026-10-19",
     "review": "Revisão semanal das fontes oficiais às segundas, 8h (America/Sao_Paulo).",
@@ -148,6 +148,9 @@ SOURCES = [
 ]
 
 CHANGELOG = [
+    ("4.7", "24/10/2026", [
+        "Vídeo: acrescentada a versão genérica do reel de 15 segundos, com campos para tipo de conteúdo, cenário, elementos de destaque e uso final. O reel de viagem foi mantido. Nenhuma fonte foi reaberta nesta edição.",
+    ]),
     ("4.6", "24/10/2026", [
         "Vídeo: dois prompts novos a partir de uma foto de referência, um storyboard de 15 quadros (um por segundo) e um reel de viagem vertical de 15 segundos com um corte por segundo. Nenhuma fonte foi reaberta nesta edição.",
     ]),
