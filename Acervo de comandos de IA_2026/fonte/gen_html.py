@@ -15,11 +15,11 @@ button,input,select{font:inherit;color:inherit}
 input[type=checkbox]{accent-color:var(--ink)}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .wrap{max-width:960px;margin:0 auto;padding:0 16px}
-header.top{background:var(--head-bg);color:var(--head-ink);padding:calc(32px + env(safe-area-inset-top,0px)) 0 24px;border-bottom:1px solid var(--line)}
+header.top{text-align:center;background:var(--head-bg);color:var(--head-ink);padding:calc(32px + env(safe-area-inset-top,0px)) 0 24px;border-bottom:1px solid var(--line)}
 header.top .eyebrow{font:500 .72rem/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
 header.top h1{font-weight:600;font-size:clamp(1.5rem,5.4vw,2.3rem);line-height:1.15;letter-spacing:-.025em;margin:0;text-wrap:balance}
 header.top .sub{margin:10px 0 18px;font-size:1rem;color:var(--muted)}
-.meta{display:flex;flex-wrap:wrap;gap:6px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .pill{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font:500 .74rem/1.4 "JetBrains Mono",ui-monospace,monospace;color:var(--ink)}
 .pill a{color:inherit}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0}
@@ -68,6 +68,9 @@ main{padding:14px 0 120px}
 .what{margin:0 0 8px}
 .pbox{background:var(--prompt-bg);border:1px solid var(--line);border-left:2px solid var(--line-strong);border-radius:6px;padding:10px 12px;font-size:.94rem;white-space:pre-wrap;word-break:break-word}
 .pbox.code{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.88rem}
+.pbox{line-height:1.6}
+.pbox.clamp{max-height:calc(4.8em + 11px);overflow:hidden;padding-bottom:0}
+.pbox.clamp.over{-webkit-mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.25));mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.25))}
 .actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
 .actions label{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:.9rem}
 .actions input{width:20px;height:20px}
@@ -110,7 +113,7 @@ dialog.menu li .n{color:var(--accent);font-weight:700;width:24px;flex:none}
 footer{font-size:.85rem;color:var(--muted);padding:20px 0 120px;border-top:1px solid var(--line)}
 mark{background:var(--mark);color:var(--ink);border-radius:3px;padding:0 1px}
 @media (max-width:560px){.hide-sm{display:none}.btn{padding:0 11px}}
-@media print{.bar,.batch,.actions,.toast{display:none}.mod-body{display:block!important}}
+@media print{.bar,.batch,.actions,.toast{display:none}.mod-body{display:block!important}.pbox.clamp{max-height:none;-webkit-mask-image:none;mask-image:none}}
 """
 
 JS = r"""
@@ -132,8 +135,9 @@ function tagsHTML(x){
 }
 function actionsHTML(x){
   const isCode=/^\//.test(x.example)||/^\$/.test(x.example);
-  return `<div class="pbox${isCode?' code':''}" id="t-${x.id}">${esc(x.example)}</div>
+  return `<div class="pbox clamp${isCode?' code':''}" id="t-${x.id}">${esc(x.example)}</div>
   <div class="actions"><button class="btn small primary" data-copy="${x.id}" aria-label="Copiar o texto de ${esc(x.title)}">Copiar texto</button>
+  <button class="btn small" data-expand="${x.id}" aria-controls="t-${x.id}" aria-expanded="false" hidden>Ver prompt completo</button>
   <label><input type="checkbox" data-sel="${x.id}" ${sel.has(x.id)?'checked':''}> Selecionar</label></div>`;
 }
 function card(x){
@@ -184,7 +188,15 @@ function build(){
   $('#fKind').innerHTML=Object.entries(D.kinds).map(([k,v])=>`<button class="chip" aria-pressed="false" data-kind="${k}">${esc(v.label)}</button>`).join('');
   $('#legend').innerHTML=Object.entries(D.kinds).map(([k,v])=>`<div><span class="kind ${k}">${esc(v.label)}</span> ${esc(v.desc)}</div>`).join('');
 }
-function setOpen(sec,open){const b=$('.mod-head',sec);b.setAttribute('aria-expanded',open);$('.mod-body',sec).hidden=!open;}
+function fit(root=document){
+  $$('.pbox',root).forEach(b=>{
+    const btn=$(`[data-expand="${b.id.slice(2)}"]`);
+    if(!btn||btn.getAttribute('aria-expanded')==='true'||!b.offsetParent)return;
+    b.classList.add('clamp');const over=b.scrollHeight>b.clientHeight+2;
+    b.classList.toggle('over',over);b.classList.toggle('clamp',over);btn.hidden=!over;
+  });
+}
+function setOpen(sec,open){const b=$('.mod-head',sec);b.setAttribute('aria-expanded',open);$('.mod-body',sec).hidden=!open;if(open)fit(sec);}
 function textOf(x){return norm([x.title,x.what||'',x.how||'',x.example,x.limits||'',x.platforms.map(p=>PL[p]).join(' '),x.kinds.map(k=>D.kinds[k].label).join(' ')].join(' '))}
 const IDX={};Object.values(ALL).forEach(x=>IDX[x.id]=textOf(x));
 function match(x){
@@ -215,6 +227,7 @@ function apply(){
   const nf=st.plats.size+st.kinds.size+(st.mod!=='all')+(st.onlySel?1:0);
   $('#nf').textContent=nf;$('#nf').hidden=!nf;
   $$('details.more').forEach(d=>d.open=st.limits);
+  fit();
 }
 function updSel(){
   $$('[data-sel]').forEach(c=>{c.checked=sel.has(c.dataset.sel);c.closest('[data-id]').classList.toggle('sel',c.checked)});
@@ -229,6 +242,8 @@ async function copy(text){
 function bind(){
   document.addEventListener('click',async e=>{
     const h=e.target.closest('.mod-head');if(h){setOpen(h.parentElement,h.getAttribute('aria-expanded')!=='true');return}
+    const x=e.target.closest('[data-expand]');if(x){const b=$('#t-'+x.dataset.expand);const open=x.getAttribute('aria-expanded')!=='true';
+      x.setAttribute('aria-expanded',open);x.textContent=open?'Recolher prompt':'Ver prompt completo';b.classList.toggle('clamp',!open);b.classList.toggle('over',!open);return}
     const c=e.target.closest('[data-copy]');if(c){const ok=await copy(ALL[c.dataset.copy].example);toast(ok?'Texto copiado para a área de transferência':'Não foi possível copiar; selecione o texto manualmente');return}
     const g=e.target.closest('[data-go]');if(g){$('#menu').close();const sec=$('#mod-'+g.dataset.go);sec.hidden=false;setOpen(sec,true);(g.dataset.sub?$('#'+g.dataset.sub):sec).scrollIntoView({behavior:'smooth'});return}
     const p=e.target.closest('[data-plat]');if(p){const k=p.dataset.plat;st.plats.has(k)?st.plats.delete(k):st.plats.add(k);p.setAttribute('aria-pressed',st.plats.has(k));apply();return}
@@ -251,6 +266,8 @@ function bind(){
   $('#bclear').onclick=()=>{sel.clear();updSel();if(st.onlySel){st.onlySel=false;$('#tSel').checked=false;$('#bshow').setAttribute('aria-pressed','false')}apply()};
 }
 build();bind();updSel();apply();
+let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>fit(),150)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>fit());
 """
 
 
