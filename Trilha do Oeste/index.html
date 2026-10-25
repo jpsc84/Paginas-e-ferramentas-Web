@@ -369,7 +369,7 @@ const map = new maplibregl.Map({
   container: 'map', style: STYLE, center: startCenter, zoom: lastPos ? 14 : 12,
   attributionControl: false, maxPitch: 60, dragRotate: true
 });
-map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: '<a href="https://openfreemap.org" target="_blank">OpenFreeMap</a> © <a href="https://www.openmaptiles.org/" target="_blank">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>' }), 'bottom-left');
+map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
 map.on('error', e => { if (e && e.error && /Failed to fetch|NetworkError/i.test(String(e.error.message))) toast('Sem conexão para carregar o mapa.'); });
 
 const EMPTY = { type: 'FeatureCollection', features: [] };
@@ -488,8 +488,11 @@ function describe(p) {
 function renderResults(feats) {
   const ul = $('#results'); ul.innerHTML = '';
   if (!feats.length) { ul.innerHTML = '<li class="hint">Nada encontrado. Tente o nome da rua com o bairro ou a cidade.</li>'; return; }
+  const seen = new Set();
   feats.forEach(f => {
     const d = describe(f.properties || {});
+    if (seen.has(d.title + '|' + d.sub)) return;
+    seen.add(d.title + '|' + d.sub);
     const li = document.createElement('li');
     const b = document.createElement('button');
     b.innerHTML = '<div class="t"></div><div class="s"></div>';
