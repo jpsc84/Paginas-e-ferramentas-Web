@@ -35,9 +35,9 @@ button{cursor:pointer;border:0;background:none;padding:0}
 /* textura de papel e vinheta por cima do mapa */
 #paper{position:fixed;inset:0;pointer-events:none;z-index:2;mix-blend-mode:multiply;
   background:
-   radial-gradient(ellipse at 50% 45%,transparent 52%,rgba(92,52,18,.30) 100%),
+   radial-gradient(ellipse at 50% 45%,transparent 60%,rgba(92,52,18,.12) 100%),
    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .16 0 0 0 .38 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity:.85}
+  opacity:.6}
 #paper::after{content:"";position:absolute;inset:0;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .16 0 0 0 .5 -.12'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23m)'/%3E%3C/svg%3E");}
 
@@ -108,8 +108,8 @@ button{cursor:pointer;border:0;background:none;padding:0}
 #recenter.on{display:block}
 
 /* marcadores */
-.me{width:46px;height:46px}
-.me svg{width:46px;height:46px;filter:drop-shadow(0 2px 2px rgba(40,20,5,.5))}
+.me{width:76px;height:76px}
+.me svg{width:76px;height:76px}
 .xmark{width:40px;height:40px}
 
 /* ajustes */
@@ -216,17 +216,27 @@ button{cursor:pointer;border:0;background:none;padding:0}
   <div class="panel">
     <h2 id="sTitle">Ajustes</h2>
     <div class="field">
-      <label for="sVoice">Voz</label>
-      <select id="sVoice"></select>
-      <p class="note">Vozes "Aprimoradas" ou "Premium" soam bem melhor. No iPhone, baixe em Ajustes, Acessibilidade, Conteúdo Falado, Vozes, Português (Brasil).</p>
+      <label for="sMode">Narrador</label>
+      <select id="sMode">
+        <option value="pistoleiro">Pistoleiro (voz gravada)</option>
+        <option value="aparelho">Voz do iPhone</option>
+      </select>
+      <p class="note" id="sModeNote"></p>
     </div>
-    <div class="field">
-      <label for="sPitch">Tom de voz <span id="sPitchV"></span></label>
-      <input id="sPitch" type="range" min="0.5" max="1.3" step="0.05">
-    </div>
-    <div class="field">
-      <label for="sRate">Velocidade da fala <span id="sRateV"></span></label>
-      <input id="sRate" type="range" min="0.8" max="1.2" step="0.05">
+    <div id="deviceVoice">
+      <div class="field">
+        <label for="sVoice">Voz do iPhone</label>
+        <select id="sVoice"></select>
+        <p class="note">Vozes "Aprimoradas" ou "Premium" soam bem melhor. No iPhone, baixe em Ajustes, Acessibilidade, Conteúdo Falado, Vozes, Português (Brasil).</p>
+      </div>
+      <div class="field">
+        <label for="sPitch">Tom de voz <span id="sPitchV"></span></label>
+        <input id="sPitch" type="range" min="0.5" max="1.3" step="0.05">
+      </div>
+      <div class="field">
+        <label for="sRate">Velocidade da fala <span id="sRateV"></span></label>
+        <input id="sRate" type="range" min="0.8" max="1.2" step="0.05">
+      </div>
     </div>
     <div class="row" style="margin:0 0 18px"><button class="btn plain" id="sTest">Testar voz</button></div>
     <div class="field">
@@ -247,7 +257,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 const $ = s => document.querySelector(s);
 
 // ---------- Preferências ----------
-const DEF = { pitch: 0.8, rate: 1, voice: '', sim: false, muted: false };
+const DEF = { pitch: 0.8, rate: 1, voice: '', sim: false, muted: false, narrator: 'pistoleiro' };
 const cfg = (() => { try { return Object.assign({}, DEF, JSON.parse(localStorage.getItem('trilha.cfg') || '{}')); } catch (e) { return Object.assign({}, DEF); } })();
 const saveCfg = () => { try { localStorage.setItem('trilha.cfg', JSON.stringify(cfg)); } catch (e) {} };
 let lastPos = null;
@@ -257,40 +267,46 @@ try { lastPos = JSON.parse(localStorage.getItem('trilha.pos') || 'null'); } catc
 const NAME = ['coalesce', ['get', 'name:pt'], ['get', 'name']];
 const cls = list => ['match', ['get', 'class'], list, true, false];
 const zi = (...stops) => ['interpolate', ['exponential', 1.4], ['zoom'], ...stops];
+const zl = (...stops) => ['interpolate', ['linear'], ['zoom'], ...stops];
+const INK = '#2B1D14', BG = '#DFC89E';
+// Fontes do mapa geradas para este app (tools/gerar_fontes.py): Libre Franklin e Alegreya, licença OFL.
+const GLYPHS = location.href.replace(/[#?].*$/, '').replace(/[^/]*$/, '') + 'fonts/{fontstack}/{range}.pbf';
+const F_CITY = ['TrilhaCidade'], F_REGION = ['TrilhaRegiao'], F_PLACE = ['TrilhaLugar'], F_ROAD = ['TrilhaRua'];
+const roads = (id, classes, minzoom, width) => ({ id, type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom,
+  filter: ['all', cls(classes), ['!=', ['get', 'brunnel'], 'tunnel']],
+  layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': INK, 'line-width': width } });
 const STYLE = {
   version: 8,
-  glyphs: 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf',
+  glyphs: GLYPHS,
   sources: { omt: { type: 'vector', url: 'https://tiles.openfreemap.org/planet' } },
   layers: [
-    { id: 'bg', type: 'background', paint: { 'background-color': '#E6D3A8' } },
-    { id: 'wood', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: cls(['wood', 'forest']), paint: { 'fill-color': '#C6B884', 'fill-opacity': 0.55 } },
-    { id: 'grass', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: cls(['grass']), paint: { 'fill-color': '#D6C895', 'fill-opacity': 0.45 } },
-    { id: 'wet', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: cls(['wetland']), paint: { 'fill-color': '#BDC199', 'fill-opacity': 0.5 } },
-    { id: 'sand', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: cls(['sand']), paint: { 'fill-color': '#EAD7A6', 'fill-opacity': 0.7 } },
-    { id: 'town', type: 'fill', source: 'omt', 'source-layer': 'landuse', minzoom: 9, filter: cls(['residential', 'suburb', 'neighbourhood']), paint: { 'fill-color': '#D9C190', 'fill-opacity': 0.35 } },
-    { id: 'park', type: 'fill', source: 'omt', 'source-layer': 'park', paint: { 'fill-color': '#CDBF8A', 'fill-opacity': 0.45 } },
-    { id: 'water-glow', type: 'line', source: 'omt', 'source-layer': 'water', minzoom: 6, paint: { 'line-color': '#7C917D', 'line-width': zi(6, 3, 14, 10), 'line-blur': zi(6, 3, 14, 9), 'line-opacity': 0.35 } },
-    { id: 'water', type: 'fill', source: 'omt', 'source-layer': 'water', paint: { 'fill-color': '#9DAE9C' } },
-    { id: 'water-edge', type: 'line', source: 'omt', 'source-layer': 'water', paint: { 'line-color': '#5F735F', 'line-width': zi(6, 0.5, 16, 1.6) } },
-    { id: 'river', type: 'line', source: 'omt', 'source-layer': 'waterway', filter: cls(['river', 'canal', 'stream']), paint: { 'line-color': '#7C917D', 'line-width': zi(8, 0.6, 16, 3) } },
-    { id: 'building', type: 'fill', source: 'omt', 'source-layer': 'building', minzoom: 14, paint: { 'fill-color': '#D2BA88', 'fill-outline-color': '#A2875A', 'fill-opacity': ['interpolate', ['linear'], ['zoom'], 14, 0, 15, 0.75] } },
-    { id: 'border-state', type: 'line', source: 'omt', 'source-layer': 'boundary', filter: ['all', ['==', ['get', 'admin_level'], 4], ['!=', ['get', 'maritime'], 1]], paint: { 'line-color': '#7D5F3C', 'line-width': 1.2, 'line-dasharray': [4, 2, 1, 2] } },
-    { id: 'border-country', type: 'line', source: 'omt', 'source-layer': 'boundary', filter: ['all', ['==', ['get', 'admin_level'], 2], ['!=', ['get', 'maritime'], 1]], paint: { 'line-color': '#5B3B22', 'line-width': 2.2, 'line-dasharray': [5, 2, 1, 2] } },
-    { id: 'path', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 13, filter: cls(['track', 'path']), paint: { 'line-color': '#86663F', 'line-width': zi(13, 0.6, 18, 1.8), 'line-dasharray': [2, 1.5] } },
-    { id: 'minor-case', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 11, filter: cls(['minor', 'service']), layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#6A4D31', 'line-width': zi(11, 0.3, 14, 2.4, 17, 9, 19, 17) } },
-    { id: 'mid-case', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 7, filter: cls(['secondary', 'tertiary']), layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#4A3220', 'line-width': zi(7, 0.5, 11, 2, 14, 5.6, 17, 14, 19, 24) } },
-    { id: 'major-case', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 4, filter: cls(['motorway', 'trunk', 'primary']), layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#3A2716', 'line-width': zi(4, 0.6, 10, 2.6, 14, 7.5, 17, 18, 19, 31) } },
-    { id: 'minor-fill', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 14, filter: cls(['minor', 'service']), layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#F1E2BF', 'line-width': zi(14, 0.8, 17, 6.5, 19, 13) } },
-    { id: 'mid-fill', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 11, filter: cls(['secondary', 'tertiary']), layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#F4E5C1', 'line-width': zi(11, 1, 14, 3.6, 17, 11, 19, 20) } },
-    { id: 'major-fill', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 9, filter: cls(['motorway', 'trunk', 'primary']), layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': ['match', ['get', 'class'], ['motorway', 'trunk'], '#E2BE78', '#F4E5C1'], 'line-width': zi(9, 1, 14, 5, 17, 14, 19, 26) } },
-    { id: 'rail', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 10, filter: cls(['rail']), paint: { 'line-color': '#4E3A28', 'line-width': 1.4, 'line-dasharray': [3, 1.5] } },
-    { id: 'river-label', type: 'symbol', source: 'omt', 'source-layer': 'waterway', minzoom: 12, layout: { 'text-field': NAME, 'text-font': ['Noto Sans Italic'], 'text-size': 13, 'symbol-placement': 'line', 'text-letter-spacing': 0.1 }, paint: { 'text-color': '#4E6552', 'text-halo-color': '#E6D3A8', 'text-halo-width': 1.4 } },
-    { id: 'water-label', type: 'symbol', source: 'omt', 'source-layer': 'water_name', filter: ['==', ['geometry-type'], 'Point'], layout: { 'text-field': NAME, 'text-font': ['Noto Sans Italic'], 'text-size': ['interpolate', ['linear'], ['zoom'], 6, 12, 14, 16], 'text-letter-spacing': 0.15 }, paint: { 'text-color': '#4E6552', 'text-halo-color': '#9DAE9C', 'text-halo-width': 1 } },
-    { id: 'road-label', type: 'symbol', source: 'omt', 'source-layer': 'transportation_name', minzoom: 13, filter: ['!', cls(['rail', 'ferry'])], layout: { 'text-field': NAME, 'text-font': ['Noto Sans Italic'], 'text-size': ['interpolate', ['linear'], ['zoom'], 13, 10.5, 17, 14], 'symbol-placement': 'line', 'text-max-angle': 30, 'text-padding': 2 }, paint: { 'text-color': '#3A2716', 'text-halo-color': '#F1E2BF', 'text-halo-width': 1.6 } },
-    { id: 'place-neigh', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 13, filter: cls(['neighbourhood', 'quarter', 'hamlet']), layout: { 'text-field': NAME, 'text-font': ['Noto Sans Italic'], 'text-size': 13, 'text-letter-spacing': 0.05 }, paint: { 'text-color': '#5B3B22', 'text-halo-color': '#E6D3A8', 'text-halo-width': 1.6 } },
-    { id: 'place-village', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 10, filter: cls(['village', 'suburb']), layout: { 'text-field': NAME, 'text-font': ['Noto Sans Regular'], 'text-size': ['interpolate', ['linear'], ['zoom'], 10, 11, 15, 15], 'text-letter-spacing': 0.06 }, paint: { 'text-color': '#3A2716', 'text-halo-color': '#E6D3A8', 'text-halo-width': 1.8 } },
-    { id: 'place-town', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 6, filter: cls(['town']), layout: { 'text-field': NAME, 'text-font': ['Noto Sans Bold'], 'text-size': ['interpolate', ['linear'], ['zoom'], 6, 10, 12, 16], 'text-transform': 'uppercase', 'text-letter-spacing': 0.12 }, paint: { 'text-color': '#2E1F14', 'text-halo-color': '#E6D3A8', 'text-halo-width': 2 } },
-    { id: 'place-city', type: 'symbol', source: 'omt', 'source-layer': 'place', filter: cls(['city']), layout: { 'text-field': NAME, 'text-font': ['Noto Sans Bold'], 'text-size': ['interpolate', ['linear'], ['zoom'], 4, 11, 8, 15, 13, 21], 'text-transform': 'uppercase', 'text-letter-spacing': 0.18 }, paint: { 'text-color': '#2E1F14', 'text-halo-color': '#E6D3A8', 'text-halo-width': 2.2 } }
+    { id: 'bg', type: 'background', paint: { 'background-color': BG } },
+    { id: 'wood', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: cls(['wood', 'forest']), paint: { 'fill-color': '#D2B989', 'fill-opacity': 0.35 } },
+    { id: 'wet', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: cls(['wetland']), paint: { 'fill-color': '#C9BC92', 'fill-opacity': 0.4 } },
+    { id: 'water', type: 'fill', source: 'omt', 'source-layer': 'water', paint: { 'fill-color': '#A3A592' } },
+    { id: 'water-edge', type: 'line', source: 'omt', 'source-layer': 'water', paint: { 'line-color': '#4B4A3E', 'line-width': zl(6, 0.5, 14, 1.2, 18, 1.8) } },
+    { id: 'river', type: 'line', source: 'omt', 'source-layer': 'waterway', filter: cls(['river', 'canal']), paint: { 'line-color': '#4B4A3E', 'line-width': zi(8, 0.8, 16, 3) } },
+    { id: 'stream', type: 'line', source: 'omt', 'source-layer': 'waterway', minzoom: 12, filter: cls(['stream', 'ditch', 'drain']), paint: { 'line-color': '#6B6A58', 'line-width': zl(12, 0.6, 17, 1.6) } },
+    { id: 'building', type: 'fill', source: 'omt', 'source-layer': 'building', minzoom: 15, paint: { 'fill-color': 'rgba(0,0,0,0)', 'fill-outline-color': INK, 'fill-opacity': zl(15, 0, 15.6, 1) } },
+    { id: 'border-state', type: 'line', source: 'omt', 'source-layer': 'boundary', filter: ['all', ['==', ['get', 'admin_level'], 4], ['!=', ['get', 'maritime'], 1]], paint: { 'line-color': INK, 'line-opacity': 0.55, 'line-width': zl(4, 1, 12, 2.2), 'line-dasharray': [4, 3] } },
+    { id: 'border-country', type: 'line', source: 'omt', 'source-layer': 'boundary', filter: ['all', ['==', ['get', 'admin_level'], 2], ['!=', ['get', 'maritime'], 1]], paint: { 'line-color': INK, 'line-opacity': 0.7, 'line-width': 2.4, 'line-dasharray': [5, 2, 1, 2] } },
+    { id: 'path', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 13, filter: cls(['track', 'path']), paint: { 'line-color': INK, 'line-opacity': 0.8, 'line-width': zl(13, 0.8, 18, 1.6), 'line-dasharray': [3, 2.5] } },
+    roads('minor', ['minor', 'service'], 11, zi(11, 0.4, 14, 1.3, 17, 2.8, 19, 4.5)),
+    roads('mid', ['secondary', 'tertiary'], 8, zi(8, 0.5, 12, 1.4, 14, 2.2, 17, 4.2, 19, 6.5)),
+    roads('major', ['motorway', 'trunk', 'primary'], 5, zi(5, 0.7, 10, 1.6, 14, 2.9, 17, 5.2, 19, 8.5)),
+    { id: 'rail', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 9, filter: cls(['rail']), paint: { 'line-color': INK, 'line-width': zl(9, 1, 16, 2) } },
+    { id: 'rail-ties', type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom: 13, filter: cls(['rail']), paint: { 'line-color': INK, 'line-width': zl(13, 4, 17, 7), 'line-dasharray': [0.3, 4] } },
+    { id: 'river-label', type: 'symbol', source: 'omt', 'source-layer': 'waterway', minzoom: 11, layout: { 'text-field': NAME, 'text-font': F_PLACE, 'text-size': zl(11, 12, 16, 17), 'symbol-placement': 'line', 'text-letter-spacing': 0.06, 'text-max-angle': 25 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1 } },
+    { id: 'water-label', type: 'symbol', source: 'omt', 'source-layer': 'water_name', filter: ['==', ['geometry-type'], 'Point'], layout: { 'text-field': NAME, 'text-font': F_PLACE, 'text-size': zl(6, 12, 15, 18), 'text-max-width': 7 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1 } },
+    { id: 'park-label', type: 'symbol', source: 'omt', 'source-layer': 'park', minzoom: 13, filter: ['==', ['geometry-type'], 'Point'], layout: { 'text-field': NAME, 'text-font': F_PLACE, 'text-size': zl(13, 12, 17, 16), 'text-max-width': 7 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1 } },
+    { id: 'road-label', type: 'symbol', source: 'omt', 'source-layer': 'transportation_name', minzoom: 14, filter: ['!', cls(['rail', 'ferry'])], layout: { 'text-field': NAME, 'text-font': F_ROAD, 'text-size': zl(14, 11, 17, 14.5), 'symbol-placement': 'line', 'text-max-angle': 30, 'text-padding': 2 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1.6 } },
+    { id: 'place-neigh', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 13, filter: cls(['neighbourhood', 'quarter', 'hamlet', 'isolated_dwelling']), layout: { 'text-field': NAME, 'text-font': F_PLACE, 'text-size': zl(13, 13, 17, 19), 'text-max-width': 8 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1.2 } },
+    { id: 'place-village', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 10, filter: cls(['village', 'suburb']), layout: { 'text-field': NAME, 'text-font': F_CITY, 'text-size': zl(10, 11, 14, 16, 17, 22), 'text-transform': 'uppercase', 'text-letter-spacing': 0.06, 'text-max-width': 9 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1.4 } },
+    { id: 'place-town', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 6, filter: cls(['town']), layout: { 'text-field': NAME, 'text-font': F_CITY, 'text-size': zl(6, 11, 12, 20, 16, 28), 'text-transform': 'uppercase', 'text-letter-spacing': 0.06, 'text-max-width': 10 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1.6 } },
+    { id: 'place-city', type: 'symbol', source: 'omt', 'source-layer': 'place', maxzoom: 10, filter: cls(['city']), layout: { 'text-field': NAME, 'text-font': F_CITY, 'text-size': zl(4, 11, 9, 20), 'text-transform': 'uppercase', 'text-letter-spacing': 0.06, 'text-max-width': 10 }, paint: { 'text-color': INK, 'text-halo-color': BG, 'text-halo-width': 1.6 } },
+    // Como as regiões do mapa do jogo: letras grandes e espaçadas, por baixo dos outros nomes.
+    { id: 'region-city', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 10, filter: cls(['city']), layout: { 'text-field': NAME, 'text-font': F_REGION, 'text-size': zl(10, 28, 13, 52, 16, 80), 'text-transform': 'uppercase', 'text-letter-spacing': 0.9, 'text-max-width': 60, 'text-allow-overlap': true, 'text-ignore-placement': true }, paint: { 'text-color': INK, 'text-opacity': 0.42 } },
+    { id: 'region-state', type: 'symbol', source: 'omt', 'source-layer': 'place', minzoom: 4, maxzoom: 10, filter: cls(['state']), layout: { 'text-field': NAME, 'text-font': F_REGION, 'text-size': zl(4, 16, 9, 40), 'text-transform': 'uppercase', 'text-letter-spacing': 0.8, 'text-max-width': 60, 'text-allow-overlap': true, 'text-ignore-placement': true }, paint: { 'text-color': INK, 'text-opacity': 0.55 } }
   ]
 };
 window.TRILHA_STYLE = STYLE;
@@ -352,15 +368,79 @@ function utter(text) {
   u.pitch = cfg.pitch; u.rate = cfg.rate;
   return u;
 }
-function speak(text) {
-  if (!synth || cfg.muted || !text) return;
+function speakDevice(text) {
+  if (!synth || !text) return;
   synth.cancel();
   setTimeout(() => synth.speak(utter(text)), 60);
 }
-// O iOS só libera a fala depois de um toque; chamado dentro do clique em "Partir".
-function unlockSpeech() {
-  if (!synth) return;
-  const u = new SpeechSynthesisUtterance(' '); u.volume = 0; synth.speak(u);
+
+// Voz do pistoleiro: trechos pré-gravados (pasta voz/) tocados em sequência pelo Web Audio.
+const clips = { ctx: null, gain: null, have: null, bufs: new Map(), sources: [], token: 0 };
+fetch('voz/manifest.json').then(r => r.ok ? r.json() : null).then(j => { if (j) clips.have = new Set(j.clipes); }).catch(() => {});
+function audioCtx() {
+  if (!clips.ctx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    clips.ctx = new AC();
+    clips.gain = clips.ctx.createGain();
+    clips.gain.connect(clips.ctx.destination);
+  }
+  return clips.ctx;
+}
+function loadClip(id) {
+  if (clips.bufs.has(id)) return clips.bufs.get(id);
+  const p = fetch('voz/' + id + '.mp3')
+    .then(r => { if (!r.ok) throw new Error(id); return r.arrayBuffer(); })
+    .then(b => new Promise((res, rej) => audioCtx().decodeAudioData(b, res, rej)));
+  p.catch(() => clips.bufs.delete(id));
+  clips.bufs.set(id, p);
+  if (clips.bufs.size > 40) clips.bufs.delete(clips.bufs.keys().next().value);
+  return p;
+}
+function stopClips() { clips.sources.forEach(x => { try { x.stop(); } catch (e) {} }); clips.sources = []; }
+async function playClips(ids) {
+  const ctx = audioCtx();
+  if (!ctx) throw new Error('sem Web Audio');
+  const tok = ++clips.token;
+  const bufs = await Promise.all(ids.map(loadClip));
+  if (tok !== clips.token) return;
+  if (ctx.state !== 'running') { try { await ctx.resume(); } catch (e) {} }
+  stopClips();
+  let t = ctx.currentTime + 0.03;
+  bufs.forEach(b => {
+    const src = ctx.createBufferSource();
+    src.buffer = b; src.connect(clips.gain); src.start(t);
+    t += b.duration - 0.04;
+    clips.sources.push(src);
+  });
+}
+// Baixa os arquivos (sem decodificar) para o cache do app, assim a voz funciona mesmo com sinal fraco.
+function prefetchClips() {
+  if (cfg.narrator !== 'pistoleiro' || !clips.have) return;
+  const ids = [...clips.have]; let i = 0;
+  const next = () => { if (i < ids.length) fetch('voz/' + ids[i++] + '.mp3').catch(() => {}).finally(next); };
+  for (let k = 0; k < 3; k++) next();
+}
+// u = { text, chunks } vindo do motor de navegação
+function speak(u) {
+  if (cfg.muted || !u) return;
+  if (cfg.narrator === 'pistoleiro' && u.chunks && clips.have && u.chunks.every(c => clips.have.has(c))) {
+    if (synth) synth.cancel();
+    playClips(u.chunks).catch(() => speakDevice(u.text));
+    return;
+  }
+  stopClips();
+  speakDevice(u.text);
+}
+// O iOS só libera som depois de um toque; chamado dentro do clique em "Partir" e em "Testar voz".
+function unlockAudio() {
+  if (synth) { const x = new SpeechSynthesisUtterance(' '); x.volume = 0; synth.speak(x); }
+  const ctx = audioCtx();
+  if (!ctx) return;
+  try { if (navigator.audioSession) navigator.audioSession.type = 'transient'; } catch (e) {}
+  if (ctx.resume) ctx.resume();
+  const b = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource();
+  src.buffer = b; src.connect(ctx.destination); src.start(0);
 }
 
 // ---------- Mapa ----------
@@ -376,9 +456,9 @@ const EMPTY = { type: 'FeatureCollection', features: [] };
 map.on('load', () => {
   map.addSource('route', { type: 'geojson', data: EMPTY });
   const w = (...s) => ['interpolate', ['linear'], ['zoom'], ...s];
-  map.addLayer({ id: 'route-case', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#F3E5C3', 'line-width': w(8, 6, 16, 14, 19, 24) } }, 'river-label');
-  map.addLayer({ id: 'route-line', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#7A1F14', 'line-width': w(8, 3.5, 16, 8, 19, 15) } }, 'river-label');
-  map.addLayer({ id: 'route-dots', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#F3E5C3', 'line-width': w(8, 1, 16, 2.2, 19, 3.5), 'line-dasharray': [0, 3] } }, 'river-label');
+  map.addLayer({ id: 'route-case', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#F3E5C3', 'line-width': w(8, 5, 16, 11, 19, 18) } }, 'river-label');
+  map.addLayer({ id: 'route-line', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#9E2416', 'line-width': w(8, 3, 16, 6.5, 19, 11) } }, 'river-label');
+  map.addLayer({ id: 'route-dots', type: 'line', source: 'route', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#F3E5C3', 'line-width': w(8, 0.8, 16, 1.8, 19, 3), 'line-dasharray': [0, 3] } }, 'river-label');
   if (route) drawRoute(route.coords);
 });
 
@@ -391,7 +471,7 @@ function drawRoute(coords) {
 // marcador do viajante
 const meEl = document.createElement('div');
 meEl.className = 'me';
-meEl.innerHTML = '<svg viewBox="0 0 48 48"><path d="M24 3 39 41 24 33 9 41Z" fill="#F3E5C3" stroke="#2E1F14" stroke-width="3" stroke-linejoin="round"/><path d="M24 3 24 33 9 41Z" fill="#7A1F14"/><path d="M24 3 39 41 24 33 9 41Z" fill="none" stroke="#2E1F14" stroke-width="3" stroke-linejoin="round"/></svg>';
+meEl.innerHTML = '<svg viewBox="0 0 76 76"><g stroke="#B3261E" stroke-width="3" stroke-linecap="round"><path d="M38 2v15M38 59v15M2 38h15M59 38h15"/></g><path d="M38 20 C46 20 51 27 50 35 L38 56 L26 35 C25 27 30 20 38 20Z" transform="rotate(180 38 38)" fill="#FBF7EC" stroke="#2B1D14" stroke-width="2.5" stroke-linejoin="round" style="filter:drop-shadow(0 1.5px 1.5px rgba(40,20,5,.45))"/></svg>';
 const me = new maplibregl.Marker({ element: meEl, rotationAlignment: 'map', pitchAlignment: 'map' });
 let meAdded = false;
 function setMe(lonlat, heading) {
@@ -553,7 +633,8 @@ function clearTrip() {
 // ---------- Navegação ----------
 $('#start').addEventListener('click', () => {
   if (!route) return;
-  unlockSpeech();
+  unlockAudio();
+  prefetchClips();
   keepAwake();
   navr = new Nav.Navigator(route, { say: speak });
   following = true;
@@ -567,6 +648,7 @@ function endNav() {
   stopSim();
   sim.on = false;
   if (synth) synth.cancel();
+  stopClips();
   releaseAwake();
   clearTrip();
   if (fix) setMe([fix.lon, fix.lat], fix.heading);
@@ -619,7 +701,7 @@ $('#recenter').addEventListener('click', () => {
 async function reroute(f) {
   if (rerouting || Date.now() - lastReroute < 8000 || !dest) return;
   rerouting = true; lastReroute = Date.now();
-  speak(Nav.rerouteLine());
+  speak(Nav.rerouteUtt());
   $('#mIcon').innerHTML = iconFor({ type: 'turn', modifier: 'uturn' });
   $('#mDist').textContent = 'Fora da trilha';
   $('#mAct').textContent = 'Recalculando a rota';
@@ -663,7 +745,7 @@ function updateMute() {
   $('#mute').innerHTML = cfg.muted ? ICON_MUTE : ICON_SOUND;
   $('#mute').setAttribute('aria-label', cfg.muted ? 'Ativar voz' : 'Silenciar voz');
 }
-$('#mute').addEventListener('click', () => { cfg.muted = !cfg.muted; saveCfg(); updateMute(); if (cfg.muted && synth) synth.cancel(); });
+$('#mute').addEventListener('click', () => { cfg.muted = !cfg.muted; saveCfg(); updateMute(); if (cfg.muted) { if (synth) synth.cancel(); stopClips(); } });
 
 // ---------- Localizar ----------
 $('#locate').addEventListener('click', () => {
@@ -689,7 +771,17 @@ function syncSettings() {
   $('#sPitch').value = cfg.pitch; $('#sPitchV').textContent = cfg.pitch.toFixed(2).replace('.', ',');
   $('#sRate').value = cfg.rate; $('#sRateV').textContent = cfg.rate.toFixed(2).replace('.', ',');
   $('#sSim').checked = cfg.sim;
+  $('#sMode').value = cfg.narrator;
+  syncMode();
 }
+function syncMode() {
+  const rec = cfg.narrator === 'pistoleiro';
+  $('#deviceVoice').style.display = rec ? 'none' : 'block';
+  $('#sModeNote').textContent = rec
+    ? 'Voz grave pré-gravada, feita a partir do modelo livre Piper "edresson" (TTS-Portuguese Corpus, de Edresson Casanova, licença CC BY 4.0). Não fala nomes de rua; eles aparecem na placa.'
+    : 'Usa a voz instalada no iPhone e fala os nomes das ruas.';
+}
+$('#sMode').addEventListener('change', e => { cfg.narrator = e.target.value; saveCfg(); syncMode(); });
 $('#openSettings').addEventListener('click', () => { syncSettings(); $('#settings').classList.add('on'); });
 $('#sClose').addEventListener('click', () => $('#settings').classList.remove('on'));
 $('#settings').addEventListener('click', e => { if (e.target.id === 'settings') $('#settings').classList.remove('on'); });
@@ -698,9 +790,10 @@ $('#sPitch').addEventListener('input', e => { cfg.pitch = +e.target.value; $('#s
 $('#sRate').addEventListener('input', e => { cfg.rate = +e.target.value; $('#sRateV').textContent = cfg.rate.toFixed(2).replace('.', ','); saveCfg(); });
 $('#sSim').addEventListener('change', e => { cfg.sim = e.target.checked; saveCfg(); });
 $('#sTest').addEventListener('click', () => {
-  if (!synth) { toast('Este navegador não tem voz sintetizada.'); return; }
-  synth.cancel();
-  synth.speak(utter('Daqui a 300 metros, vire à direita na Avenida Frei Serafim, parceiro.'));
+  unlockAudio();
+  const wasMuted = cfg.muted; cfg.muted = false;
+  speak(Nav.sampleUtt());
+  cfg.muted = wasMuted;
 });
 
 // ---------- Início ----------

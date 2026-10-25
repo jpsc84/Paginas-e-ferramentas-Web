@@ -157,42 +157,82 @@
     return { action: cap(action(st, false)), road: roadOf(st) };
   }
 
-  const LINES = {
-    far: ['Daqui a {d}, {a}.', 'Em {d}, {a}, parceiro.', 'Fica de olho: em {d}, {a}.'],
-    near: ['Agora, {a}.', 'É aqui, parceiro: {a}.', '{A} agora.'],
-    arriveFar: ['Em {d}, chegamos ao destino.', 'Faltam {d} para o fim da trilha.'],
-    arrive: ['Chegamos, parceiro. Pode apear.', 'Destino alcançado. Boa cavalgada.', 'Aqui estamos. Fim da trilha.'],
+  // ---------- Falas ----------
+  // Cada fala é montada em trechos ("chunks"). O texto completo (com nomes de rua) vai para a voz do aparelho;
+  // os trechos, sem nomes de rua, viram arquivos de áudio pré-gravados da voz do pistoleiro.
+  const LEADS = ['Daqui a {d},', 'Em {d},', 'Fica de olho: em {d},'];
+  const NEAR_PRE = ['Agora,', 'É aqui, parceiro:'];
+  const FIXED = {
     depart: ['Muito bem, parceiro, pé na estrada.', 'Hora de cavalgar.', 'Trilha traçada. Vamos nessa.'],
-    cont: ['Segue pela trilha por {d}.', 'Estrada longa pela frente: {d} até a próxima curva.'],
+    arrive: ['Chegamos, parceiro. Pode apear.', 'Destino alcançado. Boa cavalgada.', 'Aqui estamos. Fim da trilha.'],
     reroute: ['Saímos da trilha. Achando outro caminho.', 'Opa, desviamos, parceiro. Recalculando a rota.', 'Mudança de planos. Traçando nova trilha.']
   };
-  let lastPick = {};
-  function pick(kind, vars, rnd) {
-    const arr = LINES[kind];
-    let i = Math.floor((rnd || Math.random)() * arr.length);
-    if (arr.length > 1 && i === lastPick[kind]) i = (i + 1) % arr.length;
+  const CHAIN = 'E logo depois,', ARRIVE_TAIL = 'chegamos ao destino.';
+  const lastPick = {};
+  function rnd(kind, n) {
+    let i = Math.floor(Math.random() * n);
+    if (n > 1 && i === lastPick[kind]) i = (i + 1) % n;
     lastPick[kind] = i;
-    let s = arr[i];
-    for (const k in vars) s = s.split('{' + k + '}').join(vars[k]);
-    return s;
+    return i;
   }
-  function speechAction(st) {
-    const a = action(st, true), road = roadOf(st);
+  // Distância falada em trechos longos, arredondada para caber num conjunto fechado de gravações.
+  function contDist(m) {
+    const km = m / 1000;
+    let v;
+    if (km < 10) v = Math.max(2, Math.round(km * 2) / 2);
+    else if (km < 30) v = Math.round(km);
+    else if (km < 100) v = Math.round(km / 5) * 5;
+    else if (km < 300) v = Math.round(km / 10) * 10;
+    else if (km < 1000) v = Math.round(km / 50) * 50;
+    else return 'muitos quilômetros';
+    return (Number.isInteger(v) ? String(v) : String(v).replace('.', ',')) + ' quilômetros';
+  }
+  function slug(t) {
+    return t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+  function Utt() { this.text = ''; this.chunks = []; }
+  Utt.prototype.add = function (chunk, text) {
+    this.chunks.push(slug(chunk));
+    this.text += (this.text ? ' ' : '') + (text || chunk);
+    return this;
+  };
+  function streetPart(st, a) {
+    const road = roadOf(st);
     // Em rotatória e bifurcação o nome da via soa confuso; fala só a ação.
-    if (!road || /rotat|bifurca/.test(a)) return a;
-    return a + ' ' + withArticle(road);
+    return !road || /rotat|bifurca/.test(a) ? '' : ' ' + withArticle(road);
   }
-  function sayFar(st, dist) {
-    if (st.type === 'arrive') return pick('arriveFar', { d: speechDist(dist) });
-    return pick('far', { d: speechDist(dist), a: speechAction(st) });
+  function addFar(u, st, dist) {
+    const i = rnd('lead', LEADS.length);
+    u.add(LEADS[i].replace('{d}', speechDist(dist)));
+    if (st.type === 'arrive') { u.add(ARRIVE_TAIL); return u; }
+    const a = action(st, true), tail = i === 1 ? ', parceiro.' : '.';
+    return u.add(a + tail, a + streetPart(st, a) + tail);
   }
-  function sayNear(st) {
-    const a = action(st, true);
-    return pick('near', { a, A: cap(a) });
+  function addNear(u, st) {
+    u.add(NEAR_PRE[rnd('near', NEAR_PRE.length)]);
+    return u.add(action(st, true) + '.');
+  }
+  function addFixed(u, kind) { return u.add(FIXED[kind][rnd(kind, FIXED[kind].length)]); }
+  function addCont(u, dist) { return u.add('Segue pela trilha por ' + contDist(dist) + '.'); }
+
+  // Lista de todos os trechos possíveis (usada para gerar os arquivos de áudio).
+  function allChunks() {
+    const set = new Set([CHAIN, ARRIVE_TAIL, ...NEAR_PRE, ...FIXED.depart, ...FIXED.arrive, ...FIXED.reroute]);
+    const dists = new Set();
+    for (let m = 0; m <= 1100; m++) dists.add(speechDist(m));
+    dists.forEach(d => LEADS.forEach(l => set.add(l.replace('{d}', d))));
+    for (let m = 1500; m <= 1200000; m += 50) set.add('Segue pela trilha por ' + contDist(m) + '.');
+    const types = ['turn', 'new name', 'continue', 'merge', 'on ramp', 'off ramp', 'fork', 'end of road', 'roundabout', 'rotary', 'roundabout turn', 'exit roundabout', 'exit rotary', 'notification', 'use lane'];
+    const mods = ['', 'uturn', 'sharp right', 'right', 'slight right', 'straight', 'slight left', 'left', 'sharp left'];
+    types.forEach(t => mods.forEach(m => [null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(exit => {
+      const a = action({ type: t, modifier: m, exit }, true);
+      set.add(a + '.'); set.add(a + ', parceiro.');
+    })));
+    return [...set];
   }
 
   // ---------- Navegador ----------
-  // opts.say(texto) é chamado quando há algo a falar.
+  // opts.say({ text, chunks }) é chamado quando há algo a falar.
   class Navigator {
     constructor(route, opts) {
       this.say = (opts && opts.say) || (() => {});
@@ -225,35 +265,34 @@
       for (let i = ni - 1; i > 0; i--) if (!silent(steps[i])) { prevAlong = steps[i].along; break; }
       const gap = st.along - prevAlong;
       const sp = this.sp(ni);
-      const parts = [];
+      const u = new Utt();
 
       if (!offRoute && !this.arrived) {
         if (!this.started) {
           this.started = true;
-          parts.push(pick('depart', {}));
-          if (dist > N + 30 && dist <= Math.max(F, 1000)) { parts.push(sayFar(st, dist)); if (dist <= F) sp.far = true; }
-          else if (dist > Math.max(F, 1000)) { parts.push(pick('cont', { d: speechDist(dist) })); sp.cont = true; }
+          addFixed(u, 'depart');
+          if (dist > N + 30 && dist <= Math.max(F, 1000)) { addFar(u, st, dist); if (dist <= F) sp.far = true; }
+          else if (dist > Math.max(F, 1000)) { addCont(u, dist); sp.cont = true; }
         }
         if (st.type === 'arrive') {
-          if (remaining <= 30 || dist <= 30) { this.arrived = true; parts.push(pick('arrive', {})); }
-          else if (dist <= F && dist > N + 30 && gap > N + 60 && !sp.far) { sp.far = true; parts.push(sayFar(st, dist)); }
+          if (remaining <= 30 || dist <= 30) { this.arrived = true; addFixed(u, 'arrive'); }
+          else if (dist <= F && dist > N + 30 && gap > N + 60 && !sp.far) { sp.far = true; addFar(u, st, dist); }
         } else if (dist <= N && !sp.near) {
           sp.near = sp.far = true;
-          let line = sayNear(st);
+          addNear(u, st);
           const nx = steps.slice(ni + 1).find(x => !silent(x));
           if (nx && nx.type !== 'arrive' && nx.along - st.along < 100) {
-            line += ' E logo depois, ' + action(nx, true) + '.';
+            u.add(CHAIN).add(action(nx, true) + '.');
             this.sp(steps.indexOf(nx)).far = true;
           }
-          parts.push(line);
         } else if (dist <= F && dist > N + 30 && gap > N + 60 && !sp.far) {
-          sp.far = true; parts.push(sayFar(st, dist));
+          sp.far = true; addFar(u, st, dist);
         } else if (this.lastNi !== null && ni > this.lastNi && dist > 2000 && !sp.far && !sp.cont) {
-          sp.cont = true; parts.push(pick('cont', { d: speechDist(dist) }));
+          sp.cont = true; addCont(u, dist);
         }
       }
       this.lastNi = ni;
-      if (parts.length) this.say(parts.join(' '));
+      if (u.chunks.length) this.say(u);
 
       return {
         snap: s, along, remaining, offRoute, arrived: this.arrived,
@@ -264,8 +303,10 @@
   }
 
   const api = {
-    hav, bearing, buildRoute, snap, pointAt, screenText, screenDist, speechDist,
-    withArticle, action, silent, Navigator, rerouteLine: () => pick('reroute', {}), lines: LINES
+    hav, bearing, buildRoute, snap, pointAt, screenText, screenDist, speechDist, contDist,
+    withArticle, action, silent, slug, allChunks, Navigator,
+    rerouteUtt: () => addFixed(new Utt(), 'reroute'),
+    sampleUtt: () => new Utt().add('Daqui a 300 metros,').add('vire à direita, parceiro.', 'vire à direita na Avenida Frei Serafim, parceiro.')
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.Nav = api;
