@@ -25,8 +25,8 @@
   --st:env(safe-area-inset-top,0px); --sb:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-/* A moldura #app recebe a altura real da tela (ver fitScreen): no iPhone instalado como app,
-   100% e bottom:0 param acima do fim da tela e deixam uma faixa vazia embaixo. */
+/* A moldura #app recebe a altura visível medida em fitScreen. No iPhone instalado como app, o iOS
+   para de desenhar acima do fim da tela; a sobra herda a cor do fundo (igual à da folha inferior). */
 #app{position:fixed;left:0;top:0;width:100%;height:100%;height:var(--app-h,100dvh);overflow:hidden}
 html,body{margin:0;height:100%;overflow:hidden;background:var(--tallow);color:var(--ink);
   font-family:"Alegreya",Georgia,serif;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
@@ -73,7 +73,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 #mRoad{font-size:18px;line-height:1.2;opacity:.82;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* folha inferior */
-#sheet{position:absolute;z-index:6;left:0;right:0;bottom:0;padding:14px 14px calc(var(--sb) + 14px);
+#sheet{position:absolute;z-index:6;left:0;right:0;bottom:0;padding:14px 14px calc(max(var(--sb) - var(--gap,0px), 0px) + 14px);
   background:var(--tallow);border-top:2px solid var(--ink);
   box-shadow:0 -1px 0 4px rgba(243,229,195,.7),0 -12px 30px rgba(60,30,8,.25)}
 .view{display:none}.view.on{display:block}
@@ -457,12 +457,16 @@ function fitScreen() {
   let h = Math.max(window.innerHeight, document.documentElement.clientHeight, vv ? vv.height : 0);
   const ios = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   const installed = window.navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  let gap = 0;
   if (ios && installed) {
     const portrait = matchMedia('(orientation: portrait)').matches;
     const sh = portrait ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
-    if (sh > h && sh - h < 140) h = sh;
+    // O iOS não desenha nada abaixo dessa altura; a faixa que sobra mostra só a cor de fundo da página,
+    // igual à da folha inferior, e já cobre a área da barra de início.
+    gap = sh > h && sh - h < 140 ? sh - h : 0;
   }
   document.documentElement.style.setProperty('--app-h', h + 'px');
+  document.documentElement.style.setProperty('--gap', gap + 'px');
   if (mapRef) mapRef.resize();
 }
 fitScreen();
