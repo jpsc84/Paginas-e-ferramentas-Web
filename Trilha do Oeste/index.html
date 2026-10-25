@@ -25,15 +25,18 @@
   --st:env(safe-area-inset-top,0px); --sb:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;overflow:hidden;background:var(--parch);color:var(--ink);
+/* A moldura #app recebe a altura real da tela (ver fitScreen): no iPhone instalado como app,
+   100% e bottom:0 param acima do fim da tela e deixam uma faixa vazia embaixo. */
+#app{position:fixed;left:0;top:0;width:100%;height:100%;height:var(--app-h,100dvh);overflow:hidden}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--tallow);color:var(--ink);
   font-family:"Alegreya",Georgia,serif;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none;padding:0}
 :focus-visible{outline:3px solid var(--oxblood);outline-offset:2px}
-#map{position:fixed;inset:0}
+#map{position:absolute;inset:0}
 
 /* textura de papel e vinheta por cima do mapa */
-#paper{position:fixed;inset:0;pointer-events:none;z-index:2;mix-blend-mode:multiply;
+#paper{position:absolute;inset:0;pointer-events:none;z-index:2;mix-blend-mode:multiply;
   background:
    radial-gradient(ellipse at 50% 45%,transparent 60%,rgba(92,52,18,.12) 100%),
    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .16 0 0 0 .38 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -42,7 +45,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .16 0 0 0 .5 -.12'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23m)'/%3E%3C/svg%3E");}
 
 /* topo em modo livre */
-#top{position:fixed;z-index:5;left:0;right:0;top:0;padding:calc(var(--st) + 10px) 14px 0;
+#top{position:absolute;z-index:5;left:0;right:0;top:0;padding:calc(var(--st) + 10px) 14px 0;
   display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none}
 #top > *{pointer-events:auto}
 .brand{font-family:"Rye",serif;font-size:21px;letter-spacing:.02em;color:var(--ink);
@@ -53,7 +56,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .round svg{width:22px;height:22px}
 
 /* placa de manobra */
-#banner{position:fixed;z-index:6;left:10px;right:10px;top:calc(var(--st) + 8px);
+#banner{position:absolute;z-index:6;left:10px;right:10px;top:calc(var(--st) + 8px);
   background:var(--ink);color:var(--tallow);border-radius:6px;padding:14px 16px 14px 14px;
   display:none;grid-template-columns:76px 1fr;gap:14px;align-items:center;
   box-shadow:0 0 0 3px var(--tallow),0 0 0 5px var(--ink),0 10px 24px rgba(40,20,5,.45)}
@@ -70,7 +73,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 #mRoad{font-size:18px;line-height:1.2;opacity:.82;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* folha inferior */
-#sheet{position:fixed;z-index:6;left:0;right:0;bottom:0;padding:14px 14px calc(var(--sb) + 14px);
+#sheet{position:absolute;z-index:6;left:0;right:0;bottom:0;padding:14px 14px calc(var(--sb) + 14px);
   background:var(--tallow);border-top:2px solid var(--ink);
   box-shadow:0 -1px 0 4px rgba(243,229,195,.7),0 -12px 30px rgba(60,30,8,.25)}
 .view{display:none}.view.on{display:block}
@@ -100,9 +103,9 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .navbar .round{flex:none}
 
 /* rosa dos ventos e recentralizar */
-#rose{position:fixed;z-index:4;right:12px;bottom:calc(var(--sheet-h) + 14px);width:74px;height:74px;
+#rose{position:absolute;z-index:4;right:12px;bottom:calc(var(--sheet-h) + 14px);width:74px;height:74px;
   transition:transform .3s ease-out;filter:drop-shadow(1px 2px 0 rgba(46,31,20,.25))}
-#recenter{position:fixed;z-index:4;left:12px;bottom:calc(var(--sheet-h) + 18px);display:none;
+#recenter{position:absolute;z-index:4;left:12px;bottom:calc(var(--sheet-h) + 18px);display:none;
   background:var(--tallow);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);
   height:46px;padding:0 16px;border-radius:23px;font-size:17px;font-weight:700}
 #recenter.on{display:block}
@@ -113,7 +116,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .xmark{width:40px;height:40px}
 
 /* ajustes */
-#settings{position:fixed;inset:0;z-index:10;background:rgba(46,31,20,.55);display:none;align-items:flex-end;justify-content:center}
+#settings{position:absolute;inset:0;z-index:10;background:rgba(46,31,20,.55);display:none;align-items:flex-end;justify-content:center}
 #settings.on{display:flex}
 .panel{width:100%;max-width:560px;background:var(--tallow);border-top:2px solid var(--ink);
   padding:18px 18px calc(var(--sb) + 18px);max-height:88vh;overflow:auto}
@@ -126,7 +129,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .check input{width:24px;height:24px;accent-color:var(--oxblood);flex:none;margin-top:1px}
 .note{font-size:15px;color:var(--saddle);line-height:1.4;margin:4px 0 0}
 
-#toast{position:fixed;z-index:12;left:50%;top:calc(var(--st) + 70px);transform:translateX(-50%);
+#toast{position:absolute;z-index:12;left:50%;top:calc(var(--st) + 70px);transform:translateX(-50%);
   background:var(--ink);color:var(--tallow);padding:10px 16px;border-radius:4px;font-size:17px;
   max-width:calc(100% - 32px);display:none;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.3)}
 #toast.on{display:block}
@@ -145,6 +148,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 </style>
 </head>
 <body>
+<div id="app">
 <div id="map" aria-label="Mapa"></div>
 <div id="paper"></div>
 
@@ -248,6 +252,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 </div>
 
 <div id="toast"></div>
+</div>
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script src="nav.js"></script>
@@ -445,10 +450,31 @@ function unlockAudio() {
 
 // ---------- Mapa ----------
 const startCenter = lastPos ? [lastPos.lon, lastPos.lat] : [-42.8034, -5.0892];
+// ---------- Tela cheia ----------
+let mapRef = null;
+function fitScreen() {
+  const vv = window.visualViewport;
+  let h = Math.max(window.innerHeight, document.documentElement.clientHeight, vv ? vv.height : 0);
+  const ios = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const installed = window.navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  if (ios && installed) {
+    const portrait = matchMedia('(orientation: portrait)').matches;
+    const sh = portrait ? Math.max(screen.width, screen.height) : Math.min(screen.width, screen.height);
+    if (sh > h && sh - h < 140) h = sh;
+  }
+  document.documentElement.style.setProperty('--app-h', h + 'px');
+  if (mapRef) mapRef.resize();
+}
+fitScreen();
+window.addEventListener('resize', fitScreen);
+window.addEventListener('orientationchange', () => setTimeout(fitScreen, 300));
+window.addEventListener('pageshow', fitScreen);
+
 const map = new maplibregl.Map({
   container: 'map', style: STYLE, center: startCenter, zoom: lastPos ? 14 : 12,
   attributionControl: false, maxPitch: 60, dragRotate: true
 });
+mapRef = map;
 map.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-left');
 map.on('error', e => { if (e && e.error && /Failed to fetch|NetworkError/i.test(String(e.error.message))) toast('Sem conexão para carregar o mapa.'); });
 
