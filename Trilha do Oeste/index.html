@@ -220,27 +220,17 @@ button{cursor:pointer;border:0;background:none;padding:0}
   <div class="panel">
     <h2 id="sTitle">Ajustes</h2>
     <div class="field">
-      <label for="sMode">Narrador</label>
-      <select id="sMode">
-        <option value="pistoleiro">Pistoleiro (voz gravada)</option>
-        <option value="aparelho">Voz do iPhone</option>
-      </select>
-      <p class="note" id="sModeNote"></p>
+      <label for="sVoice">Voz</label>
+      <select id="sVoice"></select>
+      <p class="note">A voz "Aprimorada" ou "Premium" soa bem mais nítida e é escolhida sozinha quando está instalada. No iPhone, baixe em Ajustes, Acessibilidade, Conteúdo Falado, Vozes, Português (Brasil).</p>
     </div>
-    <div id="deviceVoice">
-      <div class="field">
-        <label for="sVoice">Voz do iPhone</label>
-        <select id="sVoice"></select>
-        <p class="note">Vozes "Aprimoradas" ou "Premium" soam bem melhor. No iPhone, baixe em Ajustes, Acessibilidade, Conteúdo Falado, Vozes, Português (Brasil).</p>
-      </div>
-      <div class="field">
-        <label for="sPitch">Tom de voz <span id="sPitchV"></span></label>
-        <input id="sPitch" type="range" min="0.5" max="1.3" step="0.05">
-      </div>
-      <div class="field">
-        <label for="sRate">Velocidade da fala <span id="sRateV"></span></label>
-        <input id="sRate" type="range" min="0.8" max="1.2" step="0.05">
-      </div>
+    <div class="field">
+      <label for="sPitch">Tom de voz <span id="sPitchV"></span></label>
+      <input id="sPitch" type="range" min="0.7" max="1.2" step="0.05">
+    </div>
+    <div class="field">
+      <label for="sRate">Velocidade da fala <span id="sRateV"></span></label>
+      <input id="sRate" type="range" min="0.8" max="1.2" step="0.05">
     </div>
     <div class="row" style="margin:0 0 18px"><button class="btn plain" id="sTest">Testar voz</button></div>
     <div class="field">
@@ -262,8 +252,10 @@ button{cursor:pointer;border:0;background:none;padding:0}
 const $ = s => document.querySelector(s);
 
 // ---------- Preferências ----------
-const DEF = { pitch: 0.8, rate: 1, voice: '', sim: false, muted: false, narrator: 'pistoleiro' };
+const DEF = { v: 2, pitch: 1, rate: 1, voice: '', sim: false, muted: false };
 const cfg = (() => { try { return Object.assign({}, DEF, JSON.parse(localStorage.getItem('trilha.cfg') || '{}')); } catch (e) { return Object.assign({}, DEF); } })();
+// Versão anterior usava tom 0,8 e a voz gravada; o tom rebaixado deixava a voz do iPhone abafada.
+if (!(cfg.v >= 2)) { cfg.v = 2; cfg.pitch = 1; delete cfg.narrator; }
 const saveCfg = () => { try { localStorage.setItem('trilha.cfg', JSON.stringify(cfg)); } catch (e) {} };
 let lastPos = null;
 try { lastPos = JSON.parse(localStorage.getItem('trilha.pos') || 'null'); } catch (e) {}
@@ -362,9 +354,20 @@ function ptVoices() {
   return synth.getVoices().filter(v => /^pt/i.test(v.lang))
     .sort((a, b) => (norm(b.lang) === 'pt-BR') - (norm(a.lang) === 'pt-BR'));
 }
+// Sem escolha manual, usa a voz pt-BR de melhor qualidade instalada (Premium > Aprimorada > padrão).
+function voiceScore(v) {
+  const id = (v.name + ' ' + v.voiceURI).toLowerCase();
+  let s = v.lang.replace('_', '-') === 'pt-BR' ? 10 : 0;
+  if (/premium/.test(id)) s += 3; else if (/enhanced|aprimorad|neural/.test(id)) s += 2;
+  if (/felipe/.test(id)) s += 0.5;          // voz masculina pt-BR, quando disponível
+  if (/compact|eloquence/.test(id)) s -= 2;
+  return s;
+}
 function pickVoice() {
   const vs = ptVoices();
-  return vs.find(v => v.voiceURI === cfg.voice) || vs.find(v => v.lang.replace('_', '-') === 'pt-BR') || vs[0] || null;
+  const chosen = vs.find(v => v.voiceURI === cfg.voice);
+  if (chosen) return chosen;
+  return vs.slice().sort((a, b) => voiceScore(b) - voiceScore(a))[0] || null;
 }
 function utter(text) {
   const u = new SpeechSynthesisUtterance(text);
@@ -379,73 +382,14 @@ function speakDevice(text) {
   setTimeout(() => synth.speak(utter(text)), 60);
 }
 
-// Voz do pistoleiro: trechos pré-gravados (pasta voz/) tocados em sequência pelo Web Audio.
-const clips = { ctx: null, gain: null, have: null, bufs: new Map(), sources: [], token: 0 };
-fetch('voz/manifest.json').then(r => r.ok ? r.json() : null).then(j => { if (j) clips.have = new Set(j.clipes); }).catch(() => {});
-function audioCtx() {
-  if (!clips.ctx) {
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return null;
-    clips.ctx = new AC();
-    clips.gain = clips.ctx.createGain();
-    clips.gain.connect(clips.ctx.destination);
-  }
-  return clips.ctx;
-}
-function loadClip(id) {
-  if (clips.bufs.has(id)) return clips.bufs.get(id);
-  const p = fetch('voz/' + id + '.mp3')
-    .then(r => { if (!r.ok) throw new Error(id); return r.arrayBuffer(); })
-    .then(b => new Promise((res, rej) => audioCtx().decodeAudioData(b, res, rej)));
-  p.catch(() => clips.bufs.delete(id));
-  clips.bufs.set(id, p);
-  if (clips.bufs.size > 40) clips.bufs.delete(clips.bufs.keys().next().value);
-  return p;
-}
-function stopClips() { clips.sources.forEach(x => { try { x.stop(); } catch (e) {} }); clips.sources = []; }
-async function playClips(ids) {
-  const ctx = audioCtx();
-  if (!ctx) throw new Error('sem Web Audio');
-  const tok = ++clips.token;
-  const bufs = await Promise.all(ids.map(loadClip));
-  if (tok !== clips.token) return;
-  if (ctx.state !== 'running') { try { await ctx.resume(); } catch (e) {} }
-  stopClips();
-  let t = ctx.currentTime + 0.03;
-  bufs.forEach(b => {
-    const src = ctx.createBufferSource();
-    src.buffer = b; src.connect(clips.gain); src.start(t);
-    t += b.duration - 0.04;
-    clips.sources.push(src);
-  });
-}
-// Baixa os arquivos (sem decodificar) para o cache do app, assim a voz funciona mesmo com sinal fraco.
-function prefetchClips() {
-  if (cfg.narrator !== 'pistoleiro' || !clips.have) return;
-  const ids = [...clips.have]; let i = 0;
-  const next = () => { if (i < ids.length) fetch('voz/' + ids[i++] + '.mp3').catch(() => {}).finally(next); };
-  for (let k = 0; k < 3; k++) next();
-}
-// u = { text, chunks } vindo do motor de navegação
+// u = { text } vindo do motor de navegação
 function speak(u) {
   if (cfg.muted || !u) return;
-  if (cfg.narrator === 'pistoleiro' && u.chunks && clips.have && u.chunks.every(c => clips.have.has(c))) {
-    if (synth) synth.cancel();
-    playClips(u.chunks).catch(() => speakDevice(u.text));
-    return;
-  }
-  stopClips();
   speakDevice(u.text);
 }
-// O iOS só libera som depois de um toque; chamado dentro do clique em "Partir" e em "Testar voz".
+// O iOS só libera a fala depois de um toque; chamado dentro do clique em "Partir" e em "Testar voz".
 function unlockAudio() {
   if (synth) { const x = new SpeechSynthesisUtterance(' '); x.volume = 0; synth.speak(x); }
-  const ctx = audioCtx();
-  if (!ctx) return;
-  try { if (navigator.audioSession) navigator.audioSession.type = 'transient'; } catch (e) {}
-  if (ctx.resume) ctx.resume();
-  const b = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource();
-  src.buffer = b; src.connect(ctx.destination); src.start(0);
 }
 
 // ---------- Mapa ----------
@@ -664,7 +608,6 @@ function clearTrip() {
 $('#start').addEventListener('click', () => {
   if (!route) return;
   unlockAudio();
-  prefetchClips();
   keepAwake();
   navr = new Nav.Navigator(route, { say: speak });
   following = true;
@@ -678,7 +621,6 @@ function endNav() {
   stopSim();
   sim.on = false;
   if (synth) synth.cancel();
-  stopClips();
   releaseAwake();
   clearTrip();
   if (fix) setMe([fix.lon, fix.lat], fix.heading);
@@ -775,7 +717,7 @@ function updateMute() {
   $('#mute').innerHTML = cfg.muted ? ICON_MUTE : ICON_SOUND;
   $('#mute').setAttribute('aria-label', cfg.muted ? 'Ativar voz' : 'Silenciar voz');
 }
-$('#mute').addEventListener('click', () => { cfg.muted = !cfg.muted; saveCfg(); updateMute(); if (cfg.muted) { if (synth) synth.cancel(); stopClips(); } });
+$('#mute').addEventListener('click', () => { cfg.muted = !cfg.muted; saveCfg(); updateMute(); if (cfg.muted && synth) synth.cancel(); });
 
 // ---------- Localizar ----------
 $('#locate').addEventListener('click', () => {
@@ -801,17 +743,7 @@ function syncSettings() {
   $('#sPitch').value = cfg.pitch; $('#sPitchV').textContent = cfg.pitch.toFixed(2).replace('.', ',');
   $('#sRate').value = cfg.rate; $('#sRateV').textContent = cfg.rate.toFixed(2).replace('.', ',');
   $('#sSim').checked = cfg.sim;
-  $('#sMode').value = cfg.narrator;
-  syncMode();
 }
-function syncMode() {
-  const rec = cfg.narrator === 'pistoleiro';
-  $('#deviceVoice').style.display = rec ? 'none' : 'block';
-  $('#sModeNote').textContent = rec
-    ? 'Voz grave pré-gravada, feita a partir do modelo livre Piper "edresson" (TTS-Portuguese Corpus, de Edresson Casanova, licença CC BY 4.0). Não fala nomes de rua; eles aparecem na placa.'
-    : 'Usa a voz instalada no iPhone e fala os nomes das ruas.';
-}
-$('#sMode').addEventListener('change', e => { cfg.narrator = e.target.value; saveCfg(); syncMode(); });
 $('#openSettings').addEventListener('click', () => { syncSettings(); $('#settings').classList.add('on'); });
 $('#sClose').addEventListener('click', () => $('#settings').classList.remove('on'));
 $('#settings').addEventListener('click', e => { if (e.target.id === 'settings') $('#settings').classList.remove('on'); });
