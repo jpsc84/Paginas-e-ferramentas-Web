@@ -1,5 +1,5 @@
 // Service worker da Trilha do Oeste: guarda o app para abrir rápido. Mapa, busca e rotas sempre vêm da rede.
-const CACHE = 'trilha-v3';
+const CACHE = 'trilha-v4';
 const CORE = ['./', 'index.html', 'nav.js', 'manifest.json', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));

@@ -160,12 +160,12 @@
   // ---------- Falas ----------
   // Cada fala é montada em trechos ("chunks"). O texto completo (com nomes de rua) vai para a voz do aparelho;
   // os trechos, sem nomes de rua, viram arquivos de áudio pré-gravados da voz do pistoleiro.
-  const LEADS = ['Daqui a {d},', 'Em {d},', 'Fica de olho: em {d},'];
-  const NEAR_PRE = ['Agora,', 'É aqui, parceiro:'];
+  // Tom formal, com um leve toque de faroeste só na palavra "trilha".
+  const LEADS = ['Em {d},'];
   const FIXED = {
-    depart: ['Muito bem, parceiro, pé na estrada.', 'Hora de cavalgar.', 'Trilha traçada. Vamos nessa.'],
-    arrive: ['Chegamos, parceiro. Pode apear.', 'Destino alcançado. Boa cavalgada.', 'Aqui estamos. Fim da trilha.'],
-    reroute: ['Saímos da trilha. Achando outro caminho.', 'Opa, desviamos, parceiro. Recalculando a rota.', 'Mudança de planos. Traçando nova trilha.']
+    depart: ['Rota traçada. Boa viagem.'],
+    arrive: ['Destino alcançado. Fim da trilha.'],
+    reroute: ['Desviamos da trilha. Recalculando.']
   };
   const CHAIN = 'E logo depois,', ARRIVE_TAIL = 'chegamos ao destino.';
   const lastPick = {};
@@ -205,28 +205,29 @@
     const i = rnd('lead', LEADS.length);
     u.add(LEADS[i].replace('{d}', speechDist(dist)));
     if (st.type === 'arrive') { u.add(ARRIVE_TAIL); return u; }
-    const a = action(st, true), tail = i === 1 ? ', parceiro.' : '.';
-    return u.add(a + tail, a + streetPart(st, a) + tail);
+    const a = action(st, true);
+    return u.add(a + '.', a + streetPart(st, a) + '.');
   }
   function addNear(u, st) {
-    u.add(NEAR_PRE[rnd('near', NEAR_PRE.length)]);
-    return u.add(action(st, true) + '.');
+    const a = action(st, true);
+    // "Na rotatória, pegue a segunda saída agora" soa estranho; nesses casos fala só a ação.
+    return u.add(cap(a) + (/rotat|bifurca/.test(a) ? '.' : ' agora.'));
   }
   function addFixed(u, kind) { return u.add(FIXED[kind][rnd(kind, FIXED[kind].length)]); }
-  function addCont(u, dist) { return u.add('Segue pela trilha por ' + contDist(dist) + '.'); }
+  function addCont(u, dist) { return u.add('Siga pela trilha por ' + contDist(dist) + '.'); }
 
   // Lista de todos os trechos possíveis (usada para gerar os arquivos de áudio).
   function allChunks() {
-    const set = new Set([CHAIN, ARRIVE_TAIL, ...NEAR_PRE, ...FIXED.depart, ...FIXED.arrive, ...FIXED.reroute]);
+    const set = new Set([CHAIN, ARRIVE_TAIL, ...FIXED.depart, ...FIXED.arrive, ...FIXED.reroute]);
     const dists = new Set();
     for (let m = 0; m <= 1100; m++) dists.add(speechDist(m));
     dists.forEach(d => LEADS.forEach(l => set.add(l.replace('{d}', d))));
-    for (let m = 1500; m <= 1200000; m += 50) set.add('Segue pela trilha por ' + contDist(m) + '.');
+    for (let m = 1500; m <= 1200000; m += 50) set.add('Siga pela trilha por ' + contDist(m) + '.');
     const types = ['turn', 'new name', 'continue', 'merge', 'on ramp', 'off ramp', 'fork', 'end of road', 'roundabout', 'rotary', 'roundabout turn', 'exit roundabout', 'exit rotary', 'notification', 'use lane'];
     const mods = ['', 'uturn', 'sharp right', 'right', 'slight right', 'straight', 'slight left', 'left', 'sharp left'];
     types.forEach(t => mods.forEach(m => [null, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(exit => {
       const a = action({ type: t, modifier: m, exit }, true);
-      set.add(a + '.'); set.add(a + ', parceiro.');
+      set.add(a + '.'); set.add(cap(a) + ' agora.'); set.add(cap(a) + '.');
     })));
     return [...set];
   }
@@ -306,7 +307,7 @@
     hav, bearing, buildRoute, snap, pointAt, screenText, screenDist, speechDist, contDist,
     withArticle, action, silent, slug, allChunks, Navigator,
     rerouteUtt: () => addFixed(new Utt(), 'reroute'),
-    sampleUtt: () => new Utt().add('Daqui a 300 metros,').add('vire à direita, parceiro.', 'vire à direita na Avenida Frei Serafim, parceiro.')
+    sampleUtt: () => new Utt().add('Em 300 metros,').add('vire à direita.', 'vire à direita na Avenida Frei Serafim.')
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.Nav = api;
